@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base knobs exactly like requested */
+@layer base {
+  html {
+    font-family: var(--font-bms-sans), ui-sans-serif, system-ui, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 1.5;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+}
+
+/* Global base styles */
+html,
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+/* Basic typography */
+h1,
+h2,
+h3,
+h4 {
+  @apply font-semibold text-bms-dark;
+}
+
+a {
+  @apply text-bms-primary hover:text-bms-accent transition-colors;
+}
+
+/* Utility for constrained max-width sections */
+.bms-page {
+  @apply container mx-auto py-10;
+}
+
+/* Odoo-like polish (safe, additive) */
+::selection {
+  background: rgba(150, 150, 220, 0.3);
+}
+
+@layer utilities {
+  /* Odoo-style neutral background helper (matches Odoo 200) */
+  .bg-200 {
+    @apply bg-odoo-200;
+  }
+
+  /* Pill radius helper */
+  .rounded-pill-md {
+    border-radius: 9999px;
+  }
+}
+
+/* Simple fade-in-up animation used for technology swap cards */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.35s ease-out;
+}
