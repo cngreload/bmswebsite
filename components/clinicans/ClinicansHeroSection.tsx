@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 
@@ -109,11 +109,13 @@ export default function ClinicansHeroSection ()
                     aria-hidden
                 >
                     {/* If you don't add this file, it will just 404 silently in the browser (no build break). */ }
-                    <img
+                    <Image
                         src="/clinicans/modules/apps_switched.svg"
-                        alt=""
+                        alt="app_switched"
                         className="h-16 w-auto"
                         loading="lazy"
+                        height={ 300 }
+                        width={ 300 }
                     />
                 </div>
 
@@ -124,11 +126,13 @@ export default function ClinicansHeroSection ()
                             href="/contact-us"
                             className="mx-auto flex w-full max-w-2xl items-center justify-center gap-3 rounded-full bg-white px-4 py-2 text-xs md:text-sm shadow-sm ring-1 ring-black/5 hover:bg-slate-50"
                         >
-                            <img
+                            <Image
                                 src="/clinicans/modules/fr.png"
                                 alt="France"
                                 className="h-4 w-4 rounded-full"
                                 loading="lazy"
+                                height={ 300 }
+                                width={ 300 }
                                 onError={ ( e ) =>
                                 {
                                     // if you don't want a flag, just prevent broken icon UI
