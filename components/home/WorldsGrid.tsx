@@ -1,51 +1,70 @@
-type BentoItem = {
+import Image from "next/image";
+
+export type BentoItem = {
     id: number;
     title: string;
     variant: "lg" | "md" | "sm";
+    imageSrc: string;
+    imageAlt: string;
 };
 
 const bentoItems: BentoItem[] = [
     {
         id: 1,
         title: "پلتفرم‌های دیجیتال",
-        variant: "lg"
+        variant: "lg",
+        imageSrc: "/images/worlds/digital-platforms.jfif",
+        imageAlt: "پلتفرم‌های دیجیتال",
     },
     {
         id: 2,
         title: "صنعت ۴ و زیرساخت‌های هوشمند",
-        variant: "md"
+        variant: "md",
+        imageSrc: "/images/worlds/industry4-smart-infra.jfif",
+        imageAlt: "صنعت ۴ و زیرساخت‌های هوشمند",
     },
     {
         id: 3,
         title: "اتوماسیون کسب‌وکار",
-        variant: "sm"
+        variant: "sm",
+        imageSrc: "/images/worlds/business-automation.jfif",
+        imageAlt: "اتوماسیون کسب‌وکار",
     },
     {
         id: 4,
         title: "سلامت دیجیتال و کلینیک‌های هوشمند",
-        variant: "sm"
+        variant: "sm",
+        imageSrc: "/images/worlds/digital-health.jfif",
+        imageAlt: "سلامت دیجیتال و کلینیک‌های هوشمند",
     },
     {
         id: 5,
         title: "پایش انرژی",
-        variant: "sm"
+        variant: "sm",
+        imageSrc: "/images/worlds/energy-monitoring.jfif",
+        imageAlt: "پایش انرژی",
     },
     {
         id: 6,
         title: "خانه و زندگی هوشمند",
-        variant: "sm"
+        variant: "sm",
+        imageSrc: "/images/worlds/smart-home.jfif",
+        imageAlt: "خانه و زندگی هوشمند",
     },
     {
         id: 7,
         title: "داشبوردها و تصمیم‌سازی مبتنی بر داده",
-        variant: "md"
+        variant: "md",
+        imageSrc: "/images/worlds/data-dashboards.jfif",
+        imageAlt: "داشبوردها و تصمیم‌سازی مبتنی بر داده",
     },
     {
         id: 8,
-        title:
-            "راهکارهای ماژولار بر بستر سخت‌افزار و نرم‌افزار بومی",
-        variant: "sm"
-    }
+        title: "راهکارهای ماژولار بر بستر سخت‌افزار و نرم‌افزار بومی",
+        variant: "sm",
+        imageSrc: "/images/worlds/modular-native-solutions.jfif",
+        imageAlt: "راهکارهای ماژولار",
+    },
 ];
 
 export default function WorldsGrid ()
@@ -53,7 +72,7 @@ export default function WorldsGrid ()
     return (
         <section className="py-10 md:py-14">
             <div className="mx-auto max-w-6xl space-y-6">
-                {/* Header بخش */ }
+                {/* Header */ }
                 <div className="space-y-2 text-right">
                     <p className="text-[11px] md:text-xs font-medium text-bms-primary">
                         حوزه‌های فناوری و نوآوری بارمان
@@ -80,27 +99,43 @@ export default function WorldsGrid ()
 
 function BentoTile ( { item }: { item: BentoItem; } )
 {
-    let sizeClasses =
-        "md:col-span-3 md:row-span-1"; // default (md)
+    let sizeClasses = "md:col-span-3 md:row-span-1"; // default (md)
+    if ( item.variant === "lg" ) sizeClasses = "md:col-span-3 md:row-span-2";
+    else if ( item.variant === "sm" ) sizeClasses = "md:col-span-2 md:row-span-1";
 
-    if ( item.variant === "lg" )
-    {
-        sizeClasses = "md:col-span-3 md:row-span-2";
-    } else if ( item.variant === "sm" )
-    {
-        sizeClasses = "md:col-span-2 md:row-span-1";
-    }
+    const sizes =
+        item.variant === "lg"
+            ? "(min-width: 1024px) 520px, (min-width: 768px) 50vw, 100vw"
+            : item.variant === "md"
+                ? "(min-width: 1024px) 420px, (min-width: 768px) 33vw, 100vw"
+                : "(min-width: 1024px) 320px, (min-width: 768px) 33vw, 100vw";
 
     return (
         <article
-            className={ `group relative flex h-full flex-col rounded-2xl border border-slate-200 bg-white/90 p-4 md:p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-soft-lg ${ sizeClasses }` }
+            className={ `group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-soft-lg ${ sizeClasses }` }
         >
-            <div className="flex h-full flex-col items-end justify-center text-right">
-                <h3 className="text-sm md:text-base lg:text-lg font-semibold text-bms-dark leading-relaxed transition-all group-hover:tracking-tight">
-                    { item.title }
-                </h3>
-                <div className="mt-1 flex w-full justify-end">
-                    <span className="h-[2px] w-0 rounded-full bg-bms-accent transition-all duration-200 group-hover:w-16" />
+            {/* Background image (NO white haze, original colors) */ }
+            <div className="pointer-events-none absolute inset-0">
+                <Image
+                    src={ item.imageSrc }
+                    alt={ item.imageAlt }
+                    fill
+                    sizes={ sizes }
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    priority={ item.id <= 2 }
+                />
+            </div>
+
+            {/* Content */ }
+            <div className="relative z-10 flex h-full flex-col items-end justify-end p-4 md:p-5 text-right">
+                {/* Frosted label only under text (does NOT wash the whole image) */ }
+                <div className="max-w-[90%] rounded-xl bg-white/75 backdrop-blur-md px-3 py-2 ring-1 ring-black/5 shadow-sm">
+                    <h3 className="text-sm md:text-base lg:text-lg font-semibold text-bms-dark leading-relaxed">
+                        { item.title }
+                    </h3>
+                    <div className="mt-1 flex w-full justify-end">
+                        <span className="h-[2px] w-0 rounded-full bg-bms-accent transition-all duration-200 group-hover:w-16" />
+                    </div>
                 </div>
             </div>
         </article>
