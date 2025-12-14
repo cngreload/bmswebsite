@@ -102,7 +102,13 @@ function ICTSBand ()
                         className="relative overflow-hidden rounded-2xl bg-slate-900 text-white aspect-video flex items-center justify-center shadow-soft-lg"
                         aria-label="پایلوت سامانه هوشمند کنترل و مانیتورینگ جایگاه CNG بارمان"
                     >
-                        {/* اینجا بعداً می‌توان ویدیو واقعی یا تصویر موکاپ قرار داد */ }
+                        <video
+                            controls
+                            className="w-auto h-auto max-w-xl mx-auto rounded-3xl  bg-purple-300 p-4"
+                        >
+                            <source src="/CNG_Station_Automation.mp4" type="video/mp4" />
+                            مرورگر شما امکان پخش فیلم را ندارد
+                        </video>
                         <div className="absolute inset-0 opacity-40 bg-gradient-to-tr from-bms-primary via-bms-accent to-slate-900" />
                         <div className="relative flex flex-col items-center gap-2">
                             <button
@@ -112,14 +118,16 @@ function ICTSBand ()
                                 <span className="mr-0.5 translate-x-[1px] text-lg">▶</span>
                             </button>
                             <span className="text-[10px] md:text-xs text-white/85">
-                                مشاهده ویدیوی پایلوت (نمونه نمایشی)
+                                مشاهده ویدیوی پایلوت
                             </span>
                         </div>
                     </div>
 
                     <p className="text-[10px] md:text-[11px] leading-relaxed text-slate-600 text-right">
-                        ویدیو پایلوت سامانه هوشمند کنترل و مانیتورینگ بارمان در یکی از
-                        جایگاه‌های منتخب؛ نمونه‌ای از کار در میدان، نه صرفاً در آزمایشگاه.
+                        <em>
+                            گزارش رسمی مهندس حسین یوسفی، مدیر پروژه هوشمندسازی جایگاه‌های CNG، <br />
+                            شرکت ملی پخش فرآورده‌های نفتی
+                        </em>
                     </p>
                 </div>
             </div>

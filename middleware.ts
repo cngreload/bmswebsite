@@ -1,18 +1,27 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/admin(.*)", "/api/admin(.*)"]);
+const isAdminPage = createRouteMatcher(["/admin(.*)"]);
+const isAdminApi = createRouteMatcher(["/api/admin(.*)"]);
 
-export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
-    await auth.protect(); // ✅ correct for @clerk/nextjs v6
+export default clerkMiddleware((auth, req) => {
+  const path = req.nextUrl.pathname;
+
+  // Protect admin APIs always
+  if (isAdminApi(req)) {
+    auth.protect();
+    return NextResponse.next();
   }
+
+  // Protect admin pages, but NEVER protect the sign-in page (avoid redirect loop)
+  if (isAdminPage(req) && !path.startsWith("/admin/sign-in")) {
+    auth.protect();
+    return NextResponse.next();
+  }
+
+  return NextResponse.next();
 });
 
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };
