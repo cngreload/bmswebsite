@@ -103,32 +103,24 @@ function BentoTile ( { item }: { item: BentoItem; } )
     if ( item.variant === "lg" ) sizeClasses = "md:col-span-3 md:row-span-2";
     else if ( item.variant === "sm" ) sizeClasses = "md:col-span-2 md:row-span-1";
 
-    const sizes =
-        item.variant === "lg"
-            ? "(min-width: 1024px) 520px, (min-width: 768px) 50vw, 100vw"
-            : item.variant === "md"
-                ? "(min-width: 1024px) 420px, (min-width: 768px) 33vw, 100vw"
-                : "(min-width: 1024px) 320px, (min-width: 768px) 33vw, 100vw";
-
     return (
         <article
             className={ `group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-soft-lg ${ sizeClasses }` }
         >
-            {/* Background image (NO white haze, original colors) */ }
+            {/* Background image (width/height provided) */ }
             <div className="pointer-events-none absolute inset-0">
                 <Image
                     src={ item.imageSrc }
                     alt={ item.imageAlt }
-                    fill
-                    sizes={ sizes }
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    width={ 1600 }
+                    height={ 900 }
                     priority={ item.id <= 2 }
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
             </div>
 
             {/* Content */ }
             <div className="relative z-10 flex h-full flex-col items-end justify-end p-4 md:p-5 text-right">
-                {/* Frosted label only under text (does NOT wash the whole image) */ }
                 <div className="max-w-[90%] rounded-xl bg-white/75 backdrop-blur-md px-3 py-2 ring-1 ring-black/5 shadow-sm">
                     <h3 className="text-sm md:text-base lg:text-lg font-semibold text-bms-dark leading-relaxed">
                         { item.title }
