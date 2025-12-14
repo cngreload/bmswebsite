@@ -4,6 +4,50 @@
 
 /* Base knobs exactly like requested */
 @layer base {
+  :root {
+    /* Odoo-ish neutral scale (for references / optional usage) */
+    --odoo-100: #f9fafb;
+    --odoo-200: #f3f4f6;
+    --odoo-300: #e6e9ed;
+    --odoo-400: #d8dadd;
+    --odoo-500: #adb5bd;
+    --odoo-600: #6c757d;
+    --odoo-700: #495057;
+    --odoo-800: #374151;
+    --odoo-900: #111827;
+
+    /* Brand-like accents seen in that Odoo theme */
+    --odoo-primary: #714b67;
+    --odoo-secondary: #017e84;
+
+    /* “Feel” tokens (cards/buttons) */
+    --odoo-border-color: color-mix(in srgb, currentColor 15%, transparent);
+    --odoo-radius: 0.625rem; /* ~10px */
+    --odoo-radius-lg: 1.25rem;
+    --odoo-radius-xl: 1.5rem;
+    --odoo-radius-2xl: 3rem;
+
+    --odoo-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    --odoo-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --odoo-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+    --odoo-gutter: 32px;
+
+    /* Typography refs (optional) */
+    --odoo-font-size-base: 1rem;
+    --odoo-body-line-height: 1.5;
+    --odoo-headings-line-height: 1.2;
+    --odoo-paragraph-mb: 16px;
+    --odoo-display-1: 4rem;
+    --odoo-display-2: 3rem;
+    --odoo-display-3: 2.5rem;
+    --odoo-display-4: 2rem;
+
+    /* Focus ring feel */
+    --odoo-focus-ring: rgba(113, 75, 103, 0.25);
+    --odoo-focus-width: 0.25rem;
+  }
+
   html {
     font-family: var(--font-bms-sans), ui-sans-serif, system-ui, sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

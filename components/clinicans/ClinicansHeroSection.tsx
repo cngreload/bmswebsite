@@ -159,10 +159,12 @@ export default function ClinicansHeroSection ()
                                             imagineWithout ? "grayscale opacity-50" : "",
                                         ].join( " " ) }
                                     >
-                                        <img
+                                        <Image
                                             src={ item.iconSrc }
                                             alt={ item.iconAlt ?? `${ item.title } icon` }
                                             className="h-10 w-10"
+                                            height={ 300 }
+                                            width={ 300 }
                                             loading="lazy"
                                         />
                                     </div>
@@ -205,15 +207,17 @@ export default function ClinicansHeroSection ()
                             {/* view all */ }
                             <div className="text-center lg:text-end">
                                 <Link
-                                    href="/clinicans#modules"
+                                    href="/clinicans/all-in-one"
                                     className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-900 hover:underline"
                                 >
                                     مشاهده همه ماژول‌ها
-                                    <img
+                                    <Image
                                         src="/clinicans/modules/secondary_arrow_sm_03.svg"
                                         alt=""
                                         className="h-4 w-8"
                                         loading="lazy"
+                                        height={ 300 }
+                                        width={ 600 }
                                         onError={ ( e ) =>
                                         {
                                             // if you didn't add the arrow file, fallback to a text arrow

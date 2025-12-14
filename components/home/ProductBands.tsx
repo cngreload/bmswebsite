@@ -296,7 +296,7 @@ function CooperationBand ()
                 {/* CTA */ }
                 <div className="mt-4 flex justify-end">
                     <Link
-                        href="/cooperation"
+                        href="/intelligentautomation"
                         className="inline-flex items-center gap-1 rounded-full bg-bms-primary px-5 py-2 text-[11px] md:text-xs font-medium text-white hover:bg-bms-dark transition-colors"
                     >
                         <span>فرصت‌های همکاری و سرمایه‌گذاری با بارمان</span>

@@ -202,7 +202,7 @@ export default function Header ()
                 <div className="flex items-center gap-3">
                     {/* CTA (desktop) */ }
                     <Link
-                        href="/cooperation"
+                        href="/intelligentautomation"
                         className="hidden md:inline-flex items-center rounded-full border border-bms-primary bg-bms-primary px-4 py-1.5 text-xs md:text-sm font-medium text-white shadow-soft-lg hover:bg-bms-dark transition-colors"
                     >
                         شروع همکاری
@@ -231,7 +231,7 @@ export default function Header ()
                     <div className="container py-3 space-y-4 text-sm">
                         {/* CTA mobile */ }
                         <Link
-                            href="/cooperation"
+                            href="/intelligentautomation"
                             className="inline-flex w-full items-center justify-center rounded-full border border-bms-primary bg-bms-primary px-4 py-2 text-xs font-medium text-white shadow-soft-lg hover:bg-bms-dark transition-colors"
                             onClick={ closeMobile }
                         >
