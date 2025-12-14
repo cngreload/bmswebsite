@@ -13,7 +13,6 @@ export default async function AdminProtectedLayout ( {
 } )
 {
     const { userId } = await auth();
-
     if ( !userId ) redirect( "/admin/sign-in" );
 
     const adminId =

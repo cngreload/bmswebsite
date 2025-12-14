@@ -8,20 +8,11 @@ const isAdminPublic = createRouteMatcher([
   "/admin/forbidden(.*)",
 ]);
 
-export default clerkMiddleware(
-  async (auth, req) => {
-    if (!isAdminArea(req) || isAdminPublic(req)) {
-      return NextResponse.next();
-    }
-
-    // v6: protect with auth.protect()
-    await auth.protect();
-    return NextResponse.next();
-  },
-  {
-    signInUrl: "/admin/sign-in",
-  }
-);
+export default clerkMiddleware(async (auth, req) => {
+  if (!isAdminArea(req) || isAdminPublic(req)) return NextResponse.next();
+  await auth.protect();
+  return NextResponse.next();
+});
 
 export const config = {
   matcher: ["/admin/:path*", "/api/admin/:path*"],
