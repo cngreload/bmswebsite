@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import CngPilotVideo from "../home/CngPilotVideo";
 export default function CngHeroSection ()
 {
     return (
@@ -49,28 +49,22 @@ export default function CngHeroSection ()
                 </div>
 
                 {/* ویدیو پایلوت – چپ */ }
-                <div className="md:col-span-5 space-y-3">
+                <div className="md:w-[42%] space-y-3">
                     <p className="text-[10px] md:text-[11px] text-slate-600 text-right">
-                        نمایی کوتاه از اجرای پایلوت سامانه ICTS در جایگاه‌های منتخب CNG
+                        نمایش بخشی از اجرای پایلوت سامانه در جایگاه‌های CNG
                     </p>
 
-                    <div
-                        className="relative overflow-hidden rounded-2xl bg-slate-900 text-white aspect-video flex items-center justify-center shadow-soft-lg"
-                        aria-label="پایلوت سامانه هوشمند کنترل و مانیتورینگ جایگاه CNG بارمان"
-                    >
-                        <div className="absolute inset-0 opacity-40 bg-gradient-to-tr from-bms-primary via-bms-accent to-slate-900" />
-                        <div className="relative flex flex-col items-center gap-2">
-                            <button
-                                type="button"
-                                className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-bms-primary shadow-lg"
-                            >
-                                <span className="mr-0.5 translate-x-[1px] text-lg">▶</span>
-                            </button>
-                            <span className="text-[10px] md:text-xs text-white/85">
-                                ویدیو پایلوت ICTS – نمونه نمایشی
-                            </span>
-                        </div>
-                    </div>
+                    <CngPilotVideo
+                        src="/CNG_Station_Automation.mp4"
+                        ariaLabel="پایلوت سامانه هوشمند کنترل و مانیتورینگ جایگاه CNG بارمان"
+                    />
+
+                    <p className="text-[10px] md:text-[11px] leading-relaxed text-slate-600 text-right">
+                        <em>
+                            گزارش رسمی مهندس حسین یوسفی، مدیر پروژه هوشمندسازی جایگاه‌های CNG، <br />
+                            شرکت ملی پخش فرآورده‌های نفتی
+                        </em>
+                    </p>
                 </div>
             </div>
         </section>

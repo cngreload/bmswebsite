@@ -62,7 +62,7 @@ const bentoItems: BentoItem[] = [
         id: 8,
         title: "راهکارهای ماژولار بر بستر سخت‌افزار و نرم‌افزار بومی",
         variant: "sm",
-        imageSrc: "/images/worlds/modular-native-solutions.svg",
+        imageSrc: "/images/worlds/digitaltransformation.svg",
         imageAlt: "راهکارهای ماژولار",
     },
 ];
