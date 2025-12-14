@@ -1,114 +1,61 @@
-"use client";
+// app/admin/(protected)/contact-messages/page.tsx
+import { fetchAdminContactMessages } from "@/lib/admin-api";
+import { AdminContactMessagesTable } from "@/components/admin/contact/AdminContactMessagesTable";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic";
 
-type ContactMessage = {
-    id: string;
-    fullName: string;
-    email: string;
-    phone: string | null;
-    subject: string;
-    message: string;
-    contactType: string;
-    status: string;
-    createdAt: string;
+type AdminContactMessagesSearchParams = {
+    page?: string | string[];
+    q?: string | string[];
+    status?: string | string[];
 };
 
-type ContactListResponse =
-    | { items: ContactMessage[]; page: number; pageSize: number; totalItems: number; totalPages: number; }
-    | ContactMessage[];
-
-function normalize ( x: ContactListResponse )
+export default async function AdminContactMessagesPage ( {
+    searchParams,
+}: {
+    searchParams?: Promise<AdminContactMessagesSearchParams>;
+} )
 {
-    if ( Array.isArray( x ) ) return { items: x, page: 1, pageSize: x.length, totalItems: x.length, totalPages: 1 };
-    return x;
-}
+    const sp = ( ( await searchParams ) ??
+        {} ) as AdminContactMessagesSearchParams;
 
-function readErrorText ( err: unknown )
-{
-    if ( err instanceof Error ) return err.message;
-    return String( err ?? "Unknown error" );
-}
+    const rawPage =
+        typeof sp.page === "string"
+            ? sp.page
+            : Array.isArray( sp.page )
+                ? sp.page[ 0 ]
+                : "1";
 
-export default function AdminContactMessagesPage ()
-{
-    const [ data, setData ] = useState<ReturnType<typeof normalize> | null>( null );
-    const [ loading, setLoading ] = useState( true );
-    const [ errText, setErrText ] = useState<string | null>( null );
+    const currentPage = Number( rawPage ?? "1" ) || 1;
 
-    async function load ()
-    {
-        setLoading( true );
-        setErrText( null );
-        try
-        {
-            const r = await fetch( "/api/admin/contact-messages?page=1&pageSize=30", { cache: "no-store" } );
-            if ( !r.ok ) throw new Error( await r.text() );
-            const j: unknown = await r.json();
-            setData( normalize( j as ContactListResponse ) );
-        } catch ( e: unknown )
-        {
-            setErrText( readErrorText( e ) );
-        } finally
-        {
-            setLoading( false );
-        }
-    }
+    const q =
+        typeof sp.q === "string"
+            ? sp.q
+            : Array.isArray( sp.q )
+                ? sp.q[ 0 ]
+                : undefined;
 
-    useEffect( () =>
-    {
-        void load();
-    }, [] );
+    const status =
+        typeof sp.status === "string"
+            ? sp.status
+            : Array.isArray( sp.status )
+                ? sp.status[ 0 ]
+                : undefined;
+
+    const data = await fetchAdminContactMessages( {
+        page: currentPage,
+        pageSize: 20,
+        q,
+        status,
+    } );
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-xl font-bold text-bms-dark">پیام‌ها</h1>
-                <p className="text-sm text-odoo-600">پیام‌های ارسال‌شده از فرم تماس</p>
-            </div>
-
-            { errText ? (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{ errText }</div>
-            ) : null }
-
-            <div className="rounded-2xl border border-odoo-200 bg-white shadow-sm overflow-hidden">
-                <div className="p-4 border-b border-odoo-200 text-sm text-odoo-600">
-                    { loading ? "در حال بارگذاری…" : `تعداد: ${ data?.totalItems ?? 0 }` }
-                </div>
-
-                <div className="divide-y divide-odoo-100">
-                    { ( data?.items ?? [] ).map( ( m ) => (
-                        <Link key={ m.id } href={ `/admin/contact-messages/${ m.id }` } className="block p-4 hover:bg-odoo-50">
-                            <div className="flex items-start justify-between gap-4">
-                                <div className="min-w-0">
-                                    <div className="flex items-center gap-2">
-                                        <div className="font-semibold text-bms-dark truncate">{ m.subject }</div>
-                                        <span
-                                            className={ `text-xs rounded-full px-2 py-1 border ${ m.status === "NEW"
-                                                ? "bg-bms-primary-soft text-bms-primary border-bms-primary/20"
-                                                : "bg-odoo-50 text-odoo-700 border-odoo-200"
-                                                }` }
-                                        >
-                                            { m.status }
-                                        </span>
-                                    </div>
-                                    <div className="text-xs text-odoo-600 mt-1">
-                                        { m.fullName } • { m.email } { m.phone ? `• ${ m.phone }` : "" } • { m.contactType }
-                                    </div>
-                                </div>
-                                <div className="text-xs text-odoo-500 whitespace-nowrap">
-                                    { new Date( m.createdAt ).toLocaleDateString( "fa-IR" ) }
-                                </div>
-                            </div>
-                        </Link>
-                    ) ) }
-
-                    { !loading && !( data?.items?.length ?? 0 ) ? (
-                        <div className="p-6 text-sm text-odoo-600">موردی یافت نشد.</div>
-                    ) : null }
-                </div>
-            </div>
+        <div className="mx-auto max-w-6xl px-4 py-6">
+            <AdminContactMessagesTable
+                messages={ data.items }
+                page={ data.page }
+                totalPages={ data.totalPages }
+            />
         </div>
     );
 }

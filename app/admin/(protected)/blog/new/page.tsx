@@ -1,6 +1,9 @@
-import PostEditor from "@/components/admin/PostEditor";
+// app/admin/(protected)/blog/new/page.tsx
+import { BlogPostForm } from "@/components/admin/blog/BlogPostForm";
 
-export default function NewPostPage ()
+export const dynamic = "force-dynamic";
+
+export default function AdminBlogNewPage ()
 {
-    return <PostEditor mode="create" />;
+    return <BlogPostForm mode="create" />;
 }
