@@ -1,15 +1,14 @@
+// lib/server/http.ts
 import { NextResponse } from "next/server";
 
 export class HttpError extends Error {
-  status: number;
-  code?: string;
-  details?: unknown;
-
-  constructor(status: number, message: string, code?: string, details?: unknown) {
+  constructor(
+    public status: number,
+    message: string,
+    public code?: string,
+    public details?: unknown
+  ) {
     super(message);
-    this.status = status;
-    this.code = code;
-    this.details = details;
   }
 }
 
@@ -20,34 +19,26 @@ export function jsonOk(data: unknown, status = 200) {
 export function jsonError(err: unknown) {
   if (err instanceof HttpError) {
     return NextResponse.json(
-      {
-        error: err.code ?? "ERROR",
-        message: err.message,
-        details: err.details ?? null,
-      },
+      { error: err.code ?? "ERROR", message: err.message, details: err.details ?? null },
       { status: err.status }
     );
   }
-
-  console.error(err);
+  console.error("Unhandled Error:", err);
   return NextResponse.json(
-    { error: "INTERNAL_SERVER_ERROR", message: "Unexpected server error" },
+    { error: "INTERNAL_SERVER_ERROR", message: "An unexpected error occurred" },
     { status: 500 }
   );
 }
 
+// Utility to parse errors on the client side consistently
+export function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "string") return err;
+  return "خطای ناشناخته رخ داد";
+}
+
 export function parsePagination(sp: URLSearchParams) {
-  const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
-  const pageSizeRaw = Number(sp.get("pageSize") ?? "10") || 10;
-  const pageSize = Math.min(50, Math.max(1, pageSizeRaw));
+  const page = Math.max(1, Number(sp.get("page")) || 1);
+  const pageSize = Math.min(50, Math.max(1, Number(sp.get("pageSize")) || 10));
   return { page, pageSize, skip: (page - 1) * pageSize, take: pageSize };
-}
-
-export function toIso(d: Date | null | undefined): string | null {
-  return d ? d.toISOString() : null;
-}
-
-export function coerceId(id: string): string | number {
-  if (/^\d+$/.test(id)) return Number(id);
-  return id;
 }

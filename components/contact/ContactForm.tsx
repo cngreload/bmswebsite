@@ -5,7 +5,7 @@ import { useState, type FormEvent, type ChangeEvent } from "react";
 import { cn } from "@/lib/utils";
 
 type ContactFormValues = {
-    name: string;
+    fullName: string;
     email: string;
     phone: string;
     subject: string;
@@ -17,7 +17,7 @@ type FieldErrors = Partial<Record<keyof ContactFormValues, string>>;
 export function ContactForm ()
 {
     const [ values, setValues ] = useState<ContactFormValues>( {
-        name: "",
+        fullName: "",
         email: "",
         phone: "",
         subject: "",
@@ -49,9 +49,9 @@ export function ContactForm ()
     {
         const nextErrors: FieldErrors = {};
 
-        if ( !values.name.trim() )
+        if ( !values.fullName.trim() )
         {
-            nextErrors.name = "نام را وارد کنید.";
+            nextErrors.fullName = "نام را وارد کنید.";
         }
         if ( !values.email.trim() )
         {
@@ -86,7 +86,7 @@ export function ContactForm ()
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify( {
-                    name: values.name.trim(),
+                    fullName: values.fullName.trim(), // 👈 IMPORTANT: backend expects fullName
                     email: values.email.trim(),
                     phone: values.phone.trim() || null,
                     subject: values.subject.trim() || null,
@@ -104,18 +104,24 @@ export function ContactForm ()
                         setServerError( data.message );
                     } else
                     {
-                        setServerError( "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید." );
+                        setServerError(
+                            "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
+                        );
                     }
                 } catch
                 {
-                    setServerError( "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید." );
+                    setServerError(
+                        "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
+                    );
                 }
                 return;
             }
 
-            setServerSuccess( "پیام شما با موفقیت ثبت شد. همکاران ما در اولین فرصت با شما تماس می‌گیرند." );
+            setServerSuccess(
+                "پیام شما با موفقیت ثبت شد. همکاران ما در اولین فرصت با شما تماس می‌گیرند.",
+            );
             setValues( {
-                name: "",
+                fullName: "",
                 email: "",
                 phone: "",
                 subject: "",
@@ -154,16 +160,16 @@ export function ContactForm ()
                     </label>
                     <input
                         type="text"
-                        value={ values.name }
-                        onChange={ handleChange( "name" ) }
+                        value={ values.fullName }
+                        onChange={ handleChange( "fullName" ) }
                         className={ cn(
                             "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
                             "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
                         ) }
                         placeholder="مثلاً: علی رضایی"
                     />
-                    { errors.name && (
-                        <p className="mt-1 text-[11px] text-red-500">{ errors.name }</p>
+                    { errors.fullName && (
+                        <p className="mt-1 text-[11px] text-red-500">{ errors.fullName }</p>
                     ) }
                 </div>
 
