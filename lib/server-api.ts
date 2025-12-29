@@ -19,9 +19,9 @@ export type BlogPost = {
   title: string;
   excerpt?: string | null;
   content?: string | null;
-  coverImage?: string | null;
+  coverImageUrl?: string | null;
   publishedAt?: string | null;
-  categories?: BlogCategory[];
+  category?: BlogCategory | null;
   tags?: BlogTag[];
 };
 
@@ -33,20 +33,15 @@ export type PaginatedBlogResponse = {
   totalPages: number;
 };
 
-// Note: headers() is async in your setup → we must await it
+/**
+ * Next.js 15 Helper to get the base URL for server-side fetches.
+ * We must await headers() now.
+ */
 async function getBaseUrl() {
-  const h = await headers();
-
-  const host =
-    h.get("x-forwarded-host") ??
-    h.get("host") ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "localhost:3000";
-
-  const protocol =
-    h.get("x-forwarded-proto") ??
-    (process.env.NODE_ENV === "production" ? "https" : "http");
-
+  const headList = await headers(); 
+  const host = headList.get("host") ?? "localhost:3000";
+  const protocol = headList.get("x-forwarded-proto") ?? "http";
+  
   return `${protocol}://${host}`;
 }
 
@@ -58,37 +53,30 @@ export async function fetchBlogPosts(params?: {
   tag?: string;
 }): Promise<PaginatedBlogResponse> {
   const baseUrl = await getBaseUrl();
-
   const search = new URLSearchParams();
+
   if (params?.page) search.set("page", String(params.page));
   if (params?.pageSize) search.set("pageSize", String(params.pageSize));
   if (params?.q) search.set("q", params.q);
   if (params?.category) search.set("category", params.category);
   if (params?.tag) search.set("tag", params.tag);
 
-  const url = `${baseUrl}/api/blog${
-    search.toString() ? `?${search.toString()}` : ""
-  }`;
+  const url = `${baseUrl}/api/blog${search.toString() ? `?${search.toString()}` : ""}`;
 
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
+  const res = await fetch(url, { cache: "no-store" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch blog posts");
   }
 
-  const data = (await res.json()) as PaginatedBlogResponse;
-  return data;
+  return res.json();
 }
 
 export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
   const baseUrl = await getBaseUrl();
   const url = `${baseUrl}/api/blog/${encodeURIComponent(slug)}`;
 
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
+  const res = await fetch(url, { cache: "no-store" });
 
   if (res.status === 404) {
     throw new Error("NOT_FOUND");
@@ -98,38 +86,31 @@ export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
     throw new Error("Failed to fetch blog post");
   }
 
-  const data = (await res.json()) as BlogPost;
-  return data;
+  return res.json();
 }
 
 export async function fetchBlogCategories(): Promise<BlogCategory[]> {
   const baseUrl = await getBaseUrl();
   const url = `${baseUrl}/api/blog/categories`;
 
-  const res = await fetch(url, {
-    cache: "force-cache",
-  });
+  const res = await fetch(url, { cache: "force-cache" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch blog categories");
   }
 
-  const data = (await res.json()) as BlogCategory[];
-  return data;
+  return res.json();
 }
 
 export async function fetchBlogTags(): Promise<BlogTag[]> {
   const baseUrl = await getBaseUrl();
   const url = `${baseUrl}/api/blog/tags`;
 
-  const res = await fetch(url, {
-    cache: "force-cache",
-  });
+  const res = await fetch(url, { cache: "force-cache" });
 
   if (!res.ok) {
     throw new Error("Failed to fetch blog tags");
   }
 
-  const data = (await res.json()) as BlogTag[];
-  return data;
+  return res.json();
 }

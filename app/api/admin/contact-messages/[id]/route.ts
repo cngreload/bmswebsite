@@ -12,8 +12,11 @@ type RouteCtx = { params: Promise<{ id: string }> };
 export async function GET(_req: Request, ctx: RouteCtx) {
   try {
     await requireAdmin();
+    // Next.js 15: must await params
     const { id } = await ctx.params;
-    return jsonOk(await adminGetContactMessage(id));
+    
+    const result = await adminGetContactMessage(id);
+    return jsonOk(result);
   } catch (err) {
     return jsonError(err);
   }
@@ -22,9 +25,14 @@ export async function GET(_req: Request, ctx: RouteCtx) {
 export async function PATCH(req: Request, ctx: RouteCtx) {
   try {
     await requireAdmin();
+    // Next.js 15: must await params
     const { id } = await ctx.params;
-    const body: unknown = await req.json();
-    return jsonOk(await adminUpdateContactMessage(id, body));
+
+    // FIX: Type cast the body to match the service function's signature
+    const body = (await req.json()) as { status: string };
+
+    const result = await adminUpdateContactMessage(id, body);
+    return jsonOk(result);
   } catch (err) {
     return jsonError(err);
   }

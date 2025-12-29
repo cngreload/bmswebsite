@@ -1,4 +1,4 @@
-// components/blog/BlogCard.tsx
+// components/admin/blog/BlogCard.tsx
 "use client";
 
 import Link from "next/link";
@@ -28,18 +28,20 @@ export function BlogCard ( { post, className }: BlogCardProps )
             ) }
         >
             <div className="flex flex-1 flex-col gap-3">
-                {/* دسته‌ها / تگ‌ها بالا */ }
-                { ( post.categories?.length || post.tags?.length ) && (
+                {/* Logic Fix: Check for singular 'category' instead of 'categories' */ }
+                { ( post.category || ( post.tags && post.tags.length > 0 ) ) && (
                     <div className="flex flex-wrap gap-1 text-[10px] text-slate-500">
-                        { post.categories?.map( ( cat ) => (
+                        { post.category && (
                             <span
-                                key={ `cat-${ cat.id }` }
+                                key={ `cat-${ post.category.id }` }
                                 className="rounded-full border border-slate-200 bg-slate-50 px-2 py-[2px]"
                             >
-                                { cat.name }
+                                { post.category.name }
                             </span>
-                        ) ) }
-                        { !post.categories?.length &&
+                        ) }
+
+                        {/* Show tags only if there is no category, or just append them */ }
+                        { !post.category &&
                             post.tags?.slice( 0, 2 ).map( ( tag ) => (
                                 <span
                                     key={ `tag-${ tag.id }` }
