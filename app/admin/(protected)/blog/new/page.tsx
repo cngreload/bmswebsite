@@ -1,9 +1,14 @@
-// app/admin/(protected)/blog/new/page.tsx
 import { BlogPostForm } from "@/components/admin/blog/BlogPostForm";
+import { adminListCategories, adminListTags } from "@/lib/server/blog-service";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminBlogNewPage ()
+export default async function AdminBlogNewPage ()
 {
-    return <BlogPostForm mode="create" />;
+    const [ categories, tags ] = await Promise.all( [
+        adminListCategories(),
+        adminListTags(),
+    ] );
+
+    return <BlogPostForm mode="create" categories={ categories } tags={ tags } />;
 }

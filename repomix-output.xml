@@ -95,8 +95,8 @@ app/layout.tsx
 app/news/[slug]/page.tsx
 app/news/page.tsx
 app/page.tsx
-app/sing-in/[[...sing-in]]/layout.tsx
-app/sing-in/[[...sing-in]]/page.tsx
+app/sign-in/[[...sign-in]]/layout.tsx
+app/sign-in/[[...sign-in]]/page.tsx
 components/about/AboutEcosystemSection.tsx
 components/about/AboutEthicsSection.tsx
 components/about/AboutGovernanceSection.tsx
@@ -1568,39 +1568,6 @@ export default function AdminIndex ()
 }
 </file>
 
-<file path="app/api/admin/blog/categories/[id]/route.ts">
-import { jsonError, jsonOk } from "@/lib/server/http";
-import { requireAdmin } from "@/lib/server/auth";
-import { adminDeleteCategory, adminUpdateCategory } from "@/lib/server/blog-service";
-
-export const runtime = "nodejs";
-
-type RouteCtx = { params: Promise<{ id: string }> };
-
-export async function PATCH(req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const body: unknown = await req.json();
-    const result = await adminUpdateCategory(id, body);
-    return jsonOk(result);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function DELETE(_req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const result = await adminDeleteCategory(id);
-    return jsonOk(result);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-</file>
-
 <file path="app/api/admin/blog/categories/route.ts">
 import { requireAdmin  } from "@/lib/server/auth";
 import { jsonError, jsonOk } from "@/lib/server/http";
@@ -1628,39 +1595,6 @@ export async function POST(req: Request) {
 }
 </file>
 
-<file path="app/api/admin/blog/tags/[id]/route.ts">
-import { jsonError, jsonOk } from "@/lib/server/http";
-import { requireAdmin } from "@/lib/server/auth";
-import { adminDeleteTag, adminUpdateTag } from "@/lib/server/blog-service";
-
-export const runtime = "nodejs";
-
-type RouteCtx = { params: Promise<{ id: string }> };
-
-export async function PATCH(req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const body: unknown = await req.json();
-    const result = await adminUpdateTag(id, body);
-    return jsonOk(result);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function DELETE(_req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const result = await adminDeleteTag(id);
-    return jsonOk(result);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-</file>
-
 <file path="app/api/admin/blog/tags/route.ts">
 import { requireAdmin  } from "@/lib/server/auth";
 import { jsonError, jsonOk } from "@/lib/server/http";
@@ -1682,40 +1616,6 @@ export async function POST(req: Request) {
     await requireAdmin();
     const body = await req.json();
     return jsonOk(await adminCreateTag(body), 201);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-</file>
-
-<file path="app/api/admin/contact-messages/[id]/route.ts">
-import { jsonError, jsonOk } from "@/lib/server/http";
-import { requireAdmin } from "@/lib/server/auth";
-import {
-  adminGetContactMessage,
-  adminUpdateContactMessage,
-} from "@/lib/server/contact-service";
-
-export const runtime = "nodejs";
-
-type RouteCtx = { params: Promise<{ id: string }> };
-
-export async function GET(_req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    return jsonOk(await adminGetContactMessage(id));
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function PATCH(req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const body: unknown = await req.json();
-    return jsonOk(await adminUpdateContactMessage(id, body));
   } catch (err) {
     return jsonError(err);
   }
@@ -1755,94 +1655,6 @@ export async function GET(req: Request) {
     });
 
     return jsonOk(result);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-</file>
-
-<file path="app/api/admin/posts/[id]/route.ts">
-import { jsonError, jsonOk } from "@/lib/server/http";
-import { requireAdmin } from "@/lib/server/auth";
-import { adminDeletePost, adminGetPost, adminUpdatePost } from "@/lib/server/blog-service";
-
-export const runtime = "nodejs";
-
-type RouteCtx = { params: Promise<{ id: string }> };
-
-export async function GET(_req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    return jsonOk(await adminGetPost(id));
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function PATCH(req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    const body: unknown = await req.json();
-    return jsonOk(await adminUpdatePost(id, body));
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function DELETE(_req: Request, ctx: RouteCtx) {
-  try {
-    await requireAdmin();
-    const { id } = await ctx.params;
-    return jsonOk(await adminDeletePost(id));
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-</file>
-
-<file path="app/api/admin/posts/route.ts">
-import { requireAdmin  } from "@/lib/server/auth";
-import { jsonError, jsonOk, parsePagination } from "@/lib/server/http";
-import { adminCreatePost, adminListPosts } from "@/lib/server/blog-service";
-
-export const runtime = "nodejs";
-
-export async function GET(req: Request) {
-  try {
-    await requireAdmin();
-
-    const url = new URL(req.url);
-    const sp = url.searchParams;
-    const { page, pageSize, skip, take } = parsePagination(sp);
-
-    const data = await adminListPosts({
-      page,
-      pageSize,
-      skip,
-      take,
-      q: sp.get("q"),
-      status: sp.get("status"),
-      categoryId: sp.get("categoryId"),
-      tagId: sp.get("tagId"),
-      category: null,
-      tag: null,
-    });
-
-    return jsonOk(data);
-  } catch (err) {
-    return jsonError(err);
-  }
-}
-
-export async function POST(req: Request) {
-  try {
-    await requireAdmin();
-
-    const body = await req.json();
-    const created = await adminCreatePost(body);
-    return jsonOk(created, 201);
   } catch (err) {
     return jsonError(err);
   }
@@ -2428,129 +2240,6 @@ export default function IntelligentAutomationPage ()
 }
 </file>
 
-<file path="app/news/[slug]/page.tsx">
-// app/news/[slug]/page.tsx
-import { notFound } from "next/navigation";
-import { fetchBlogPostBySlug } from "@/lib/server-api";
-
-export const dynamic = "force-dynamic";
-
-type NewsDetailParams = {
-    slug?: string | string[];
-};
-
-export default async function NewsDetailPage ( {
-    params,
-}: {
-    params: Promise<NewsDetailParams>;
-} )
-{
-    const p = ( ( await params ) ?? {} ) as NewsDetailParams;
-
-    const rawSlug =
-        typeof p.slug === "string"
-            ? p.slug
-            : Array.isArray( p.slug )
-                ? p.slug[ 0 ]
-                : undefined;
-
-    if ( !rawSlug )
-    {
-        notFound();
-    }
-
-    let post;
-    try
-    {
-        post = await fetchBlogPostBySlug( rawSlug );
-    } catch ( err )
-    {
-        if ( err instanceof Error && err.message === "NOT_FOUND" )
-        {
-            notFound();
-        }
-        throw err;
-    }
-
-    const publishedLabel = post.publishedAt
-        ? new Intl.DateTimeFormat( "fa-IR", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-        } ).format( new Date( post.publishedAt ) )
-        : null;
-
-    return (
-        <main className="bg-slate-50/60 py-10">
-            <div className="mx-auto max-w-3xl px-4">
-                {/* breadcrumb / section label */ }
-                <p className="mb-2 text-[11px] font-medium text-bms-primary md:text-xs">
-                    اخبار و مقالات بارمان
-                </p>
-
-                {/* title */ }
-                <h1 className="mb-3 text-xl font-bold leading-relaxed text-bms-dark md:text-2xl">
-                    { post.title }
-                </h1>
-
-                {/* meta */ }
-                <div className="mb-6 flex flex-wrap items-center gap-3 text-[11px] text-slate-500 md:text-xs">
-                    { publishedLabel && (
-                        <span className="inline-flex items-center gap-1">
-                            <span className="h-[6px] w-[6px] rounded-full bg-emerald-500" />
-                            <span>منتشر شده در { publishedLabel }</span>
-                        </span>
-                    ) }
-
-                    { post.categories && post.categories.length > 0 && (
-                        <span className="inline-flex flex-wrap items-center gap-2">
-                            <span className="text-slate-400">دسته‌ها:</span>
-                            { post.categories.map( ( cat: { id: string; name: string; } ) => (
-                                <span
-                                    key={ cat.id }
-                                    className="rounded-full bg-slate-100 px-2 py-[3px] text-[10px] text-slate-700"
-                                >
-                                    { cat.name }
-                                </span>
-                            ) ) }
-                        </span>
-                    ) }
-
-                    { post.tags && post.tags.length > 0 && (
-                        <span className="inline-flex flex-wrap items-center gap-2">
-                            <span className="text-slate-400">تگ‌ها:</span>
-                            { post.tags.map( ( tag: { id: string; name: string; } ) => (
-                                <span
-                                    key={ tag.id }
-                                    className="rounded-full bg-bms-primary-soft px-2 py-[3px] text-[10px] text-bms-primary"
-                                >
-                                    { tag.name }
-                                </span>
-                            ) ) }
-                        </span>
-                    ) }
-                </div>
-
-                {/* content */ }
-                <article className="rounded-2xl border border-slate-200 bg-white/95 p-4 text-[13px] leading-7 text-slate-700 shadow-sm md:p-6 md:text-sm">
-                    { post.content ? (
-                        post.content.split( /\n{2,}/ ).map( ( para: string, idx: number ) => (
-                            <p key={ idx } className="mb-3 last:mb-0">
-                                { para }
-                            </p>
-                        ) )
-                    ) : (
-                        <p className="text-slate-400">
-                            محتوای این خبر هنوز ثبت نشده است.
-                        </p>
-                    ) }
-                </article>
-            </div>
-        </main>
-    );
-}
-</file>
-
 <file path="app/news/page.tsx">
 // app/news/page.tsx
 import
@@ -2777,7 +2466,7 @@ export default function HomePage ()
 }
 </file>
 
-<file path="app/sing-in/[[...sing-in]]/layout.tsx">
+<file path="app/sign-in/[[...sign-in]]/layout.tsx">
 "use client";
 
 import { ClerkProvider } from "@clerk/nextjs";
@@ -2788,7 +2477,7 @@ export default function SignInLayout ( { children }: { children: React.ReactNode
 }
 </file>
 
-<file path="app/sing-in/[[...sing-in]]/page.tsx">
+<file path="app/sign-in/[[...sign-in]]/page.tsx">
 import { SignIn } from "@clerk/nextjs";
 
 export default function Page ()
@@ -3673,90 +3362,6 @@ function Td ( {
 {
     return (
         <td className={ cn( "px-4 py-3 align-top", className ) }>{ children }</td>
-    );
-}
-</file>
-
-<file path="components/admin/blog/BlogCard.tsx">
-// components/blog/BlogCard.tsx
-"use client";
-
-import Link from "next/link";
-import { BlogPost } from "@/lib/server-api";
-import { cn } from "@/lib/utils";
-
-type BlogCardProps = {
-    post: BlogPost;
-    className?: string;
-};
-
-export function BlogCard ( { post, className }: BlogCardProps )
-{
-    const dateLabel = post.publishedAt
-        ? new Intl.DateTimeFormat( "fa-IR", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-        } ).format( new Date( post.publishedAt ) )
-        : null;
-
-    return (
-        <article
-            className={ cn(
-                "flex h-full flex-col rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
-                className,
-            ) }
-        >
-            <div className="flex flex-1 flex-col gap-3">
-                {/* دسته‌ها / تگ‌ها بالا */ }
-                { ( post.categories?.length || post.tags?.length ) && (
-                    <div className="flex flex-wrap gap-1 text-[10px] text-slate-500">
-                        { post.categories?.map( ( cat ) => (
-                            <span
-                                key={ `cat-${ cat.id }` }
-                                className="rounded-full border border-slate-200 bg-slate-50 px-2 py-[2px]"
-                            >
-                                { cat.name }
-                            </span>
-                        ) ) }
-                        { !post.categories?.length &&
-                            post.tags?.slice( 0, 2 ).map( ( tag ) => (
-                                <span
-                                    key={ `tag-${ tag.id }` }
-                                    className="rounded-full border border-emerald-100 bg-emerald-50 px-2 py-[2px] text-emerald-700"
-                                >
-                                    { tag.name }
-                                </span>
-                            ) ) }
-                    </div>
-                ) }
-
-                {/* عنوان */ }
-                <h3 className="text-right text-sm font-semibold leading-snug text-bms-dark md:text-base">
-                    <Link href={ `/news/${ post.slug }` } className="hover:text-bms-primary">
-                        { post.title }
-                    </Link>
-                </h3>
-
-                {/* خلاصه */ }
-                { post.excerpt && (
-                    <p className="text-right text-[11px] leading-relaxed text-slate-600 md:text-xs line-clamp-3">
-                        { post.excerpt }
-                    </p>
-                ) }
-            </div>
-
-            {/* بخش پایین: تاریخ + لینک ادامه */ }
-            <div className="mt-4 flex items-center justify-between gap-2 text-[11px] md:text-xs">
-                <div className="text-slate-400">{ dateLabel }</div>
-                <Link
-                    href={ `/news/${ post.slug }` }
-                    className="text-bms-primary hover:text-bms-dark"
-                >
-                    ادامه مطلب
-                </Link>
-            </div>
-        </article>
     );
 }
 </file>
@@ -6715,267 +6320,6 @@ export default function WhatSystemDoesSection ()
 }
 </file>
 
-<file path="components/contact/ContactForm.tsx">
-// components/contact/ContactForm.tsx
-"use client";
-
-import { useState, type FormEvent, type ChangeEvent } from "react";
-import { cn } from "@/lib/utils";
-
-type ContactFormValues = {
-    fullName: string;
-    email: string;
-    phone: string;
-    subject: string;
-    message: string;
-};
-
-type FieldErrors = Partial<Record<keyof ContactFormValues, string>>;
-
-export function ContactForm ()
-{
-    const [ values, setValues ] = useState<ContactFormValues>( {
-        fullName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-    } );
-
-    const [ errors, setErrors ] = useState<FieldErrors>( {} );
-    const [ submitting, setSubmitting ] = useState( false );
-    const [ serverError, setServerError ] = useState<string | null>( null );
-    const [ serverSuccess, setServerSuccess ] = useState<string | null>( null );
-
-    const handleChange =
-        ( field: keyof ContactFormValues ) =>
-            (
-                e:
-                    | ChangeEvent<HTMLInputElement>
-                    | ChangeEvent<HTMLTextAreaElement>
-                    | ChangeEvent<HTMLSelectElement>,
-            ) =>
-            {
-                const value = e.target.value;
-                setValues( ( prev ) => ( { ...prev, [ field ]: value } ) );
-                setErrors( ( prev ) => ( { ...prev, [ field ]: undefined } ) );
-                setServerError( null );
-                setServerSuccess( null );
-            };
-
-    const validate = (): boolean =>
-    {
-        const nextErrors: FieldErrors = {};
-
-        if ( !values.fullName.trim() )
-        {
-            nextErrors.fullName = "نام را وارد کنید.";
-        }
-        if ( !values.email.trim() )
-        {
-            nextErrors.email = "ایمیل را وارد کنید.";
-        } else if ( !/^\S+@\S+\.\S+$/.test( values.email.trim() ) )
-        {
-            nextErrors.email = "فرمت ایمیل معتبر نیست.";
-        }
-        if ( !values.message.trim() )
-        {
-            nextErrors.message = "متن پیام را وارد کنید.";
-        }
-
-        setErrors( nextErrors );
-        return Object.keys( nextErrors ).length === 0;
-    };
-
-    const handleSubmit = async ( e: FormEvent<HTMLFormElement> ) =>
-    {
-        e.preventDefault();
-        setServerError( null );
-        setServerSuccess( null );
-
-        if ( !validate() ) return;
-
-        setSubmitting( true );
-        try
-        {
-            const res = await fetch( "/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify( {
-                    fullName: values.fullName.trim(), // 👈 IMPORTANT: backend expects fullName
-                    email: values.email.trim(),
-                    phone: values.phone.trim() || null,
-                    subject: values.subject.trim() || null,
-                    message: values.message.trim(),
-                } ),
-            } );
-
-            if ( !res.ok )
-            {
-                try
-                {
-                    const data = await res.json();
-                    if ( data?.message )
-                    {
-                        setServerError( data.message );
-                    } else
-                    {
-                        setServerError(
-                            "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
-                        );
-                    }
-                } catch
-                {
-                    setServerError(
-                        "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
-                    );
-                }
-                return;
-            }
-
-            setServerSuccess(
-                "پیام شما با موفقیت ثبت شد. همکاران ما در اولین فرصت با شما تماس می‌گیرند.",
-            );
-            setValues( {
-                fullName: "",
-                email: "",
-                phone: "",
-                subject: "",
-                message: "",
-            } );
-        } catch
-        {
-            setServerError( "عدم ارتباط با سرور. لطفاً بعداً دوباره تلاش کنید." );
-        } finally
-        {
-            setSubmitting( false );
-        }
-    };
-
-    return (
-        <form
-            onSubmit={ handleSubmit }
-            className="space-y-4 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-sm md:p-6"
-        >
-            { serverError && (
-                <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-2 text-[11px] text-red-600 md:text-xs">
-                    { serverError }
-                </div>
-            ) }
-
-            { serverSuccess && (
-                <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-[11px] text-emerald-700 md:text-xs">
-                    { serverSuccess }
-                </div>
-            ) }
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="text-right">
-                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
-                        نام و نام خانوادگی <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={ values.fullName }
-                        onChange={ handleChange( "fullName" ) }
-                        className={ cn(
-                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
-                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
-                        ) }
-                        placeholder="مثلاً: علی رضایی"
-                    />
-                    { errors.fullName && (
-                        <p className="mt-1 text-[11px] text-red-500">{ errors.fullName }</p>
-                    ) }
-                </div>
-
-                <div className="text-right">
-                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
-                        ایمیل <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="email"
-                        value={ values.email }
-                        onChange={ handleChange( "email" ) }
-                        className={ cn(
-                            "w-full rounded-xl border px-3 py-2 text-xs text-left text-slate-800 outline-none ring-0 transition md:text-sm",
-                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
-                        ) }
-                        placeholder="you@example.com"
-                        dir="ltr"
-                    />
-                    { errors.email && (
-                        <p className="mt-1 text-[11px] text-red-500">{ errors.email }</p>
-                    ) }
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="text-right">
-                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
-                        شماره تماس (اختیاری)
-                    </label>
-                    <input
-                        type="tel"
-                        value={ values.phone }
-                        onChange={ handleChange( "phone" ) }
-                        className={ cn(
-                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
-                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
-                        ) }
-                        placeholder="مثلاً: ۰۹۱۲۱۲۳۴۵۶۷"
-                    />
-                </div>
-
-                <div className="text-right">
-                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
-                        موضوع (اختیاری)
-                    </label>
-                    <input
-                        type="text"
-                        value={ values.subject }
-                        onChange={ handleChange( "subject" ) }
-                        className={ cn(
-                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
-                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
-                        ) }
-                        placeholder="مثلاً: درخواست دمو، همکاری، سرمایه‌گذاری و ..."
-                    />
-                </div>
-            </div>
-
-            <div className="text-right">
-                <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
-                    متن پیام <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                    value={ values.message }
-                    onChange={ handleChange( "message" ) }
-                    rows={ 5 }
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary md:text-sm"
-                    placeholder="لطفاً توضیح دهید در چه زمینه‌ای می‌خواهید با بارمان همکاری یا ارتباط داشته باشید..."
-                />
-                { errors.message && (
-                    <p className="mt-1 text-[11px] text-red-500">{ errors.message }</p>
-                ) }
-            </div>
-
-            <div className="flex items-center justify-end">
-                <button
-                    type="submit"
-                    disabled={ submitting }
-                    className="rounded-xl bg-bms-primary px-5 py-2 text-[11px] font-medium text-white shadow-sm transition hover:bg-bms-dark disabled:cursor-not-allowed disabled:bg-slate-400 md:text-sm"
-                >
-                    { submitting ? "در حال ارسال..." : "ارسال پیام" }
-                </button>
-            </div>
-        </form>
-    );
-}
-</file>
-
 <file path="components/contact/ContactInfoPanel.tsx">
 // components/contact/ContactInfoPanel.tsx
 export default function ContactInfoPanel ()
@@ -7996,144 +7340,6 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 </file>
 
-<file path="lib/server-api.ts">
-// lib/server-api.ts
-import { headers } from "next/headers";
-
-export type BlogCategory = {
-  id: string;
-  name: string;
-  slug: string;
-};
-
-export type BlogTag = {
-  id: string;
-  name: string;
-  slug: string;
-};
-
-export type BlogPost = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt?: string | null;
-  content?: string | null;
-  coverImage?: string | null;
-  publishedAt?: string | null;
-  categories?: BlogCategory[];
-  tags?: BlogTag[];
-};
-
-export type PaginatedBlogResponse = {
-  items: BlogPost[];
-  page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
-};
-
-// Note: headers() is async in your setup → we must await it
-async function getBaseUrl() {
-  const h = await headers();
-
-  const host =
-    h.get("x-forwarded-host") ??
-    h.get("host") ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "localhost:3000";
-
-  const protocol =
-    h.get("x-forwarded-proto") ??
-    (process.env.NODE_ENV === "production" ? "https" : "http");
-
-  return `${protocol}://${host}`;
-}
-
-export async function fetchBlogPosts(params?: {
-  page?: number;
-  pageSize?: number;
-  q?: string;
-  category?: string;
-  tag?: string;
-}): Promise<PaginatedBlogResponse> {
-  const baseUrl = await getBaseUrl();
-
-  const search = new URLSearchParams();
-  if (params?.page) search.set("page", String(params.page));
-  if (params?.pageSize) search.set("pageSize", String(params.pageSize));
-  if (params?.q) search.set("q", params.q);
-  if (params?.category) search.set("category", params.category);
-  if (params?.tag) search.set("tag", params.tag);
-
-  const url = `${baseUrl}/api/blog${
-    search.toString() ? `?${search.toString()}` : ""
-  }`;
-
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch blog posts");
-  }
-
-  const data = (await res.json()) as PaginatedBlogResponse;
-  return data;
-}
-
-export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
-  const baseUrl = await getBaseUrl();
-  const url = `${baseUrl}/api/blog/${encodeURIComponent(slug)}`;
-
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
-
-  if (res.status === 404) {
-    throw new Error("NOT_FOUND");
-  }
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch blog post");
-  }
-
-  const data = (await res.json()) as BlogPost;
-  return data;
-}
-
-export async function fetchBlogCategories(): Promise<BlogCategory[]> {
-  const baseUrl = await getBaseUrl();
-  const url = `${baseUrl}/api/blog/categories`;
-
-  const res = await fetch(url, {
-    cache: "force-cache",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch blog categories");
-  }
-
-  const data = (await res.json()) as BlogCategory[];
-  return data;
-}
-
-export async function fetchBlogTags(): Promise<BlogTag[]> {
-  const baseUrl = await getBaseUrl();
-  const url = `${baseUrl}/api/blog/tags`;
-
-  const res = await fetch(url, {
-    cache: "force-cache",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch blog tags");
-  }
-
-  const data = (await res.json()) as BlogTag[];
-  return data;
-}
-</file>
-
 <file path="lib/server/auth.ts">
 import "server-only";
 import { auth, currentUser } from "@clerk/nextjs/server";
@@ -8174,791 +7380,6 @@ export async function getBaseUrl() {
   if (!host) return "http://localhost:3000"; // safe fallback for dev
 
   return `${proto}://${host}`;
-}
-</file>
-
-<file path="lib/server/blog-service.ts">
-import "server-only";
-
-import { prisma } from "@/lib/prisma";
-import { HttpError, toIso } from "@/lib/server/http";
-import { makeSlug } from "@/lib/server/slug";
-
-type JsonRecord = Record<string, unknown>;
-
-function isRecord(v: unknown): v is JsonRecord {
-  return typeof v === "object" && v !== null && !Array.isArray(v);
-}
-function asRecord(v: unknown, msg = "Invalid object"): JsonRecord {
-  if (!isRecord(v)) throw new HttpError(400, msg, "VALIDATION_ERROR");
-  return v;
-}
-function asString(v: unknown, field: string, required: boolean) {
-  if (v === undefined || v === null) {
-    if (required) throw new HttpError(400, `${field} is required`, "VALIDATION_ERROR");
-    return undefined;
-  }
-  const s = String(v).trim();
-  if (!s && required) throw new HttpError(400, `${field} is required`, "VALIDATION_ERROR");
-  return s || undefined;
-}
-function asNullableString(v: unknown): string | null | undefined {
-  if (v === undefined) return undefined;
-  if (v === null) return null;
-  const s = String(v).trim();
-  return s ? s : null;
-}
-function ensureArray(v: unknown, msg = "Expected array"): unknown[] {
-  if (!Array.isArray(v)) throw new HttpError(500, msg, "INTERNAL_ERROR");
-  return v;
-}
-function ensureNumber(v: unknown, msg = "Expected number"): number {
-  if (typeof v !== "number" || Number.isNaN(v)) throw new HttpError(500, msg, "INTERNAL_ERROR");
-  return v;
-}
-function parseDateOrNull(v: unknown): Date | null | undefined {
-  if (v === undefined) return undefined;
-  if (v === null || v === "") return null;
-  const d = new Date(String(v));
-  if (Number.isNaN(d.getTime())) throw new HttpError(400, "Invalid publishedAt", "VALIDATION_ERROR");
-  return d;
-}
-
-const POST_STATUSES = ["DRAFT", "PUBLISHED", "ARCHIVED"] as const;
-type PostStatus = (typeof POST_STATUSES)[number];
-
-function parseStatus(v: unknown): PostStatus | undefined {
-  if (v === undefined) return undefined;
-  const s = String(v).trim().toUpperCase();
-  if (!POST_STATUSES.includes(s as PostStatus)) throw new HttpError(400, "Invalid status", "VALIDATION_ERROR");
-  return s as PostStatus;
-}
-
-function publishedWhere(): Record<string, unknown> {
-  return {
-    status: "PUBLISHED",
-    publishedAt: { lte: new Date() },
-  };
-}
-
-// typed wrapper (no `any`) so TS doesn't require Prisma namespace types
-const db = prisma as unknown as {
-  blogPost: {
-    count(args: unknown): Promise<number>;
-    findMany(args: unknown): Promise<unknown>;
-    findUnique(args: unknown): Promise<unknown | null>;
-    create(args: unknown): Promise<unknown>;
-    update(args: unknown): Promise<unknown>;
-    delete(args: unknown): Promise<unknown>;
-  };
-  category: {
-    findMany(args: unknown): Promise<unknown>;
-    findUnique(args: unknown): Promise<unknown | null>;
-    create(args: unknown): Promise<unknown>;
-    update(args: unknown): Promise<unknown>;
-    delete(args: unknown): Promise<unknown>;
-  };
-  tag: {
-    findMany(args: unknown): Promise<unknown>;
-    findUnique(args: unknown): Promise<unknown | null>;
-    create(args: unknown): Promise<unknown>;
-    update(args: unknown): Promise<unknown>;
-    delete(args: unknown): Promise<unknown>;
-  };
-};
-
-/* -------------------- Public -------------------- */
-
-type ListArgs = {
-  page: number;
-  pageSize: number;
-  skip: number;
-  take: number;
-  category?: string | null;
-  tag?: string | null;
-  q?: string | null;
-};
-
-function mapPublicPostRow(row: unknown) {
-  const r = asRecord(row);
-
-  const id = asString(r.id, "id", true)!;
-  const slug = asString(r.slug, "slug", true)!;
-  const title = asString(r.title, "title", true)!;
-
-  const summary = r.summary === undefined ? null : asNullableString(r.summary) ?? null;
-  const coverImageUrl = r.coverImageUrl === undefined ? null : asNullableString(r.coverImageUrl) ?? null;
-
-  const category =
-    r.category && isRecord(r.category)
-      ? {
-          slug: asString(r.category.slug, "category.slug", true)!,
-          name: asString(r.category.name, "category.name", true)!,
-        }
-      : null;
-
-  const tags = Array.isArray(r.tags)
-    ? r.tags
-        .map((t) => (isRecord(t) ? t : null))
-        .filter((t): t is JsonRecord => !!t)
-        .map((t) => ({
-          slug: asString(t.slug, "tag.slug", true)!,
-          name: asString(t.name, "tag.name", true)!,
-        }))
-    : [];
-
-  // publishedAt should exist for public posts
-  const publishedAt = r.publishedAt instanceof Date ? r.publishedAt : new Date(String(r.publishedAt));
-  if (Number.isNaN(publishedAt.getTime())) throw new HttpError(500, "Invalid publishedAt in DB", "INTERNAL_ERROR");
-
-  return {
-    id,
-    slug,
-    title,
-    summary,
-    coverImageUrl,
-    category,
-    tags,
-    publishedAt: toIso(publishedAt)!,
-  };
-}
-
-export async function listPublicPosts(args: ListArgs) {
-  const where: Record<string, unknown> = { ...publishedWhere() };
-
-  if (args.category) {
-    // correct Prisma relation filter for optional single relation
-    where.category = { is: { slug: args.category } };
-  }
-
-  if (args.tag) {
-    where.tags = { some: { slug: args.tag } };
-  }
-
-  if (args.q) {
-    const q = args.q.trim();
-    if (q) {
-      where.OR = [
-        { title: { contains: q, mode: "insensitive" } },
-        { summary: { contains: q, mode: "insensitive" } },
-      ];
-    }
-  }
-
-  const [totalItemsRaw, rowsRaw] = await Promise.all([
-    db.blogPost.count({ where }),
-    db.blogPost.findMany({
-      where,
-      orderBy: { publishedAt: "desc" },
-      skip: args.skip,
-      take: args.take,
-      include: {
-        category: { select: { slug: true, name: true } },
-        tags: { select: { slug: true, name: true } },
-      },
-    }),
-  ]);
-
-  const totalItems = ensureNumber(totalItemsRaw);
-  const rows = ensureArray(rowsRaw);
-
-  return {
-    items: rows.map(mapPublicPostRow),
-    page: args.page,
-    pageSize: args.pageSize,
-    totalItems,
-    totalPages: Math.ceil(totalItems / args.pageSize),
-  };
-}
-
-export async function getPublicPostBySlug(slug: string) {
-  const postRaw = await db.blogPost.findUnique({
-    where: { slug },
-    include: {
-      category: { select: { slug: true, name: true } },
-      tags: { select: { slug: true, name: true } },
-    },
-  });
-
-  if (!postRaw) throw new HttpError(404, "Not found", "NOT_FOUND");
-  const p = asRecord(postRaw);
-
-  const status = String(p.status ?? "");
-  const publishedAt = p.publishedAt instanceof Date ? p.publishedAt : new Date(String(p.publishedAt));
-
-  if (status !== "PUBLISHED" || !p.publishedAt || Number.isNaN(publishedAt.getTime()) || publishedAt > new Date()) {
-    throw new HttpError(404, "Not found", "NOT_FOUND");
-  }
-
-  const category =
-    p.category && isRecord(p.category)
-      ? {
-          slug: asString(p.category.slug, "category.slug", true)!,
-          name: asString(p.category.name, "category.name", true)!,
-        }
-      : null;
-
-  const tags = Array.isArray(p.tags)
-    ? p.tags
-        .map((t) => (isRecord(t) ? t : null))
-        .filter((t): t is JsonRecord => !!t)
-        .map((t) => ({
-          slug: asString(t.slug, "tag.slug", true)!,
-          name: asString(t.name, "tag.name", true)!,
-        }))
-    : [];
-
-  return {
-    id: asString(p.id, "id", true)!,
-    slug: asString(p.slug, "slug", true)!,
-    title: asString(p.title, "title", true)!,
-    summary: asNullableString(p.summary) ?? null,
-    content: String(p.content ?? ""),
-    coverImageUrl: asNullableString(p.coverImageUrl) ?? null,
-    category,
-    tags,
-    publishedAt: toIso(publishedAt)!,
-    readingTime: typeof p.readingTime === "number" ? p.readingTime : null,
-    seo: null,
-  };
-}
-
-export async function listPublicCategories() {
-  const catsRaw = await db.category.findMany({
-    select: { slug: true, name: true },
-    orderBy: { name: "asc" },
-  });
-
-  const cats = ensureArray(catsRaw).map((c) => asRecord(c));
-
-  const items = await Promise.all(
-    cats.map(async (c) => {
-      const slug = asString(c.slug, "slug", true)!;
-      const name = asString(c.name, "name", true)!;
-
-      const postCountRaw = await db.blogPost.count({
-        where: { ...publishedWhere(), category: { is: { slug } } },
-      });
-
-      return { slug, name, postCount: ensureNumber(postCountRaw) };
-    })
-  );
-
-  return items;
-}
-
-export async function listPublicTags() {
-  const tagsRaw = await db.tag.findMany({
-    select: { slug: true, name: true },
-    orderBy: { name: "asc" },
-  });
-
-  const tags = ensureArray(tagsRaw).map((t) => asRecord(t));
-
-  const items = await Promise.all(
-    tags.map(async (t) => {
-      const slug = asString(t.slug, "slug", true)!;
-      const name = asString(t.name, "name", true)!;
-
-      const postCountRaw = await db.blogPost.count({
-        where: { ...publishedWhere(), tags: { some: { slug } } },
-      });
-
-      return { slug, name, postCount: ensureNumber(postCountRaw) };
-    })
-  );
-
-  return items;
-}
-
-/* -------------------- Admin -------------------- */
-
-type AdminListArgs = ListArgs & {
-  status?: string | null;
-  categoryId?: string | null;
-  tagId?: string | null;
-};
-
-function mapAdminListRow(row: unknown) {
-  const r = asRecord(row);
-
-  const category =
-    r.category && isRecord(r.category)
-      ? {
-          id: asString(r.category.id, "category.id", true)!,
-          name: asString(r.category.name, "category.name", true)!,
-        }
-      : null;
-
-  return {
-    id: asString(r.id, "id", true)!,
-    slug: asString(r.slug, "slug", true)!,
-    title: asString(r.title, "title", true)!,
-    status: String(r.status ?? "DRAFT"),
-    publishedAt: r.publishedAt ? toIso(r.publishedAt instanceof Date ? r.publishedAt : new Date(String(r.publishedAt))) : null,
-    createdAt: r.createdAt ? toIso(r.createdAt instanceof Date ? r.createdAt : new Date(String(r.createdAt))) : null,
-    updatedAt: r.updatedAt ? toIso(r.updatedAt instanceof Date ? r.updatedAt : new Date(String(r.updatedAt))) : null,
-    category,
-  };
-}
-
-export async function adminListPosts(args: AdminListArgs) {
-  const where: Record<string, unknown> = {};
-
-  if (args.status) where.status = parseStatus(args.status) ?? args.status;
-  if (args.categoryId) where.categoryId = args.categoryId;
-  if (args.tagId) where.tags = { some: { id: args.tagId } };
-
-  if (args.q) {
-    const q = args.q.trim();
-    if (q) {
-      where.OR = [
-        { title: { contains: q, mode: "insensitive" } },
-        { summary: { contains: q, mode: "insensitive" } },
-      ];
-    }
-  }
-
-  const [totalItemsRaw, rowsRaw] = await Promise.all([
-    db.blogPost.count({ where }),
-    db.blogPost.findMany({
-      where,
-      orderBy: [{ updatedAt: "desc" }],
-      skip: args.skip,
-      take: args.take,
-      include: { category: { select: { id: true, name: true } } },
-    }),
-  ]);
-
-  const totalItems = ensureNumber(totalItemsRaw);
-  const rows = ensureArray(rowsRaw);
-
-  return {
-    items: rows.map(mapAdminListRow),
-    page: args.page,
-    pageSize: args.pageSize,
-    totalItems,
-    totalPages: Math.ceil(totalItems / args.pageSize),
-  };
-}
-
-export async function adminGetPost(id: string) {
-  const postRaw = await db.blogPost.findUnique({
-    where: { id },
-    include: {
-      category: true,
-      tags: { select: { id: true, slug: true, name: true } },
-    },
-  });
-  if (!postRaw) throw new HttpError(404, "Not found", "NOT_FOUND");
-
-  const p = asRecord(postRaw);
-
-  const tags = Array.isArray(p.tags)
-    ? p.tags
-        .map((t) => (isRecord(t) ? t : null))
-        .filter((t): t is JsonRecord => !!t)
-        .map((t) => ({
-          id: asString(t.id, "tag.id", true)!,
-          slug: asString(t.slug, "tag.slug", true)!,
-          name: asString(t.name, "tag.name", true)!,
-        }))
-    : [];
-
-  return {
-    id: asString(p.id, "id", true)!,
-    title: asString(p.title, "title", true)!,
-    slug: asString(p.slug, "slug", true)!,
-    summary: asNullableString(p.summary) ?? null,
-    content: String(p.content ?? ""),
-    coverImageUrl: asNullableString(p.coverImageUrl) ?? null,
-    status: String(p.status ?? "DRAFT"),
-    publishedAt: p.publishedAt ? toIso(p.publishedAt instanceof Date ? p.publishedAt : new Date(String(p.publishedAt))) : null,
-    categoryId: p.categoryId ? String(p.categoryId) : null,
-    tags,
-  };
-}
-
-export async function adminCreatePost(body: unknown) {
-  const b = asRecord(body);
-
-  const title = asString(b.title, "title", true)!;
-  const slug = makeSlug(asString(b.slug ?? title, "slug", true)!);
-
-  const exists = await db.blogPost.findUnique({ where: { slug } });
-  if (exists) throw new HttpError(409, "Slug already exists", "CONFLICT");
-
-  const status = parseStatus(b.status) ?? "DRAFT";
-
-  const publishedAt =
-    status === "PUBLISHED" ? (parseDateOrNull(b.publishedAt) ?? new Date()) : (parseDateOrNull(b.publishedAt) ?? null);
-
-  const categoryId = b.categoryId === undefined ? undefined : asNullableString(b.categoryId);
-
-  const tagIds =
-    b.tagIds === undefined
-      ? []
-      : Array.isArray(b.tagIds)
-        ? b.tagIds.map((x) => String(x))
-        : (() => {
-            throw new HttpError(400, "Invalid tagIds", "VALIDATION_ERROR");
-          })();
-
-  const data: Record<string, unknown> = {
-    title,
-    slug,
-    summary: asNullableString(b.summary) ?? null,
-    content: String(b.content ?? ""),
-    coverImageUrl: asNullableString(b.coverImageUrl) ?? null,
-    status,
-    publishedAt,
-  };
-
-  if (categoryId !== undefined) data.categoryId = categoryId;
-  if (tagIds.length) data.tags = { connect: tagIds.map((id) => ({ id })) };
-
-  return db.blogPost.create({ data });
-}
-
-export async function adminUpdatePost(id: string, body: unknown) {
-  const b = asRecord(body);
-  const data: Record<string, unknown> = {};
-
-  if (b.title !== undefined) data.title = asString(b.title, "title", true)!;
-
-  if (b.slug !== undefined) {
-    const s = makeSlug(asString(b.slug, "slug", true)!);
-    const exists = await db.blogPost.findUnique({ where: { slug: s } });
-    if (exists) {
-      const ex = asRecord(exists);
-      if (String(ex.id) !== id) throw new HttpError(409, "Slug already exists", "CONFLICT");
-    }
-    data.slug = s;
-  }
-
-  if (b.summary !== undefined) data.summary = asNullableString(b.summary) ?? null;
-  if (b.content !== undefined) data.content = String(b.content ?? "");
-  if (b.coverImageUrl !== undefined) data.coverImageUrl = asNullableString(b.coverImageUrl) ?? null;
-
-  if (b.status !== undefined) data.status = parseStatus(b.status) ?? String(b.status);
-  if (b.publishedAt !== undefined) data.publishedAt = parseDateOrNull(b.publishedAt);
-
-  if (b.status === "PUBLISHED" && (b.publishedAt === undefined || b.publishedAt === null || b.publishedAt === "")) {
-    data.publishedAt = new Date();
-  }
-
-  if (b.categoryId !== undefined) data.categoryId = asNullableString(b.categoryId);
-
-  if (b.tagIds !== undefined) {
-    if (!Array.isArray(b.tagIds)) throw new HttpError(400, "Invalid tagIds", "VALIDATION_ERROR");
-    const tagIds = b.tagIds.map((x) => String(x));
-    data.tags = { set: [], connect: tagIds.map((tid) => ({ id: tid })) };
-  }
-
-  return db.blogPost.update({ where: { id }, data });
-}
-
-export async function adminDeletePost(id: string) {
-  return db.blogPost.delete({ where: { id } });
-}
-
-/* -------- Category Admin -------- */
-
-export async function adminListCategories() {
-  return db.category.findMany({ orderBy: { name: "asc" } });
-}
-
-export async function adminCreateCategory(body: unknown) {
-  const b = asRecord(body);
-  const name = asString(b.name, "name", true)!;
-  const slug = makeSlug(asString(b.slug ?? name, "slug", true)!);
-
-  const exists = await db.category.findUnique({ where: { slug } });
-  if (exists) throw new HttpError(409, "Slug already exists", "CONFLICT");
-
-  return db.category.create({ data: { name, slug, description: asNullableString(b.description) ?? null } });
-}
-
-export async function adminUpdateCategory(id: string, body: unknown) {
-  const b = asRecord(body);
-  const data: Record<string, unknown> = {};
-
-  if (b.name !== undefined) data.name = asString(b.name, "name", true)!;
-
-  if (b.slug !== undefined) {
-    const slug = makeSlug(asString(b.slug, "slug", true)!);
-    const exists = await db.category.findUnique({ where: { slug } });
-    if (exists) {
-      const ex = asRecord(exists);
-      if (String(ex.id) !== id) throw new HttpError(409, "Slug already exists", "CONFLICT");
-    }
-    data.slug = slug;
-  }
-
-  if (b.description !== undefined) data.description = asNullableString(b.description) ?? null;
-
-  return db.category.update({ where: { id }, data });
-}
-
-export async function adminDeleteCategory(id: string) {
-  const inUseRaw = await db.blogPost.count({ where: { categoryId: id } });
-  const inUse = ensureNumber(inUseRaw);
-  if (inUse > 0) throw new HttpError(409, "Category has posts", "CONFLICT");
-  return db.category.delete({ where: { id } });
-}
-
-/* -------- Tag Admin -------- */
-
-export async function adminListTags() {
-  return db.tag.findMany({ orderBy: { name: "asc" } });
-}
-
-export async function adminCreateTag(body: unknown) {
-  const b = asRecord(body);
-  const name = asString(b.name, "name", true)!;
-  const slug = makeSlug(asString(b.slug ?? name, "slug", true)!);
-
-  const exists = await db.tag.findUnique({ where: { slug } });
-  if (exists) throw new HttpError(409, "Slug already exists", "CONFLICT");
-
-  return db.tag.create({ data: { name, slug } });
-}
-
-export async function adminUpdateTag(id: string, body: unknown) {
-  const b = asRecord(body);
-  const data: Record<string, unknown> = {};
-
-  if (b.name !== undefined) data.name = asString(b.name, "name", true)!;
-
-  if (b.slug !== undefined) {
-    const slug = makeSlug(asString(b.slug, "slug", true)!);
-    const exists = await db.tag.findUnique({ where: { slug } });
-    if (exists) {
-      const ex = asRecord(exists);
-      if (String(ex.id) !== id) throw new HttpError(409, "Slug already exists", "CONFLICT");
-    }
-    data.slug = slug;
-  }
-
-  return db.tag.update({ where: { id }, data });
-}
-
-export async function adminDeleteTag(id: string) {
-  const inUseRaw = await db.blogPost.count({ where: { tags: { some: { id } } } });
-  const inUse = ensureNumber(inUseRaw);
-  if (inUse > 0) throw new HttpError(409, "Tag is in use", "CONFLICT");
-  return db.tag.delete({ where: { id } });
-}
-</file>
-
-<file path="lib/server/contact-service.ts">
-import "server-only";
-
-import { prisma } from "@/lib/prisma";
-import { HttpError, toIso } from "@/lib/server/http";
-
-type JsonRecord = Record<string, unknown>;
-
-function isRecord(v: unknown): v is JsonRecord {
-  return typeof v === "object" && v !== null && !Array.isArray(v);
-}
-
-function asRecord(v: unknown, msg = "Invalid object"): JsonRecord {
-  if (!isRecord(v)) throw new HttpError(400, msg, "VALIDATION_ERROR");
-  return v;
-}
-
-function ensureArray(v: unknown, msg = "Expected array"): unknown[] {
-  if (!Array.isArray(v)) throw new HttpError(500, msg, "INTERNAL_ERROR");
-  return v;
-}
-
-function ensureNumber(v: unknown, msg = "Expected number"): number {
-  if (typeof v !== "number" || Number.isNaN(v)) throw new HttpError(500, msg, "INTERNAL_ERROR");
-  return v;
-}
-
-const db = prisma as unknown as {
-  contactMessage: {
-    count(args: unknown): Promise<number>;
-    findMany(args: unknown): Promise<unknown>;
-    findUnique(args: unknown): Promise<unknown | null>;
-    create(args: unknown): Promise<unknown>;
-    update(args: unknown): Promise<unknown>;
-  };
-};
-
-type ListArgs = {
-  page: number;
-  pageSize: number;
-  skip: number;
-  take: number;
-  status?: string | null;
-};
-
-function mapRow(row: unknown) {
-  const m = asRecord(row);
-
-  const createdAt =
-    m.createdAt instanceof Date ? m.createdAt : m.createdAt ? new Date(String(m.createdAt)) : null;
-
-  const updatedAt =
-    m.updatedAt instanceof Date ? m.updatedAt : m.updatedAt ? new Date(String(m.updatedAt)) : null;
-
-  return {
-    id: String(m.id),
-    fullName: String(m.fullName ?? ""),
-    email: String(m.email ?? ""),
-    phone: m.phone ? String(m.phone) : null,
-    subject: String(m.subject ?? ""),
-    message: String(m.message ?? ""),
-    contactType: m.contactType ? String(m.contactType) : null,
-    status: String(m.status ?? ""),
-    createdAt: createdAt ? toIso(createdAt)! : null,
-    updatedAt: updatedAt ? toIso(updatedAt)! : null,
-  };
-}
-
-/* -------------------- Public -------------------- */
-
-export async function createContactMessage(body: unknown) {
-  const b = asRecord(body);
-
-  const fullName = String(b.fullName ?? "").trim();
-  const email = String(b.email ?? "").trim();
-  const subject = String(b.subject ?? "").trim();
-  const message = String(b.message ?? "").trim();
-
-  const phone =
-    b.phone === undefined || b.phone === null ? null : String(b.phone).trim() || null;
-
-  const contactType =
-    b.contactType === undefined || b.contactType === null
-      ? null
-      : String(b.contactType).trim() || null;
-
-  if (!fullName) throw new HttpError(400, "fullName is required", "VALIDATION_ERROR");
-  if (!email) throw new HttpError(400, "email is required", "VALIDATION_ERROR");
-  if (!subject) throw new HttpError(400, "subject is required", "VALIDATION_ERROR");
-  if (!message) throw new HttpError(400, "message is required", "VALIDATION_ERROR");
-
-  const created = await db.contactMessage.create({
-    data: {
-      fullName,
-      email,
-      phone,
-      subject,
-      message,
-      ...(contactType ? { contactType } : {}),
-      // status should be defaulted in DB (recommended). If not, you can set it here:
-      // status: "NEW",
-    },
-  });
-
-  return mapRow(created);
-}
-
-/* -------------------- Admin -------------------- */
-
-export async function adminListContactMessages(args: ListArgs) {
-  const where: Record<string, unknown> = {};
-  if (args.status) where.status = args.status;
-
-  const [totalItemsRaw, rowsRaw] = await Promise.all([
-    db.contactMessage.count({ where }),
-    db.contactMessage.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      skip: args.skip,
-      take: args.take,
-    }),
-  ]);
-
-  const totalItems = ensureNumber(totalItemsRaw);
-  const rows = ensureArray(rowsRaw);
-
-  return {
-    items: rows.map(mapRow),
-    page: args.page,
-    pageSize: args.pageSize,
-    totalItems,
-    totalPages: Math.ceil(totalItems / args.pageSize),
-  };
-}
-
-export async function adminGetContactMessage(id: string) {
-  const raw = await db.contactMessage.findUnique({ where: { id } });
-  if (!raw) throw new HttpError(404, "Not found", "NOT_FOUND");
-  return mapRow(raw);
-}
-
-export async function adminUpdateContactMessage(id: string, body: unknown) {
-  const b = asRecord(body);
-  const status = String(b.status ?? "").trim();
-  if (!status) throw new HttpError(400, "status is required", "VALIDATION_ERROR");
-
-  const updated = await db.contactMessage.update({
-    where: { id },
-    data: { status },
-  });
-
-  return mapRow(updated);
-}
-</file>
-
-<file path="lib/server/http.ts">
-import { NextResponse } from "next/server";
-
-export class HttpError extends Error {
-  status: number;
-  code?: string;
-  details?: unknown;
-
-  constructor(status: number, message: string, code?: string, details?: unknown) {
-    super(message);
-    this.status = status;
-    this.code = code;
-    this.details = details;
-  }
-}
-
-export function jsonOk(data: unknown, status = 200) {
-  return NextResponse.json(data, { status });
-}
-
-export function jsonError(err: unknown) {
-  if (err instanceof HttpError) {
-    return NextResponse.json(
-      {
-        error: err.code ?? "ERROR",
-        message: err.message,
-        details: err.details ?? null,
-      },
-      { status: err.status }
-    );
-  }
-
-  console.error(err);
-  return NextResponse.json(
-    { error: "INTERNAL_SERVER_ERROR", message: "Unexpected server error" },
-    { status: 500 }
-  );
-}
-
-export function parsePagination(sp: URLSearchParams) {
-  const page = Math.max(1, Number(sp.get("page") ?? "1") || 1);
-  const pageSizeRaw = Number(sp.get("pageSize") ?? "10") || 10;
-  const pageSize = Math.min(50, Math.max(1, pageSizeRaw));
-  return { page, pageSize, skip: (page - 1) * pageSize, take: pageSize };
-}
-
-export function toIso(d: Date | null | undefined): string | null {
-  return d ? d.toISOString() : null;
-}
-
-export function coerceId(id: string): string | number {
-  if (/^\d+$/.test(id)) return Number(id);
-  return id;
 }
 </file>
 
@@ -9839,6 +8260,176 @@ export default function AdminForbiddenPage ()
 }
 </file>
 
+<file path="app/api/admin/blog/categories/[id]/route.ts">
+import { jsonError, jsonOk } from "@/lib/server/http";
+import { requireAdmin } from "@/lib/server/auth";
+import { adminDeleteCategory, adminUpdateCategory, CategoryInput } from "@/lib/server/blog-service";
+
+type RouteCtx = { params: Promise<{ id: string }> };
+
+export async function PATCH(req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const body = (await req.json()) as Partial<CategoryInput>;
+    const result = await adminUpdateCategory(id, body);
+    return jsonOk(result);
+  } catch (err) { return jsonError(err); }
+}
+
+export async function DELETE(_req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const result = await adminDeleteCategory(id);
+    return jsonOk(result);
+  } catch (err) { return jsonError(err); }
+}
+</file>
+
+<file path="app/api/admin/blog/tags/[id]/route.ts">
+import { jsonError, jsonOk } from "@/lib/server/http";
+import { requireAdmin } from "@/lib/server/auth";
+import { adminDeleteTag, adminUpdateTag, TagInput } from "@/lib/server/blog-service";
+
+type RouteCtx = { params: Promise<{ id: string }> };
+
+export async function PATCH(req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const body = (await req.json()) as Partial<TagInput>;
+    const result = await adminUpdateTag(id, body);
+    return jsonOk(result);
+  } catch (err) { return jsonError(err); }
+}
+
+export async function DELETE(_req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    return jsonOk(await adminDeleteTag(id));
+  } catch (err) { return jsonError(err); }
+}
+</file>
+
+<file path="app/api/admin/contact-messages/[id]/route.ts">
+import { jsonError, jsonOk } from "@/lib/server/http";
+import { requireAdmin } from "@/lib/server/auth";
+import {
+  adminGetContactMessage,
+  adminUpdateContactMessage,
+} from "@/lib/server/contact-service";
+
+export const runtime = "nodejs";
+
+type RouteCtx = { params: Promise<{ id: string }> };
+
+export async function GET(_req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    // Next.js 15: must await params
+    const { id } = await ctx.params;
+    
+    const result = await adminGetContactMessage(id);
+    return jsonOk(result);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+
+export async function PATCH(req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    // Next.js 15: must await params
+    const { id } = await ctx.params;
+
+    // FIX: Type cast the body to match the service function's signature
+    const body = (await req.json()) as { status: string };
+
+    const result = await adminUpdateContactMessage(id, body);
+    return jsonOk(result);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+</file>
+
+<file path="app/api/admin/posts/[id]/route.ts">
+// app/api/admin/posts/[id]/route.ts
+import { jsonError, jsonOk } from "@/lib/server/http";
+import { requireAdmin } from "@/lib/server/auth";
+import { 
+  adminDeletePost, 
+  adminGetPost, 
+  adminUpdatePost, 
+  PostInput 
+} from "@/lib/server/blog-service";
+
+type RouteCtx = { params: Promise<{ id: string }> };
+
+export async function GET(_req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const result = await adminGetPost(id); // This will now work
+    return jsonOk(result);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+
+export async function PATCH(req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const body = (await req.json()) as Partial<PostInput>;
+    const result = await adminUpdatePost(id, body);
+    return jsonOk(result);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+
+export async function DELETE(_req: Request, ctx: RouteCtx) {
+  try {
+    await requireAdmin();
+    const { id } = await ctx.params;
+    const result = await adminDeletePost(id);
+    return jsonOk(result);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+</file>
+
+<file path="app/api/admin/posts/route.ts">
+// app/api/admin/posts/route.ts
+import { requireAdmin } from "@/lib/server/auth";
+import { jsonError, jsonOk } from "@/lib/server/http";
+import { adminCreatePost } from "@/lib/server/blog-service";
+
+export async function POST(req: Request) {
+  try {
+    await requireAdmin();
+    const body = await req.json();
+
+    // Fix: In your form, you use 'categoryIds' (plural), 
+    // but the DB uses 'categoryId' (singular). 
+    // This logic ensures the backend understands both.
+    const sanitizedData = {
+      ...body,
+      categoryId: body.categoryId || body.categoryIds?.[0] || null
+    };
+
+    const created = await adminCreatePost(sanitizedData);
+    return jsonOk(created, 201);
+  } catch (err) {
+    return jsonError(err);
+  }
+}
+</file>
+
 <file path="app/globals.css">
 @tailwind base;
 @tailwind components;
@@ -9996,6 +8587,183 @@ export default function RootLayout ( { children }: { children: React.ReactNode; 
 }
 </file>
 
+<file path="app/news/[slug]/page.tsx">
+// app/news/[slug]/page.tsx
+import { notFound } from "next/navigation";
+import { fetchBlogPostBySlug } from "@/lib/server-api";
+
+export const dynamic = "force-dynamic";
+
+export default async function NewsDetailPage ( {
+    params,
+}: {
+    params: Promise<{ slug: string; }>;
+} )
+{
+    const { slug } = await params;
+    if ( !slug ) notFound();
+
+    try
+    {
+        const post = await fetchBlogPostBySlug( slug );
+
+        // Prepare the date label for display
+        const publishedLabel = post.publishedAt
+            ? new Intl.DateTimeFormat( "fa-IR", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit",
+            } ).format( new Date( post.publishedAt ) )
+            : null;
+
+        return (
+            <main className="bg-slate-50/60 py-10">
+                <div className="mx-auto max-w-3xl px-4 text-right">
+                    {/* Breadcrumb / Category */ }
+                    <div className="mb-2 flex items-center justify-start gap-2 text-xs text-bms-primary">
+                        <span>اخبار و مقالات</span>
+                        { post.category && (
+                            <>
+                                <span className="text-slate-300">/</span>
+                                <span>{ post.category.name }</span>
+                            </>
+                        ) }
+                    </div>
+
+                    {/* Title */ }
+                    <h1 className="mb-3 text-xl font-bold leading-relaxed text-bms-dark md:text-2xl">
+                        { post.title }
+                    </h1>
+
+                    {/* Meta Info */ }
+                    <div className="mb-6 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+                        { publishedLabel && (
+                            <span className="flex items-center gap-1">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                <span>منتشر شده در { publishedLabel }</span>
+                            </span>
+                        ) }
+                        { post.tags && post.tags.length > 0 && (
+                            <div className="flex gap-2">
+                                { post.tags.map( ( tag ) => (
+                                    <span key={ tag.id } className="text-slate-400">
+                                        #{ tag.name }
+                                    </span>
+                                ) ) }
+                            </div>
+                        ) }
+                    </div>
+
+                    {/* Content */ }
+                    <article className="rounded-2xl border border-slate-200 bg-white p-6 text-[13px] leading-8 text-slate-700 shadow-sm md:p-8 md:text-sm">
+                        { post.content ? (
+                            post.content.split( /\n{2,}/ ).map( ( para, i ) => (
+                                <p key={ i } className="mb-4 last:mb-0">
+                                    { para }
+                                </p>
+                            ) )
+                        ) : (
+                            <p className="text-slate-400">محتوایی برای این خبر ثبت نشده است.</p>
+                        ) }
+                    </article>
+                </div>
+            </main>
+        );
+    } catch
+    {
+        // Logic Fix: Omit the catch variable entirely. 
+        // This is valid in modern JS and bypasses the unused variable error.
+        notFound();
+    }
+}
+</file>
+
+<file path="components/admin/blog/BlogCard.tsx">
+// components/admin/blog/BlogCard.tsx
+"use client";
+
+import Link from "next/link";
+import { BlogPost } from "@/lib/server-api";
+import { cn } from "@/lib/utils";
+
+type BlogCardProps = {
+    post: BlogPost;
+    className?: string;
+};
+
+export function BlogCard ( { post, className }: BlogCardProps )
+{
+    const dateLabel = post.publishedAt
+        ? new Intl.DateTimeFormat( "fa-IR", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+        } ).format( new Date( post.publishedAt ) )
+        : null;
+
+    return (
+        <article
+            className={ cn(
+                "flex h-full flex-col rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
+                className,
+            ) }
+        >
+            <div className="flex flex-1 flex-col gap-3">
+                {/* Logic Fix: Check for singular 'category' instead of 'categories' */ }
+                { ( post.category || ( post.tags && post.tags.length > 0 ) ) && (
+                    <div className="flex flex-wrap gap-1 text-[10px] text-slate-500">
+                        { post.category && (
+                            <span
+                                key={ `cat-${ post.category.id }` }
+                                className="rounded-full border border-slate-200 bg-slate-50 px-2 py-[2px]"
+                            >
+                                { post.category.name }
+                            </span>
+                        ) }
+
+                        {/* Show tags only if there is no category, or just append them */ }
+                        { !post.category &&
+                            post.tags?.slice( 0, 2 ).map( ( tag ) => (
+                                <span
+                                    key={ `tag-${ tag.id }` }
+                                    className="rounded-full border border-emerald-100 bg-emerald-50 px-2 py-[2px] text-emerald-700"
+                                >
+                                    { tag.name }
+                                </span>
+                            ) ) }
+                    </div>
+                ) }
+
+                {/* عنوان */ }
+                <h3 className="text-right text-sm font-semibold leading-snug text-bms-dark md:text-base">
+                    <Link href={ `/news/${ post.slug }` } className="hover:text-bms-primary">
+                        { post.title }
+                    </Link>
+                </h3>
+
+                {/* خلاصه */ }
+                { post.excerpt && (
+                    <p className="text-right text-[11px] leading-relaxed text-slate-600 md:text-xs line-clamp-3">
+                        { post.excerpt }
+                    </p>
+                ) }
+            </div>
+
+            {/* بخش پایین: تاریخ + لینک ادامه */ }
+            <div className="mt-4 flex items-center justify-between gap-2 text-[11px] md:text-xs">
+                <div className="text-slate-400">{ dateLabel }</div>
+                <Link
+                    href={ `/news/${ post.slug }` }
+                    className="text-bms-primary hover:text-bms-dark"
+                >
+                    ادامه مطلب
+                </Link>
+            </div>
+        </article>
+    );
+}
+</file>
+
 <file path="components/cng/CngHeroSection.tsx">
 import Link from "next/link";
 import CngPilotVideo from "../home/CngPilotVideo";
@@ -10067,6 +8835,267 @@ export default function CngHeroSection ()
                 </div>
             </div>
         </section>
+    );
+}
+</file>
+
+<file path="components/contact/ContactForm.tsx">
+// components/contact/ContactForm.tsx
+"use client";
+
+import { useState, type FormEvent, type ChangeEvent } from "react";
+import { cn } from "@/lib/utils";
+
+type ContactFormValues = {
+    fullName: string;
+    email: string;
+    phone: string;
+    subject: string;
+    message: string;
+};
+
+type FieldErrors = Partial<Record<keyof ContactFormValues, string>>;
+
+export function ContactForm ()
+{
+    const [ values, setValues ] = useState<ContactFormValues>( {
+        fullName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+    } );
+
+    const [ errors, setErrors ] = useState<FieldErrors>( {} );
+    const [ submitting, setSubmitting ] = useState( false );
+    const [ serverError, setServerError ] = useState<string | null>( null );
+    const [ serverSuccess, setServerSuccess ] = useState<string | null>( null );
+
+    const handleChange =
+        ( field: keyof ContactFormValues ) =>
+            (
+                e:
+                    | ChangeEvent<HTMLInputElement>
+                    | ChangeEvent<HTMLTextAreaElement>
+                    | ChangeEvent<HTMLSelectElement>,
+            ) =>
+            {
+                const value = e.target.value;
+                setValues( ( prev ) => ( { ...prev, [ field ]: value } ) );
+                setErrors( ( prev ) => ( { ...prev, [ field ]: undefined } ) );
+                setServerError( null );
+                setServerSuccess( null );
+            };
+
+    const validate = (): boolean =>
+    {
+        const nextErrors: FieldErrors = {};
+
+        if ( !values.fullName.trim() )
+        {
+            nextErrors.fullName = "نام را وارد کنید.";
+        }
+        if ( !values.email.trim() )
+        {
+            nextErrors.email = "ایمیل را وارد کنید.";
+        } else if ( !/^\S+@\S+\.\S+$/.test( values.email.trim() ) )
+        {
+            nextErrors.email = "فرمت ایمیل معتبر نیست.";
+        }
+        if ( !values.message.trim() )
+        {
+            nextErrors.message = "متن پیام را وارد کنید.";
+        }
+
+        setErrors( nextErrors );
+        return Object.keys( nextErrors ).length === 0;
+    };
+
+    const handleSubmit = async ( e: FormEvent<HTMLFormElement> ) =>
+    {
+        e.preventDefault();
+        setServerError( null );
+        setServerSuccess( null );
+
+        if ( !validate() ) return;
+
+        setSubmitting( true );
+        try
+        {
+            const res = await fetch( "/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify( {
+                    fullName: values.fullName.trim(), // 👈 IMPORTANT: backend expects fullName
+                    email: values.email.trim(),
+                    phone: values.phone.trim() || null,
+                    subject: values.subject.trim() || null,
+                    message: values.message.trim(),
+                } ),
+            } );
+
+            if ( !res.ok )
+            {
+                try
+                {
+                    const data = await res.json();
+                    if ( data?.message )
+                    {
+                        setServerError( data.message );
+                    } else
+                    {
+                        setServerError(
+                            "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
+                        );
+                    }
+                } catch
+                {
+                    setServerError(
+                        "ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.",
+                    );
+                }
+                return;
+            }
+
+            setServerSuccess(
+                "پیام شما با موفقیت ثبت شد. همکاران ما در اولین فرصت با شما تماس می‌گیرند.",
+            );
+            setValues( {
+                fullName: "",
+                email: "",
+                phone: "",
+                subject: "",
+                message: "",
+            } );
+        } catch
+        {
+            setServerError( "عدم ارتباط با سرور. لطفاً بعداً دوباره تلاش کنید." );
+        } finally
+        {
+            setSubmitting( false );
+        }
+    };
+
+    return (
+        <form
+            onSubmit={ handleSubmit }
+            className="space-y-4 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-sm md:p-6"
+        >
+            { serverError && (
+                <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-2 text-[11px] text-red-600 md:text-xs">
+                    { serverError }
+                </div>
+            ) }
+
+            { serverSuccess && (
+                <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-[11px] text-emerald-700 md:text-xs">
+                    { serverSuccess }
+                </div>
+            ) }
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="text-right">
+                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
+                        نام و نام خانوادگی <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        value={ values.fullName }
+                        onChange={ handleChange( "fullName" ) }
+                        className={ cn(
+                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
+                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
+                        ) }
+                        placeholder="مثلاً: علی رضایی"
+                    />
+                    { errors.fullName && (
+                        <p className="mt-1 text-[11px] text-red-500">{ errors.fullName }</p>
+                    ) }
+                </div>
+
+                <div className="text-right">
+                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
+                        ایمیل <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="email"
+                        value={ values.email }
+                        onChange={ handleChange( "email" ) }
+                        className={ cn(
+                            "w-full rounded-xl border px-3 py-2 text-xs text-left text-slate-800 outline-none ring-0 transition md:text-sm",
+                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
+                        ) }
+                        placeholder="you@example.com"
+                        dir="ltr"
+                    />
+                    { errors.email && (
+                        <p className="mt-1 text-[11px] text-red-500">{ errors.email }</p>
+                    ) }
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="text-right">
+                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
+                        شماره تماس (اختیاری)
+                    </label>
+                    <input
+                        type="tel"
+                        value={ values.phone }
+                        onChange={ handleChange( "phone" ) }
+                        className={ cn(
+                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
+                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
+                        ) }
+                        placeholder="مثلاً: ۰۹۱۲۱۲۳۴۵۶۷"
+                    />
+                </div>
+
+                <div className="text-right">
+                    <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
+                        موضوع (اختیاری)
+                    </label>
+                    <input
+                        type="text"
+                        value={ values.subject }
+                        onChange={ handleChange( "subject" ) }
+                        className={ cn(
+                            "w-full rounded-xl border px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition md:text-sm",
+                            "bg-slate-50 border-slate-200 focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary",
+                        ) }
+                        placeholder="مثلاً: درخواست دمو، همکاری، سرمایه‌گذاری و ..."
+                    />
+                </div>
+            </div>
+
+            <div className="text-right">
+                <label className="mb-1 block text-xs font-medium text-slate-700 md:text-sm">
+                    متن پیام <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                    value={ values.message }
+                    onChange={ handleChange( "message" ) }
+                    rows={ 5 }
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-800 outline-none ring-0 transition focus:border-bms-primary focus:bg-white focus:ring-1 focus:ring-bms-primary md:text-sm"
+                    placeholder="لطفاً توضیح دهید در چه زمینه‌ای می‌خواهید با بارمان همکاری یا ارتباط داشته باشید..."
+                />
+                { errors.message && (
+                    <p className="mt-1 text-[11px] text-red-500">{ errors.message }</p>
+                ) }
+            </div>
+
+            <div className="flex items-center justify-end">
+                <button
+                    type="submit"
+                    disabled={ submitting }
+                    className="rounded-xl bg-bms-primary px-5 py-2 text-[11px] font-medium text-white shadow-sm transition hover:bg-bms-dark disabled:cursor-not-allowed disabled:bg-slate-400 md:text-sm"
+                >
+                    { submitting ? "در حال ارسال..." : "ارسال پیام" }
+                </button>
+            </div>
+        </form>
     );
 }
 </file>
@@ -10474,6 +9503,172 @@ export default function Header ()
 }
 </file>
 
+<file path="lib/server-api.ts">
+// lib/server-api.ts
+import { headers } from "next/headers";
+
+export type BlogCategory = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type BlogTag = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type BlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  content?: string | null;
+  coverImageUrl?: string | null;
+  publishedAt?: string | null;
+  category?: BlogCategory | null;
+  tags?: BlogTag[];
+};
+
+export type PaginatedBlogResponse = {
+  items: BlogPost[];
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+};
+
+/**
+ * Next.js 15 Helper to get the base URL for server-side fetches.
+ * We must await headers() now.
+ */
+async function getBaseUrl() {
+  const headList = await headers(); 
+  const host = headList.get("host") ?? "localhost:3000";
+  const protocol = headList.get("x-forwarded-proto") ?? "http";
+  
+  return `${protocol}://${host}`;
+}
+
+export async function fetchBlogPosts(params?: {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+  category?: string;
+  tag?: string;
+}): Promise<PaginatedBlogResponse> {
+  const baseUrl = await getBaseUrl();
+  const search = new URLSearchParams();
+
+  if (params?.page) search.set("page", String(params.page));
+  if (params?.pageSize) search.set("pageSize", String(params.pageSize));
+  if (params?.q) search.set("q", params.q);
+  if (params?.category) search.set("category", params.category);
+  if (params?.tag) search.set("tag", params.tag);
+
+  const url = `${baseUrl}/api/blog${search.toString() ? `?${search.toString()}` : ""}`;
+
+  const res = await fetch(url, { cache: "no-store" });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog posts");
+  }
+
+  return res.json();
+}
+
+export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost> {
+  const baseUrl = await getBaseUrl();
+  const url = `${baseUrl}/api/blog/${encodeURIComponent(slug)}`;
+
+  const res = await fetch(url, { cache: "no-store" });
+
+  if (res.status === 404) {
+    throw new Error("NOT_FOUND");
+  }
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog post");
+  }
+
+  return res.json();
+}
+
+export async function fetchBlogCategories(): Promise<BlogCategory[]> {
+  const baseUrl = await getBaseUrl();
+  const url = `${baseUrl}/api/blog/categories`;
+
+  const res = await fetch(url, { cache: "force-cache" });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog categories");
+  }
+
+  return res.json();
+}
+
+export async function fetchBlogTags(): Promise<BlogTag[]> {
+  const baseUrl = await getBaseUrl();
+  const url = `${baseUrl}/api/blog/tags`;
+
+  const res = await fetch(url, { cache: "force-cache" });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog tags");
+  }
+
+  return res.json();
+}
+</file>
+
+<file path="lib/server/http.ts">
+// lib/server/http.ts
+import { NextResponse } from "next/server";
+
+export class HttpError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+    public code?: string,
+    public details?: unknown
+  ) {
+    super(message);
+  }
+}
+
+export function jsonOk(data: unknown, status = 200) {
+  return NextResponse.json(data, { status });
+}
+
+export function jsonError(err: unknown) {
+  if (err instanceof HttpError) {
+    return NextResponse.json(
+      { error: err.code ?? "ERROR", message: err.message, details: err.details ?? null },
+      { status: err.status }
+    );
+  }
+  console.error("Unhandled Error:", err);
+  return NextResponse.json(
+    { error: "INTERNAL_SERVER_ERROR", message: "An unexpected error occurred" },
+    { status: 500 }
+  );
+}
+
+// Utility to parse errors on the client side consistently
+export function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "string") return err;
+  return "خطای ناشناخته رخ داد";
+}
+
+export function parsePagination(sp: URLSearchParams) {
+  const page = Math.max(1, Number(sp.get("page")) || 1);
+  const pageSize = Math.min(50, Math.max(1, Number(sp.get("pageSize")) || 10));
+  return { page, pageSize, skip: (page - 1) * pageSize, take: pageSize };
+}
+</file>
+
 <file path="app/admin/layout.tsx">
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -10724,6 +9919,429 @@ export default function ClinicansHeroSection ()
             </section>
         </div>
     );
+}
+</file>
+
+<file path="lib/server/blog-service.ts">
+// lib/server/blog-service.ts
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { makeSlug } from "@/lib/server/slug";
+import { Prisma, PostStatus } from "@prisma/client";
+import { HttpError } from "@/lib/server/http";
+
+/**
+ * Type Definitions
+ */
+export interface ListPostsArgs {
+  page: number;
+  pageSize: number;
+  skip: number;
+  take: number;
+  category?: string | null;
+  tag?: string | null;
+  q?: string | null;
+  status?: string | null;
+  categoryId?: string | null;
+  tagId?: string | null;
+}
+
+export interface PostInput {
+  title: string;
+  content: string;
+  slug?: string;
+  summary?: string | null;
+  coverImageUrl?: string | null;
+  status?: PostStatus;
+  publishedAt?: string | Date | null;
+  categoryId?: string | null;
+  tagIds?: string[];
+}
+
+export interface CategoryInput {
+  name: string;
+  slug?: string;
+  description?: string | null;
+}
+
+export interface TagInput {
+  name: string;
+  slug?: string;
+}
+
+/* -------------------- Public API -------------------- */
+
+export async function listPublicPosts(args: ListPostsArgs) {
+  const where: Prisma.BlogPostWhereInput = {
+    status: "PUBLISHED",
+    publishedAt: { lte: new Date() },
+  };
+
+  if (args.category) where.category = { slug: args.category };
+  if (args.tag) where.tags = { some: { slug: args.tag } };
+  
+  if (args.q) {
+    const query = args.q.trim();
+    where.OR = [
+      { title: { contains: query, mode: "insensitive" } },
+      { summary: { contains: query, mode: "insensitive" } },
+    ];
+  }
+
+  const [totalItems, items] = await Promise.all([
+    prisma.blogPost.count({ where }),
+    prisma.blogPost.findMany({
+      where,
+      skip: args.skip,
+      take: args.take,
+      orderBy: { publishedAt: "desc" },
+      include: {
+        category: { select: { id: true, name: true, slug: true } },
+        tags: { select: { id: true, name: true, slug: true } },
+      },
+    }),
+  ]);
+
+  return {
+    items,
+    page: args.page,
+    pageSize: args.pageSize,
+    totalItems,
+    totalPages: Math.ceil(totalItems / args.pageSize),
+  };
+}
+
+export async function getPublicPostBySlug(slug: string) {
+  const post = await prisma.blogPost.findUnique({
+    where: { slug },
+    include: {
+      category: { select: { id: true, name: true, slug: true } },
+      tags: { select: { id: true, name: true, slug: true } },
+    },
+  });
+
+  if (!post || post.status !== "PUBLISHED") {
+    throw new HttpError(404, "پست مورد نظر یافت نشد", "NOT_FOUND");
+  }
+
+  return post;
+}
+
+/**
+ * NEW: Fetches all categories for public use (e.g. sidebar filters)
+ */
+export async function listPublicCategories() {
+  return await prisma.category.findMany({
+    orderBy: { name: "asc" },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    }
+  });
+}
+
+/**
+ * NEW: Fetches all tags for public use
+ */
+export async function listPublicTags() {
+  return await prisma.tag.findMany({
+    orderBy: { name: "asc" },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    }
+  });
+}
+
+/* -------------------- Admin Post API -------------------- */
+
+export async function adminListPosts(args: ListPostsArgs) {
+  const where: Prisma.BlogPostWhereInput = {};
+
+  if (args.status) where.status = args.status as PostStatus;
+  if (args.categoryId) where.categoryId = args.categoryId;
+  if (args.tagId) where.tags = { some: { id: args.tagId } };
+  
+  if (args.q) {
+    where.OR = [
+      { title: { contains: args.q, mode: "insensitive" } },
+      { summary: { contains: args.q, mode: "insensitive" } },
+    ];
+  }
+
+  const [totalItems, items] = await Promise.all([
+    prisma.blogPost.count({ where }),
+    prisma.blogPost.findMany({
+      where,
+      skip: args.skip,
+      take: args.take,
+      orderBy: { updatedAt: "desc" },
+      include: { category: { select: { id: true, name: true } } },
+    }),
+  ]);
+
+  return {
+    items,
+    page: args.page,
+    pageSize: args.pageSize,
+    totalItems,
+    totalPages: Math.ceil(totalItems / args.pageSize),
+  };
+}
+
+export async function adminGetPost(id: string) {
+  const post = await prisma.blogPost.findUnique({
+    where: { id },
+    include: {
+      category: true,
+      tags: true,
+    },
+  });
+
+  if (!post) {
+    throw new HttpError(404, "پست یافت نشد", "NOT_FOUND");
+  }
+
+  return {
+    ...post,
+    tagIds: post.tags.map((t) => t.id),
+  };
+}
+
+export async function adminCreatePost(data: PostInput) {
+  const { tagIds, categoryId, title, slug, ...rest } = data;
+  const finalSlug = makeSlug(slug || title);
+
+  const existing = await prisma.blogPost.findUnique({ where: { slug: finalSlug } });
+  if (existing) throw new HttpError(409, "این نامک (Slug) قبلاً استفاده شده است", "CONFLICT");
+
+  let publishedAtDate: Date | null = null;
+  if (data.status === "PUBLISHED") {
+    publishedAtDate = data.publishedAt ? new Date(data.publishedAt) : new Date();
+  }
+
+  return prisma.blogPost.create({
+    data: {
+      ...rest,
+      title,
+      slug: finalSlug,
+      publishedAt: publishedAtDate,
+      category: categoryId ? { connect: { id: categoryId } } : undefined,
+      tags: tagIds && tagIds.length > 0 
+        ? { connect: tagIds.map((id) => ({ id })) } 
+        : undefined,
+    },
+  });
+}
+
+export async function adminUpdatePost(id: string, data: Partial<PostInput>) {
+  const { tagIds, categoryId, slug, title, ...rest } = data;
+
+  const updateData: Prisma.BlogPostUpdateInput = {
+    ...rest,
+  };
+
+  if (title) updateData.title = title;
+  if (slug) updateData.slug = makeSlug(slug);
+  
+  if (categoryId !== undefined) {
+    updateData.category = categoryId 
+      ? { connect: { id: categoryId } } 
+      : { disconnect: true };
+  }
+
+  if (tagIds !== undefined) {
+    updateData.tags = {
+      set: tagIds.map((tid) => ({ id: tid })),
+    };
+  }
+
+  if (data.status === "PUBLISHED" && !data.publishedAt) {
+    updateData.publishedAt = new Date();
+  }
+
+  return prisma.blogPost.update({
+    where: { id },
+    data: updateData,
+  });
+}
+
+export async function adminDeletePost(id: string) {
+  return prisma.blogPost.delete({ where: { id } });
+}
+
+/* -------------------- Category Admin API -------------------- */
+
+export async function adminListCategories() {
+  return prisma.category.findMany({ orderBy: { name: "asc" } });
+}
+
+export async function adminCreateCategory(data: CategoryInput) {
+  const slug = makeSlug(data.slug || data.name);
+  return prisma.category.create({
+    data: { ...data, slug }
+  });
+}
+
+export async function adminUpdateCategory(id: string, data: Partial<CategoryInput>) {
+  const updateData: Prisma.CategoryUpdateInput = { ...data };
+  if (data.slug) updateData.slug = makeSlug(data.slug);
+  
+  return prisma.category.update({
+    where: { id },
+    data: updateData,
+  });
+}
+
+export async function adminDeleteCategory(id: string) {
+  const postCount = await prisma.blogPost.count({ where: { categoryId: id } });
+  if (postCount > 0) {
+    throw new HttpError(409, "این دسته‌بندی دارای پست است و قابل حذف نیست", "CONFLICT");
+  }
+  return prisma.category.delete({ where: { id } });
+}
+
+/* -------------------- Tag Admin API -------------------- */
+
+export async function adminListTags() {
+  return prisma.tag.findMany({ orderBy: { name: "asc" } });
+}
+
+export async function adminCreateTag(data: TagInput) {
+  const slug = makeSlug(data.slug || data.name);
+  return prisma.tag.create({
+    data: { ...data, slug }
+  });
+}
+
+export async function adminUpdateTag(id: string, data: Partial<TagInput>) {
+  const updateData: Prisma.TagUpdateInput = { ...data };
+  if (data.slug) updateData.slug = makeSlug(data.slug);
+
+  return prisma.tag.update({
+    where: { id },
+    data: updateData,
+  });
+}
+
+export async function adminDeleteTag(id: string) {
+  const postCount = await prisma.blogPost.count({ where: { tags: { some: { id } } } });
+  if (postCount > 0) {
+    throw new HttpError(409, "این تگ در پست‌ها استفاده شده است و قابل حذف نیست", "CONFLICT");
+  }
+  return prisma.tag.delete({ where: { id } });
+}
+</file>
+
+<file path="lib/server/contact-service.ts">
+// lib/server/contact-service.ts
+import "server-only";
+import { prisma } from "@/lib/prisma";
+import { HttpError } from "@/lib/server/http";
+import { contactMessageSchema } from "@/lib/validations/contact";
+import { Prisma, ContactMessageStatus, ContactType } from "@prisma/client";
+
+/**
+ * Interface for Admin Listing Arguments
+ */
+export interface ListContactMessagesArgs {
+  page: number;
+  pageSize: number;
+  skip: number;
+  take: number;
+  status?: string | null;
+}
+
+/* -------------------- Public API -------------------- */
+
+/**
+ * Creates a contact message from the public form.
+ * Uses Zod for strict validation.
+ */
+export async function createContactMessage(body: unknown) {
+  const result = contactMessageSchema.safeParse(body);
+  
+  if (!result.success) {
+    throw new HttpError(
+      400, 
+      "اطلاعات وارد شده معتبر نیست", 
+      "VALIDATION_ERROR", 
+      result.error.format()
+    );
+  }
+
+  const { fullName, email, phone, subject, message } = result.data;
+
+  return await prisma.contactMessage.create({
+    data: {
+      fullName,
+      email,
+      phone: phone || null,
+      subject,
+      message,
+      contactType: ContactType.GENERAL, // Defaulting for simple web form
+    },
+  });
+}
+
+/* -------------------- Admin API -------------------- */
+
+/**
+ * Lists contact messages for the admin panel with pagination.
+ */
+export async function adminListContactMessages(args: ListContactMessagesArgs) {
+  const where: Prisma.ContactMessageWhereInput = {};
+  
+  if (args.status) {
+    where.status = args.status as ContactMessageStatus;
+  }
+
+  const [totalItems, items] = await Promise.all([
+    prisma.contactMessage.count({ where }),
+    prisma.contactMessage.findMany({
+      where,
+      skip: args.skip,
+      take: args.take,
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  return {
+    items,
+    page: args.page,
+    pageSize: args.pageSize,
+    totalItems,
+    totalPages: Math.ceil(totalItems / args.pageSize),
+  };
+}
+
+/**
+ * Fetches a single message details.
+ */
+export async function adminGetContactMessage(id: string) {
+  const message = await prisma.contactMessage.findUnique({
+    where: { id },
+  });
+
+  if (!message) {
+    throw new HttpError(404, "پیام یافت نشد", "NOT_FOUND");
+  }
+
+  return message;
+}
+
+/**
+ * Updates message status (READ, ARCHIVED, etc.)
+ */
+export async function adminUpdateContactMessage(id: string, data: { status: string }) {
+  return await prisma.contactMessage.update({
+    where: { id },
+    data: {
+      status: data.status as ContactMessageStatus,
+    },
+  });
 }
 </file>
 
@@ -11148,24 +10766,27 @@ function BentoTile ( { item }: { item: BentoItem; } )
 </file>
 
 <file path="middleware.ts">
+// middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
 
-const isAdminArea = createRouteMatcher(["/admin(.*)", "/api/admin(.*)"]);
-const isAdminPublic = createRouteMatcher([
+const isProtectedRoute = createRouteMatcher(["/admin(.*)", "/api/admin(.*)"]);
+const isPublicAdminRoute = createRouteMatcher([
   "/admin/sign-in(.*)",
   "/admin/auth-error(.*)",
   "/admin/forbidden(.*)",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (!isAdminArea(req) || isAdminPublic(req)) return NextResponse.next();
-  await auth.protect();
-  return NextResponse.next();
+  if (isProtectedRoute(req) && !isPublicAdminRoute(req)) {
+    await auth.protect();
+  }
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: [
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
 };
 </file>
 

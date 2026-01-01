@@ -1,250 +1,78 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 
-type Tag = {
-    id: string;
-    name: string;
-    slug: string;
-};
-
-function readErrorText ( err: unknown )
-{
-    if ( err instanceof Error ) return err.message;
-    return String( err ?? "Unknown error" );
-}
+type Tag = { id: string; name: string; slug: string; };
 
 export default function AdminTagsPage ()
 {
-    const [ items, setItems ] = useState<Tag[]>( [] );
-    const [ loading, setLoading ] = useState( true );
-    const [ errText, setErrText ] = useState<string | null>( null );
+    const [ tags, setTags ] = useState<Tag[]>( [] );
+    const [ isLoading, setIsLoading ] = useState( true );
+    const [ name, setName ] = useState( "" );
 
-    const [ createName, setCreateName ] = useState( "" );
-    const [ createSlug, setCreateSlug ] = useState( "" );
-
-    const [ editingId, setEditingId ] = useState<string | null>( null );
-    const [ editName, setEditName ] = useState( "" );
-    const [ editSlug, setEditSlug ] = useState( "" );
-
-    const sorted = useMemo(
-        () => [ ...items ].sort( ( a, b ) => a.name.localeCompare( b.name, "fa" ) ),
-        [ items ]
-    );
-
-    async function load ()
+    const fetchTags = async () =>
     {
-        setLoading( true );
-        setErrText( null );
-        try
-        {
-            const r = await fetch( "/api/admin/blog/tags", { cache: "no-store" } );
-            if ( !r.ok ) throw new Error( await r.text() );
-            const j: unknown = await r.json();
-            if ( !Array.isArray( j ) ) throw new Error( "Invalid response" );
-            setItems(
-                j.map( ( x ) => ( {
-                    id: String( ( x as { id: unknown; } ).id ),
-                    name: String( ( x as { name: unknown; } ).name ?? "" ),
-                    slug: String( ( x as { slug: unknown; } ).slug ?? "" ),
-                } ) )
-            );
-        } catch ( e: unknown )
-        {
-            setErrText( readErrorText( e ) );
-        } finally
-        {
-            setLoading( false );
-        }
-    }
+        setIsLoading( true );
+        const res = await fetch( "/api/admin/blog/tags" );
+        if ( res.ok ) setTags( await res.json() );
+        setIsLoading( false );
+    };
 
-    useEffect( () =>
+    useEffect( () => { fetchTags(); }, [] );
+
+    const handleCreate = async ( e: React.FormEvent ) =>
     {
-        void load();
-    }, [] );
+        e.preventDefault();
+        if ( !name.trim() ) return;
+        await fetch( "/api/admin/blog/tags", {
+            method: "POST",
+            body: JSON.stringify( { name } ),
+        } );
+        setName( "" );
+        fetchTags();
+    };
 
-    function startEdit ( t: Tag )
-    {
-        setEditingId( t.id );
-        setEditName( t.name );
-        setEditSlug( t.slug );
-    }
-
-    function cancelEdit ()
-    {
-        setEditingId( null );
-        setEditName( "" );
-        setEditSlug( "" );
-    }
-
-    async function create ()
-    {
-        setErrText( null );
-        try
-        {
-            const r = await fetch( "/api/admin/blog/tags", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name: createName.trim(),
-                    slug: createSlug.trim() || undefined,
-                } ),
-            } );
-            if ( !r.ok ) throw new Error( await r.text() );
-
-            setCreateName( "" );
-            setCreateSlug( "" );
-            await load();
-        } catch ( e: unknown )
-        {
-            setErrText( readErrorText( e ) );
-        }
-    }
-
-    async function saveEdit ( id: string )
-    {
-        setErrText( null );
-        try
-        {
-            const r = await fetch( `/api/admin/blog/tags/${ id }`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name: editName.trim(),
-                    slug: editSlug.trim(),
-                } ),
-            } );
-            if ( !r.ok ) throw new Error( await r.text() );
-            cancelEdit();
-            await load();
-        } catch ( e: unknown )
-        {
-            setErrText( readErrorText( e ) );
-        }
-    }
-
-    async function remove ( id: string )
+    const handleDelete = async ( id: string ) =>
     {
         if ( !confirm( "حذف شود؟" ) ) return;
-        setErrText( null );
-        try
-        {
-            const r = await fetch( `/api/admin/blog/tags/${ id }`, { method: "DELETE" } );
-            if ( !r.ok ) throw new Error( await r.text() );
-            await load();
-        } catch ( e: unknown )
-        {
-            setErrText( readErrorText( e ) );
-        }
-    }
+        await fetch( `/api/admin/blog/tags/${ id }`, { method: "DELETE" } );
+        fetchTags();
+    };
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-xl font-bold text-bms-dark">تگ‌ها</h1>
-                <p className="text-sm text-odoo-600">مدیریت تگ‌های خبرها</p>
+        <div className="max-w-4xl mx-auto space-y-8">
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-slate-800">تگ‌ها</h1>
             </div>
 
-            { errText ? (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{ errText }</div>
-            ) : null }
-
-            <div className="rounded-2xl border border-odoo-200 bg-white p-5 shadow-sm">
-                <div className="text-sm font-semibold text-bms-dark mb-3">ایجاد تگ جدید</div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <form onSubmit={ handleCreate } className="flex gap-4">
                     <input
-                        className="rounded-xl border border-odoo-200 px-4 py-3 text-sm"
-                        placeholder="نام"
-                        value={ createName }
-                        onChange={ ( e ) => setCreateName( e.target.value ) }
+                        className="flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm"
+                        placeholder="نام تگ جدید..."
+                        value={ name }
+                        onChange={ ( e ) => setName( e.target.value ) }
                     />
-                    <input
-                        className="rounded-xl border border-odoo-200 px-4 py-3 text-sm"
-                        placeholder="slug (اختیاری)"
-                        value={ createSlug }
-                        onChange={ ( e ) => setCreateSlug( e.target.value ) }
-                    />
-                    <button
-                        onClick={ () => void create() }
-                        className="rounded-xl bg-bms-primary px-4 py-3 text-sm font-medium text-white"
-                    >
-                        ایجاد
+                    <button type="submit" className="bg-bms-primary text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-bms-dark transition-colors">
+                        افزودن
                     </button>
-                </div>
+                </form>
             </div>
 
-            <div className="rounded-2xl border border-odoo-200 bg-white shadow-sm overflow-hidden">
-                <div className="p-4 border-b border-odoo-200 text-sm text-odoo-600">
-                    { loading ? "در حال بارگذاری…" : `تعداد: ${ items.length }` }
-                </div>
-
-                <div className="divide-y divide-odoo-100">
-                    { sorted.map( ( t ) =>
-                    {
-                        const isEditing = editingId === t.id;
-
-                        return (
-                            <div key={ t.id } className="p-4">
-                                { !isEditing ? (
-                                    <div className="flex items-start justify-between gap-4">
-                                        <div className="min-w-0">
-                                            <div className="font-semibold text-bms-dark truncate">{ t.name }</div>
-                                            <div className="text-xs text-odoo-600 mt-1">
-                                                <span className="opacity-80">{ t.slug }</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={ () => startEdit( t ) }
-                                                className="rounded-xl border border-odoo-200 px-3 py-2 text-sm hover:bg-odoo-50"
-                                            >
-                                                ویرایش
-                                            </button>
-                                            <button
-                                                onClick={ () => void remove( t.id ) }
-                                                className="rounded-xl border border-red-200 px-3 py-2 text-sm text-red-700 hover:bg-red-50"
-                                            >
-                                                حذف
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                        <input
-                                            className="rounded-xl border border-odoo-200 px-4 py-3 text-sm"
-                                            value={ editName }
-                                            onChange={ ( e ) => setEditName( e.target.value ) }
-                                        />
-                                        <input
-                                            className="rounded-xl border border-odoo-200 px-4 py-3 text-sm"
-                                            value={ editSlug }
-                                            onChange={ ( e ) => setEditSlug( e.target.value ) }
-                                        />
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={ () => void saveEdit( t.id ) }
-                                                className="flex-1 rounded-xl bg-bms-primary px-4 py-3 text-sm font-medium text-white"
-                                            >
-                                                ذخیره
-                                            </button>
-                                            <button
-                                                onClick={ cancelEdit }
-                                                className="rounded-xl border border-odoo-200 px-4 py-3 text-sm hover:bg-odoo-50"
-                                            >
-                                                انصراف
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) }
-                            </div>
-                        );
-                    } ) }
-                </div>
-
-                { !loading && sorted.length === 0 ? (
-                    <div className="p-6 text-sm text-odoo-600">موردی وجود ندارد.</div>
-                ) : null }
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                { isLoading ? (
+                    <div className="p-8 text-center text-slate-500">در حال بارگذاری...</div>
+                ) : (
+                    <div className="p-6 flex flex-wrap gap-2">
+                        { tags.map( ( tag ) => (
+                            <span key={ tag.id } className="inline-flex items-center gap-2 bg-slate-50 border border-slate-200 text-slate-700 px-3 py-1 rounded-full text-sm">
+                                <span># { tag.name }</span>
+                                <button onClick={ () => handleDelete( tag.id ) } className="text-slate-400 hover:text-red-500 font-bold px-1">×</button>
+                            </span>
+                        ) ) }
+                        { tags.length === 0 && <p className="text-slate-400 w-full text-center">تگی وجود ندارد.</p> }
+                    </div>
+                ) }
             </div>
         </div>
     );

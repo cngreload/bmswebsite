@@ -1,60 +1,112 @@
+// components/clinicans/ClinicansTechSection.tsx
+import
+{
+    LuCloud,
+    LuCpu,
+    LuDatabase,
+    LuWebhook,
+    LuServer
+} from "react-icons/lu";
+
 const techBlocks = [
     {
+        id: "cloud",
         title: "معماری تحت‌وب و Cloud-Ready",
-        body:
-            "دسترسی به Clinicans از طریق مرورگر، بدون نیاز به نصب و به‌روزرسانی دستی انجام می‌شود. امکان استفاده هم در داخل کلینیک و هم در شعب یا مکان‌های دیگر در صورت تعریف سطح دسترسی وجود دارد."
+        icon: LuCloud,
+        color: "text-blue-600",
+        bg: "bg-blue-50",
+        border: "group-hover:border-blue-200",
+        body: "دسترسی از هر مکان و هر دستگاه (Anywhere, Anytime). بدون نیاز به نصب سرور فیزیکی در مطب و دغدغه‌های نگهداری سخت‌افزار."
     },
     {
-        title: "هسته‌ی مبتنی بر فریم‌ورک‌های مدرن",
-        body:
-            "لایه‌ی بک‌اند بر پایه‌ی فناوری‌های مدرن و پایدار توسعه یافته است تا نگه‌داری، توسعه و یکپارچگی با سامانه‌های دیگر در طول زمان ساده و قابل اتکا باشد. لایه‌ی فرانت‌اند با تمرکز بر تجربه‌ی کاربری روان و واکنش‌گرا طراحی شده است."
+        id: "stack",
+        title: "هسته‌ی مدرن (Modern Stack)",
+        icon: LuCpu,
+        color: "text-indigo-600",
+        bg: "bg-indigo-50",
+        border: "group-hover:border-indigo-200",
+        body: "توسعه یافته با جدیدترین تکنولوژی‌های وب (Next.js & React). رابط کاربری سریع، واکنش‌گرا (Responsive) و تجربه کاربری روان."
     },
     {
-        title: "پایگاه داده ساخت‌یافته و مقیاس‌پذیر",
-        body:
-            "داده‌های کلینیک روی پایگاه داده‌ای ساخت‌یافته ذخیره می‌شود که برای حجم بالای نوبت‌ها، پرونده‌ها و سوابق مالی آماده است. معماری داده امکان گزارش‌گیری و تحلیل مؤثر اطلاعات را در آینده ساده‌تر می‌کند."
+        id: "db",
+        title: "پایگاه داده مقیاس‌پذیر",
+        icon: LuDatabase,
+        color: "text-cyan-600",
+        bg: "bg-cyan-50",
+        border: "group-hover:border-cyan-200",
+        body: "طراحی دیتابیس برای حجم عظیم داده‌های پزشکی. بهینه‌سازی شده برای جستجوی سریع در میلیون‌ها رکورد پرونده و تراکنش مالی."
     },
     {
-        title: "آماده برای یکپارچگی (Integration-Ready)",
-        body:
-            "زیرساخت کلینیکانز با نگاه API-محور طراحی شده است تا در صورت نیاز، امکان اتصال به سامانه‌های مکمل (مانند سیستم‌های آزمایشگاهی، پرداخت، پیامک و…) فراهم باشد و اکوسیستم دیجیتال اختصاصی هر کلینیک شکل بگیرد."
+        id: "api",
+        title: "آماده برای اتصال (API-First)",
+        icon: LuWebhook,
+        color: "text-violet-600",
+        bg: "bg-violet-50",
+        border: "group-hover:border-violet-200",
+        body: "معماری باز برای اتصال به سایر سرویس‌ها. یکپارچگی آسان با سامانه‌های بیمه، آزمایشگاه‌ها، درگاه‌های پرداخت و پنل‌های پیامکی."
     }
 ];
 
 export default function ClinicansTechSection ()
 {
     return (
-        <section id="clinicans-tech" className="pt-8">
-            <div className="mx-auto max-w-6xl space-y-4 text-right">
-                <h2 className="text-lg md:text-xl font-semibold text-bms-dark">
-                    تکنولوژی و زیرساخت کلینیکانز
-                </h2>
-                <p className="text-xs md:text-sm text-slate-700 max-w-3xl ml-auto leading-relaxed">
-                    پلتفرمی تحت‌وب، مقیاس‌پذیر و قابل‌اتکا؛ ساخته‌شده با فناوری‌های روز و
-                    آماده برای رشد کلینیک شما.
-                </p>
-                <p className="text-xs md:text-sm text-slate-700 max-w-3xl ml-auto leading-relaxed">
-                    کلینیکانز به‌عنوان یک پلتفرم تحت‌وب طراحی شده است؛ یعنی برای استفاده
-                    از آن نیازی به نصب نرم‌افزارهای سنگین یا تجهیزات خاص در کلینیک نیست.
-                    تنها با یک مرورگر به‌روز و اینترنت پایدار، می‌توان از هر کامپیوتر یا
-                    تبلت در محیط کلینیک به پنل دسترسی داشت. زیرساخت نرم‌افزاری و پایگاه
-                    داده‌ی سیستم، بر پایه‌ی فناوری‌های مدرن و قابل‌گسترش انتخاب شده است
-                    تا بتواند هم نیاز یک کلینیک تک‌شعبه‌ای و هم شبکه‌ای از کلینیک‌ها را
-                    پاسخ دهد.
-                </p>
+        <section
+            id="clinicans-tech"
+            className="py-10 md:py-16 bg-slate-50/50"
+            aria-labelledby="tech-heading"
+        >
+            <div className="mx-auto max-w-6xl px-4">
 
-                <div className="grid gap-4 md:grid-cols-2">
-                    { techBlocks.map( ( block ) => (
-                        <article
-                            key={ block.title }
-                            className="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm text-[11px] md:text-sm leading-relaxed text-slate-700"
-                        >
-                            <h3 className="mb-2 text-sm md:text-base font-semibold text-bms-dark">
-                                { block.title }
-                            </h3>
-                            <p>{ block.body }</p>
-                        </article>
-                    ) ) }
+                {/* Header */ }
+                <div className="mb-12 text-right space-y-4">
+                    <span className="inline-block rounded-lg bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700 border border-slate-300 font-mono">
+                        Tech Specs
+                    </span>
+                    <h2
+                        id="tech-heading"
+                        className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
+                    >
+                        زیرساخت فنی و <span className="text-bms-primary">تکنولوژی</span>
+                    </h2>
+                    <p className="max-w-3xl ml-auto text-sm leading-8 text-slate-600 md:text-base">
+                        ما کلینیکانز را نه فقط به عنوان یک نرم‌افزار، بلکه به عنوان یک
+                        <strong className="text-slate-900 mx-1">اکوسیستم دیجیتال</strong> مهندسی کرده‌ایم.
+                        پایداری، سرعت و امنیت، در DNA کدهای ماست.
+                    </p>
+                </div>
+
+                {/* Grid */ }
+                <div className="grid gap-6 md:grid-cols-2">
+                    { techBlocks.map( ( block ) =>
+                    {
+                        const Icon = block.icon;
+                        return (
+                            <article
+                                key={ block.id }
+                                className={ `group relative flex items-start gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${ block.border }` }
+                            >
+                                {/* Tech Icon */ }
+                                <div className={ `flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${ block.bg } ${ block.color } shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-6` }>
+                                    <Icon className="h-7 w-7" />
+                                </div>
+
+                                {/* Content */ }
+                                <div className="space-y-2 text-right">
+                                    <h3 className="text-base font-bold text-slate-900 group-hover:text-bms-primary transition-colors">
+                                        { block.title }
+                                    </h3>
+                                    <p className="text-sm leading-7 text-slate-600 text-pretty">
+                                        { block.body }
+                                    </p>
+                                </div>
+
+                                {/* Tech Decoration */ }
+                                <div className="absolute top-4 left-4 opacity-0 transition-opacity group-hover:opacity-100">
+                                    <LuServer className="h-4 w-4 text-slate-200" />
+                                </div>
+                            </article>
+                        );
+                    } ) }
                 </div>
             </div>
         </section>

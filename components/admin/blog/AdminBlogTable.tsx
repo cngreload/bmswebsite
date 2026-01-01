@@ -1,234 +1,177 @@
-// components/admin/blog/AdminBlogTable.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
-import { AdminBlogPost } from "@/lib/admin-api";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 
+// نوع اختصاصی برای ادمین
+type AdminBlogPost = {
+    id: string;
+    title: string;
+    slug: string;
+    status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
+    isFeatured: boolean;
+    publishedAt: string | null;
+    category?: { name: string; } | null;
+    // content رو حذف کن یا optional کن
+    // content?: string;  // اگر واقعاً لازم نیست، کامل حذف کن
+    excerpt?: string | null;
+    coverImageUrl?: string | null;
+    seoTitle?: string | null;
+    seoDesc?: string | null;
+    readingTime?: number | null;
+};
 type AdminBlogTableProps = {
     posts: AdminBlogPost[];
     page: number;
     totalPages: number;
 };
 
-export function AdminBlogTable ( {
-    posts,
-    page,
-    totalPages,
-}: AdminBlogTableProps )
+// Helper for status colors
+const statusStyles = {
+    DRAFT: "bg-slate-100 text-slate-600 border-slate-200",
+    PUBLISHED: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    ARCHIVED: "bg-amber-50 text-amber-700 border-amber-200",
+};
+
+export function AdminBlogTable ( { posts, page, totalPages }: AdminBlogTableProps )
 {
     const router = useRouter();
-    const [ deletingId, setDeletingId ] = useState<string | null>( null );
-
-    const goToNew = () =>
-    {
-        router.push( "/admin/blog/new" );
-    };
-
-    const goToEdit = ( id: string ) =>
-    {
-        router.push( `/admin/blog/${ id }` );
-    };
+    const [ isDeleting, setIsDeleting ] = useState<string | null>( null );
 
     const handleDelete = async ( id: string ) =>
     {
-        if (
-            !window.confirm(
-                "آیا از حذف این پست اطمینان دارید؟ این عملیات قابل بازگشت نیست.",
-            )
-        )
-        {
-            return;
-        }
+        if ( !confirm( "آیا از حذف این مقاله اطمینان دارید؟ این عملیات غیرقابل بازگشت است." ) ) return;
 
+        setIsDeleting( id );
         try
         {
-            setDeletingId( id );
-            const res = await fetch( `/api/admin/blog/posts/${ id }`, {
-                method: "DELETE",
-            } );
-
-            if ( !res.ok )
-            {
-                alert( "خطایی در حذف پست رخ داد." );
-                return;
-            }
-
+            const res = await fetch( `/api/admin/posts/${ id }`, { method: "DELETE" } );
+            if ( !res.ok ) throw new Error( "Delete failed" );
             router.refresh();
         } catch
         {
-            alert( "عدم ارتباط با سرور. لطفاً دوباره تلاش کنید." );
+            alert( "خطا در حذف مقاله" );
         } finally
         {
-            setDeletingId( null );
+            setIsDeleting( null );
         }
     };
 
     return (
         <div className="space-y-4">
-            {/* header */ }
-            <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1 text-right">
-                    <h1 className="text-base font-semibold text-bms-dark md:text-lg">
-                        پست‌های وبلاگ
-                    </h1>
-                    <p className="text-[11px] text-slate-500 md:text-xs">
-                        مدیریت اخبار، مقالات و به‌روزرسانی‌های محتوایی بارمان.
-                    </p>
-                </div>
-                <button
-                    type="button"
-                    onClick={ goToNew }
-                    className="rounded-xl bg-bms-primary px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-bms-dark md:text-sm"
+            {/* Header Actions */ }
+            <div className="flex justify-between items-center bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <h2 className="text-lg font-bold text-slate-800">لیست مقالات</h2>
+                <Link
+                    href="/admin/blog/new"
+                    className="bg-bms-primary text-white px-4 py-2 rounded-xl text-sm hover:bg-bms-dark transition-colors"
                 >
-                    پست جدید
-                </button>
+                    + مقاله جدید
+                </Link>
             </div>
 
-            {/* table */ }
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <table className="min-w-full border-separate border-spacing-0 text-right text-[11px] md:text-xs">
-                    <thead className="bg-slate-50">
-                        <tr>
-                            <Th>عنوان</Th>
-                            <Th className="hidden md:table-cell">Slug</Th>
-                            <Th>وضعیت</Th>
-                            <Th className="hidden md:table-cell">تاریخ انتشار</Th>
-                            <Th>اقدامات</Th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { posts.length === 0 && (
+            {/* Table */ }
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-right">
+                        <thead className="bg-slate-50 border-b border-slate-100 text-xs text-slate-500 uppercase">
                             <tr>
-                                <td
-                                    colSpan={ 5 }
-                                    className="px-4 py-6 text-center text-[11px] text-slate-500 md:text-xs"
-                                >
-                                    هنوز هیچ پستی ثبت نشده است.
-                                </td>
+                                <th className="px-6 py-4 font-medium">عنوان</th>
+                                <th className="px-6 py-4 font-medium">وضعیت</th>
+                                <th className="px-6 py-4 font-medium">دسته‌بندی</th>
+                                <th className="px-6 py-4 font-medium">تاریخ انتشار</th>
+                                <th className="px-6 py-4 font-medium text-left">عملیات</th>
                             </tr>
-                        ) }
-
-                        { posts.map( ( post, index ) => (
-                            <tr
-                                key={ post.id }
-                                className={ cn(
-                                    "border-t border-slate-100",
-                                    index % 2 === 1 && "bg-slate-50/40",
-                                ) }
-                            >
-                                {/* عنوان */ }
-                                <Td>
-                                    <div className="flex flex-col gap-1">
-                                        <span className="line-clamp-2 text-[11px] font-medium text-bms-dark md:text-xs">
-                                            { post.title }
-                                        </span>
-                                        { post.excerpt && (
-                                            <span className="line-clamp-1 text-[10px] text-slate-500">
-                                                { post.excerpt }
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                            { posts.length === 0 ? (
+                                <tr>
+                                    <td colSpan={ 5 } className="px-6 py-8 text-center text-slate-500 text-sm">
+                                        هیچ مقاله‌ای یافت نشد.
+                                    </td>
+                                </tr>
+                            ) : (
+                                posts.map( ( post ) => (
+                                    <tr key={ post.id } className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-6 py-4">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="font-semibold text-slate-800 text-sm line-clamp-1">
+                                                    { post.title }
+                                                </span>
+                                                <span className="text-[11px] text-slate-400 font-mono dir-ltr text-right truncate max-w-[200px]">
+                                                    /{ post.slug }
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span
+                                                className={ `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${ statusStyles[ post.status ]
+                                                    }` }
+                                            >
+                                                { post.status === "DRAFT" && "پیش‌نویس" }
+                                                { post.status === "PUBLISHED" && "منتشر شده" }
+                                                { post.status === "ARCHIVED" && "آرشیو" }
                                             </span>
-                                        ) }
-                                    </div>
-                                </Td>
-
-                                {/* slug */ }
-                                <Td className="hidden md:table-cell text-[10px] text-slate-500">
-                                    { post.slug }
-                                </Td>
-
-                                {/* status */ }
-                                <Td>
-                                    <span
-                                        className={ cn(
-                                            "inline-flex items-center rounded-full px-2 py-[3px] text-[10px]",
-                                            post.status === "PUBLISHED"
-                                                ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100"
-                                                : "bg-amber-50 text-amber-700 ring-1 ring-amber-100",
-                                        ) }
-                                    >
-                                        { post.status === "PUBLISHED" ? "منتشر شده" : "پیش‌نویس" }
-                                    </span>
-                                </Td>
-
-                                {/* date */ }
-                                <Td className="hidden md:table-cell text-[10px] text-slate-500">
-                                    { post.publishedAt
-                                        ? new Intl.DateTimeFormat( "fa-IR", {
-                                            year: "numeric",
-                                            month: "short",
-                                            day: "2-digit",
-                                        } ).format( new Date( post.publishedAt ) )
-                                        : "-" }
-                                </Td>
-
-                                {/* actions */ }
-                                <Td>
-                                    <div className="flex items-center justify-start gap-2">
-                                        <button
-                                            type="button"
-                                            onClick={ () => goToEdit( post.id ) }
-                                            className="text-[11px] text-bms-primary hover:text-bms-dark"
-                                        >
-                                            ویرایش
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={ () => handleDelete( post.id ) }
-                                            disabled={ deletingId === post.id }
-                                            className="text-[11px] text-red-500 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-60"
-                                        >
-                                            { deletingId === post.id ? "در حال حذف..." : "حذف" }
-                                        </button>
-                                    </div>
-                                </Td>
-                            </tr>
-                        ) ) }
-                    </tbody>
-                </table>
-            </div>
-
-            {/* pagination placeholder */ }
-            { totalPages > 1 && (
-                <div className="flex items-center justify-center gap-3 text-[11px] md:text-xs">
-                    <span className="text-slate-500">
-                        صفحه { page } از { totalPages }
-                    </span>
+                                            { post.isFeatured && (
+                                                <span className="mr-2 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-200">
+                                                    ویژه
+                                                </span>
+                                            ) }
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-slate-600">
+                                            { post.category?.name ?? "—" }
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-slate-500">
+                                            { post.publishedAt
+                                                ? new Intl.DateTimeFormat( "fa-IR" ).format( new Date( post.publishedAt ) )
+                                                : "—" }
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center justify-end gap-3 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                                <Link
+                                                    href={ `/admin/blog/${ post.id }` }
+                                                    className="text-bms-primary hover:underline text-sm font-medium"
+                                                >
+                                                    ویرایش
+                                                </Link>
+                                                <button
+                                                    onClick={ () => handleDelete( post.id ) }
+                                                    disabled={ isDeleting === post.id }
+                                                    className="text-red-500 hover:underline text-sm disabled:opacity-50"
+                                                >
+                                                    { isDeleting === post.id ? "..." : "حذف" }
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ) )
+                            ) }
+                        </tbody>
+                    </table>
                 </div>
-            ) }
+
+                {/* Pagination Footer */ }
+                <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
+                    <span>صفحه { page } از { totalPages }</span>
+                    <div className="flex gap-2">
+                        <button
+                            disabled={ page <= 1 }
+                            onClick={ () => router.push( `?page=${ page - 1 }` ) }
+                            className="px-3 py-1 rounded border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
+                        >
+                            قبلی
+                        </button>
+                        <button
+                            disabled={ page >= totalPages }
+                            onClick={ () => router.push( `?page=${ page + 1 }` ) }
+                            className="px-3 py-1 rounded border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
+                        >
+                            بعدی
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    );
-}
-
-function Th ( {
-    children,
-    className,
-}: {
-    children: React.ReactNode;
-    className?: string;
-} )
-{
-    return (
-        <th
-            className={ cn(
-                "px-4 py-3 text-[11px] font-medium text-slate-600 md:text-xs",
-                className,
-            ) }
-        >
-            { children }
-        </th>
-    );
-}
-
-function Td ( {
-    children,
-    className,
-}: {
-    children: React.ReactNode;
-    className?: string;
-} )
-{
-    return (
-        <td className={ cn( "px-4 py-3 align-top", className ) }>{ children }</td>
     );
 }

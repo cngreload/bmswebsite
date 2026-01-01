@@ -1,233 +1,238 @@
+// components/home/ProductBands.tsx
 import Link from "next/link";
 import CngPilotVideo from "./CngPilotVideo";
+import { LuCpu, LuActivity, LuHandshake, LuArrowUpLeft } from "react-icons/lu";
 
 export default function ProductBands ()
 {
     return (
-        <section className="py-10 md:py-14">
-            <div className="mx-auto max-w-6xl space-y-10 md:space-y-12">
-                <ICTSBand />
-                <ClinicansBand />
-                <CooperationBand />
+        <section className="py-10 md:py-16" aria-labelledby="products-heading">
+            <div className="mx-auto max-w-6xl">
+
+                {/* 
+          🧠 SEMANTIC HEADER
+          - Matches the visual rhythm of WorldsGrid.
+          - Provides context before showing the cards.
+        */}
+                <div className="mb-12 space-y-3 text-right px-4">
+                    <span className="inline-block rounded-lg bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600">
+                        محصولات عملیاتی
+                    </span>
+                    <h2
+                        id="products-heading"
+                        className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
+                    >
+                        سامانه‌ها و <span className="text-bms-primary">محصولات</span>
+                    </h2>
+                    <p className="ml-auto max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+                        ما تنها طراح نیستیم؛ ما سازنده‌ایم. این‌ها محصولاتی هستند که هم‌اکنون در زیرساخت‌های ملی و کسب‌وکارهای خصوصی در حال خدمت‌رسانی هستند.
+                    </p>
+                </div>
+
+                {/* Bands Container */ }
+                <div className="space-y-16">
+                    <ICTSBand />
+                    <ClinicansBand />
+                    <CooperationBand />
+                </div>
             </div>
         </section>
     );
 }
 
-/* 🟦 باند ۱ – سامانه هوشمند جایگاه‌های سوخت CNG (با ویدیو پایلوت) */
-
+/* 
+  🟦 BAND 1: ICTS (CNG Automation)
+*/
 function ICTSBand ()
 {
     return (
-        <article className="rounded-3xl border border-bms-primary/10 bg-bms-primary-soft/70 p-5 md:p-8 shadow-soft-lg">
-            <div className="flex flex-col gap-6 md:gap-8 md:flex-row md:items-stretch">
-                {/* متن – راست (در RTL) */ }
-                <div className="md:flex-1 text-right space-y-4">
-                    <p className="text-[11px] md:text-xs font-medium text-bms-primary">
-                        انرژی، ایمنی و زیرساخت‌های حیاتی
-                    </p>
+        <article
+            className="group relative overflow-hidden rounded-[2.5rem] border border-bms-primary/10 bg-gradient-to-br from-slate-50 to-blue-50/50 p-6 md:p-10 shadow-sm transition-shadow hover:shadow-md"
+        >
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
 
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-bms-dark leading-relaxed">
-                        سامانه هوشمند کنترل و مانیتورینگ جایگاه‌های CNG
-                    </h3>
-
-                    <p className="text-xs md:text-sm text-slate-700">
-                        جایی که فناوری، ایمنی و بهره‌وری به هم می‌رسند.
-                    </p>
-
-                    <div className="space-y-3 text-xs md:text-sm leading-relaxed text-slate-700">
-                        <p>
-                            داستان این سامانه از دل یک نیاز واقعی در جایگاه‌های سوخت آغاز شد؛ نیازی به نظارت
-                            دقیق، سریع و ایمن بر فرآیندهایی که هر روز با جان و سرمایه‌ی مردم گره خورده‌اند.
-                            پاسخی که بارمان به این نیاز داد، صرفاً یک محصول نبود؛ تحولی بومی و جسورانه در
-                            نحوه‌ی نگاه به کنترل و مانیتورینگ در صنعت سوخت کشور بود.
-                        </p>
-                        <p>
-                            سامانه هوشمند کنترل و مانیتورینگ جایگاه‌های CNG با تکیه بر فناوری‌های روز،
-                            داده‌ها را به‌صورت لحظه‌ای جمع‌آوری و پردازش می‌کند، وضعیت تجهیزات حیاتی را پایش
-                            می‌کند و با ارائه‌ی داشبوردها و گزارش‌های تعاملی، مدیریت را از کاری پیچیده و
-                            پراکنده به تصمیم‌گیری هوشمند، مستند و قابل ردیابی تبدیل می‌کند.
-                        </p>
-                        <p>
-                            نقطه‌ی عطف این سامانه، قابلیت شناسایی خودکار خودروهای غیر استاندارد است؛
-                            راهکاری که با پیشگیری از حوادث و کاهش ریسک‌های پنهان، ایمنی را از یک شعار به
-                            واقعیتی ملموس برای بهره‌برداران، کارکنان و مراجعان جایگاه تبدیل می‌کند.
-                        </p>
+                {/* Content (Right in RTL) */ }
+                <div className="lg:flex-1 space-y-6 text-right">
+                    <div className="flex items-center gap-2 text-bms-primary">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-bms-primary/10">
+                            <LuCpu className="h-4 w-4" />
+                        </div>
+                        <span className="text-xs font-bold tracking-wide">زیرساخت‌های حیاتی انرژی</span>
                     </div>
 
-                    <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-slate-700 list-disc pr-4">
-                        <li>پایش و کنترل لحظه‌ای تجهیزات، نازل‌ها و زیرساخت‌های حیاتی جایگاه</li>
-                        <li>کاهش ریسک حوادث و توقف‌های هزینه‌زا با شناسایی خودکار شرایط و خودروهای پرخطر</li>
-                        <li>تولید گزارش‌ها و بینش مدیریتی برای انطباق با الزامات، برنامه‌ریزی و تصمیم‌سازی</li>
-                        <li>یکپارچگی سخت‌افزار و نرم‌افزار بومی، مبتنی بر تجربه‌ی میدانی در طرح‌های ملی</li>
+                    <h3 className="text-2xl font-bold text-slate-900 md:text-3xl leading-tight">
+                        سامانه هوشمند <span className="text-bms-primary">ICTS</span>
+                        <br />
+                        <span className="text-lg font-medium text-slate-500">پایش و کنترل جایگاه‌های سوخت CNG</span>
+                    </h3>
+
+                    <p className="text-sm leading-7 text-slate-600 md:text-base text-justify">
+                        پاسخ بومی بارمان به چالش ایمنی و نظارت در شبکه سوخت کشور.
+                        ICTS با تلفیق سخت‌افزار صنعتی و نرم‌افزار مرکزی، داده‌های میدان را به صورت لحظه‌ای (Real-time)
+                        پردازش کرده و ریسک حوادث ناشی از خودروهای غیرواجد شرایط را به صفر نزدیک می‌کند.
+                    </p>
+
+                    <ul className="grid gap-3 text-sm text-slate-700">
+                        { [ "شناسایی خودکار خودروهای پرخطر", "داشبورد مدیریتی تحت وب", "سخت‌افزار مقاوم صنعتی (Industrial Grade)" ].map( ( item, i ) => (
+                            <li key={ i } className="flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-bms-accent" />
+                                { item }
+                            </li>
+                        ) ) }
                     </ul>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="pt-2">
                         <Link
                             href="/cng-automation"
-                            className="inline-flex items-center gap-1 rounded-full bg-bms-primary px-5 py-2 text-[11px] md:text-xs font-medium text-white hover:bg-bms-dark transition-colors"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-bms-primary hover:text-bms-dark transition-colors"
                         >
-                            <span>مشاهده جزئیات سامانه جایگاه‌های CNG</span>
-                            <span className="text-[13px]">↗</span>
+                            بررسی فنی سامانه
+                            <LuArrowUpLeft className="h-4 w-4" />
                         </Link>
                     </div>
                 </div>
 
-                {/* ویدیو – چپ */ }
-                <div className="md:w-[42%] space-y-3">
-                    <p className="text-[10px] md:text-[11px] text-slate-600 text-right">
-                        نمایش بخشی از اجرای پایلوت سامانه در جایگاه‌های CNG
-                    </p>
-
-                    <CngPilotVideo
-                        src="/CNG_Station_Automation.mp4"
-                        ariaLabel="پایلوت سامانه هوشمند کنترل و مانیتورینگ جایگاه CNG بارمان"
-                    />
-
-                    <p className="text-[10px] md:text-[11px] leading-relaxed text-slate-600 text-right">
-                        <em>
-                            گزارش رسمی مهندس حسین یوسفی، مدیر پروژه هوشمندسازی جایگاه‌های CNG، <br />
-                            شرکت ملی پخش فرآورده‌های نفتی
-                        </em>
-                    </p>
+                {/* Media (Left) */ }
+                <div className="w-full lg:w-[45%]">
+                    <div className="relative rounded-2xl bg-slate-900 p-2 shadow-2xl rotate-1 transition-transform duration-500 group-hover:rotate-0">
+                        <CngPilotVideo
+                            src="/CNG_Station_Automation.mp4"
+                            ariaLabel="ویدیو عملکرد سامانه هوشمند در جایگاه سوخت"
+                        />
+                        <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-2xl bg-bms-primary/10" />
+                    </div>
                 </div>
             </div>
         </article>
     );
 }
 
-/* 🟦 باند ۲ – پلتفرم Clinicans برای کلینیک‌ها */
-
+/* 
+  🟩 BAND 2: Clinicans (SaaS Healthcare)
+*/
 function ClinicansBand ()
 {
     return (
-        <article className="rounded-3xl border border-slate-200 bg-white p-5 md:p-8 shadow-sm">
-            <div className="flex flex-col gap-6 md:gap-8 md:flex-row md:items-stretch">
-                <div className="md:flex-1 text-right space-y-4">
-                    <p className="text-[11px] md:text-xs font-medium text-bms-primary">
-                        سلامت دیجیتال و کلینیک‌های هوشمند
-                    </p>
+        <article
+            className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-6 md:p-10 shadow-sm transition-shadow hover:shadow-md"
+        >
+            <div className="flex flex-col gap-8 lg:flex-row-reverse lg:items-center lg:gap-12">
 
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-bms-dark leading-relaxed">
-                        Clinicans – پلتفرم فول‌استک مدیریت کلینیک‌های زیبایی و سلامت
-                    </h3>
-
-                    <p className="text-xs md:text-sm text-slate-700">
-                        از نوبت‌دهی تا رشد درآمد؛ همه‌چیز در یک بستر یکپارچه.
-                    </p>
-
-                    <div className="space-y-3 text-xs md:text-sm leading-relaxed text-slate-700">
-                        <p>
-                            Clinicans پاسخی است به کلینیک‌هایی که می‌خواهند از مدیریت روزمره‌ی شلوغ و
-                            ابزارهای پراکنده عبور کنند و بر کیفیت خدمات و رشد پایدار تمرکز کنند. این پلتفرم
-                            فول‌استک، لایه‌های مختلف مدیریت کلینیک را – از نوبت‌دهی و پرونده‌ی سلامت تا
-                            مالی، ارتباط با بیمار و مارکتینگ – در یک پنل یکپارچه و مدرن گردآورده است.
-                        </p>
-                        <p>
-                            Clinicans با طراحی بومی برای کلینیک‌های حرفه‌ای، امکان پایش عملکرد، تحلیل داده‌های
-                            کلینیک و برنامه‌ریزی برای توسعه‌ی خدمات را فراهم می‌کند؛ بدون آن‌که تیم درمان را
-                            درگیر چندین سامانه‌ی جداگانه، زمان‌بر و پرخطا کند.
-                        </p>
+                {/* Content */ }
+                <div className="lg:flex-1 space-y-6 text-right">
+                    <div className="flex items-center gap-2 text-emerald-600">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50">
+                            <LuActivity className="h-4 w-4" />
+                        </div>
+                        <span className="text-xs font-bold tracking-wide">سلامت دیجیتال (E-Health)</span>
                     </div>
 
-                    <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-slate-700 list-disc pr-4">
-                        <li>یکپارچه‌سازی نوبت‌دهی، پرونده‌ی بیمار، مالی و ارتباط با مراجعان</li>
-                        <li>ابزارهای درون‌ساخت برای مارکتینگ، پیام‌رسانی هدفمند و تحلیل رشد کلینیک</li>
-                        <li>طراحی‌شده برای کلینیک‌های در حال توسعه که به ساختار حرفه‌ای و مقیاس‌پذیر نیاز دارند</li>
-                        <li>تجربه‌ی کاربری ساده برای تیم درمان، در عین پشتیبانی از سناریوهای پیچیده‌ی مدیریتی</li>
+                    <h3 className="text-2xl font-bold text-slate-900 md:text-3xl leading-tight">
+                        پلتفرم ابری <span className="text-emerald-600">Clinicans</span>
+                        <br />
+                        <span className="text-lg font-medium text-slate-500">مدیریت یکپارچه کلینیک‌های مدرن</span>
+                    </h3>
+
+                    <p className="text-sm leading-7 text-slate-600 md:text-base text-justify">
+                        پایان دوران نرم‌افزارهای جزیره‌ای. کلینیکانز (Clinicans) تمام نیازهای یک مرکز درمانی،
+                        از نوبت‌دهی آنلاین و پرونده الکترونیک (EHR) تا حسابداری و CRM را در یک پلتفرم امن و یکپارچه گردآورده است.
+                    </p>
+
+                    <ul className="grid gap-3 text-sm text-slate-700">
+                        { [ "پرونده الکترونیک سلامت (EHR)", "باشگاه مشتریان و مارکتینگ خودکار", "گزارش‌های هوش تجاری (BI)" ].map( ( item, i ) => (
+                            <li key={ i } className="flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                { item }
+                            </li>
+                        ) ) }
                     </ul>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="pt-2">
                         <Link
                             href="/clinicans"
-                            className="inline-flex items-center gap-1 rounded-full bg-bms-primary px-5 py-2 text-[11px] md:text-xs font-medium text-white hover:bg-bms-dark transition-colors"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-800 transition-colors"
                         >
-                            <span>آشنایی با پلتفرم Clinicans</span>
-                            <span className="text-[13px]">↗</span>
+                            مشاهده امکانات پلتفرم
+                            <LuArrowUpLeft className="h-4 w-4" />
                         </Link>
                     </div>
                 </div>
 
-                <div className="md:w-[42%] space-y-3">
-                    <p className="text-[10px] md:text-[11px] text-slate-600 text-right">
-                        نمایی از داشبورد مدیریت کلینیک در پلتفرم Clinicans
-                    </p>
-
-                    <div className="relative overflow-hidden rounded-2xl border border-bms-primary/15 bg-gradient-to-br from-bms-primary-soft via-white to-emerald-50 aspect-video shadow-sm">
-                        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_10%_0,rgba(16,185,129,0.35),transparent_55%),radial-gradient(circle_at_90%_100,rgba(20,92,152,0.3),transparent_55%)]" />
-                        <div className="relative flex h-full flex-col justify-between p-4 text-right text-slate-800">
-                            <div className="flex items-center justify-between text-[11px] md:text-xs">
-                                <span className="font-semibold text-bms-primary">Clinicans Dashboard</span>
-                                <span className="rounded-full bg-white/80 px-2 py-0.5 text-[10px]">
-                                    Demo View
-                                </span>
+                {/* Visual: CSS Dashboard Mockup */ }
+                <div className="w-full lg:w-[45%]">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-lg transition-transform duration-500 group-hover:scale-[1.02]">
+                        <div className="absolute top-0 right-0 h-full w-16 border-l border-slate-200 bg-white" />
+                        <div className="absolute top-4 right-20 left-4 h-8 rounded-lg bg-white border border-slate-200" />
+                        <div className="absolute top-16 right-20 left-4 grid grid-cols-3 gap-3">
+                            <div className="h-24 rounded-lg bg-white border border-slate-200 p-3">
+                                <div className="h-2 w-8 rounded bg-emerald-100 mb-2" />
+                                <div className="h-6 w-12 rounded bg-slate-100" />
                             </div>
-                            <div className="space-y-1.5 text-[10px] md:text-[11px] leading-relaxed">
-                                <p>• نوبت‌های امروز، وضعیت اتاق‌ها و مراجعان در یک نگاه</p>
-                                <p>• نمای کلی درآمد، کانال‌های ورودی و کمپین‌های فعال</p>
-                                <p>• لیست سریع مراجعان VIP و پیگیری‌های در حال انجام</p>
+                            <div className="h-24 rounded-lg bg-white border border-slate-200 p-3">
+                                <div className="h-2 w-8 rounded bg-blue-100 mb-2" />
+                                <div className="h-6 w-12 rounded bg-slate-100" />
+                            </div>
+                            <div className="h-24 rounded-lg bg-white border border-slate-200 p-3">
+                                <div className="h-2 w-8 rounded bg-purple-100 mb-2" />
+                                <div className="h-6 w-12 rounded bg-slate-100" />
                             </div>
                         </div>
+                        <div className="absolute top-44 right-20 left-4 bottom-4 rounded-lg bg-white border border-slate-200 p-4">
+                            <div className="flex items-end gap-2 h-full w-full opacity-50">
+                                <div className="w-full bg-emerald-500 rounded-t h-[40%]" />
+                                <div className="w-full bg-emerald-500 rounded-t h-[70%]" />
+                                <div className="w-full bg-emerald-500 rounded-t h-[50%]" />
+                                <div className="w-full bg-emerald-500 rounded-t h-[85%]" />
+                                <div className="w-full bg-emerald-500 rounded-t h-[60%]" />
+                            </div>
+                        </div>
+                        <div className="absolute bottom-3 right-3 rounded-full bg-emerald-100 px-2 py-1 text-[10px] font-bold text-emerald-700">
+                            Live Demo
+                        </div>
                     </div>
-
-                    <p className="text-[10px] md:text-[11px] leading-relaxed text-slate-600 text-right">
-                        موکاپ نمایشی از داشبورد Clinicans؛ در نسخه نهایی می‌توان اسکرین‌شات واقعی محیط
-                        کاربری را در این بخش جایگزین کرد.
-                    </p>
                 </div>
             </div>
         </article>
     );
 }
 
-/* 🟦 باند ۳ – همکاری و سرمایه‌گذاری بر بستر فناوری بارمان */
-
+/* 
+  🟪 BAND 3: Cooperation
+*/
 function CooperationBand ()
 {
     return (
-        <article className="rounded-3xl border border-dashed border-bms-primary/25 bg-gradient-to-br from-white via-bms-primary-soft/60 to-emerald-50/60 p-5 md:p-7 shadow-sm">
-            <div className="space-y-4 text-right">
-                <p className="text-[11px] md:text-xs font-medium text-bms-primary">
-                    همکاری‌های استراتژیک و توسعه‌ی محصولات جدید
-                </p>
-
-                <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-bms-dark leading-relaxed">
-                    سرمایه‌گذاری بر یک هسته‌ی بومی برای هوشمندسازی نسل بعد کسب‌وکارها
-                </h3>
-
-                <p className="text-xs md:text-sm text-slate-700 max-w-3xl ml-auto">
-                    از صنعت و انرژی تا خدمات و زندگی روزمره؛ معماری ماژولار بارمان آماده‌ی خلق نسل بعدی
-                    محصولات هوشمند است.
-                </p>
-
-                <div className="space-y-3 text-xs md:text-sm leading-relaxed text-slate-700 max-w-3xl ml-auto">
-                    <p>
-                        هسته‌ی فناوری بارمان – ترکیبی از سخت‌افزار، نرم‌افزار و طراحی فرآیند – برای یک
-                        سناریوی واحد ساخته نشده است. معماری ماژولار این پلتفرم، امکان توسعه‌ی راهکارهای
-                        جدید را برای طیفی از کسب‌وکارهای خدماتی و صنعتی فراهم می‌کند؛ جایی که مدل‌های نوین
-                        درآمد، تجربه‌ی کاربر و الزامات ایمنی و نظارتی در کنار هم قرار می‌گیرند.
-                    </p>
-                    <p>
-                        ما در بارمان به‌دنبال شراکت‌های صرفاً مالی نیستیم؛ به‌دنبال هم‌افزایی با بازیگران
-                        آینده‌نگر در صنعت، سلامت، خدمات و فناوری هستیم تا بر بستر این زیرساخت بومی، نسل
-                        تازه‌ای از محصولات هوشمند برای بازار ایران و فراتر از آن طراحی و پیاده‌سازی کنیم.
-                    </p>
+        <article
+            className="rounded-[2.5rem] bg-slate-900 p-8 md:p-12 text-center text-white shadow-xl"
+        >
+            <div className="mx-auto max-w-3xl space-y-6">
+                <div className="flex justify-center">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-sm">
+                        <LuHandshake className="h-6 w-6" />
+                    </div>
                 </div>
 
-                <ul className="mt-3 space-y-1.5 text-xs md:text-sm text-slate-700 list-disc pr-4 max-w-3xl ml-auto">
-                    <li>دسترسی به زیرساخت آزموده‌شده‌ی هوشمندسازی، به‌جای شروع از نقطه‌ی صفر</li>
-                    <li>امکان طراحی محصول مشترک متناسب با بازار هدف و مدل کسب‌وکار شریک</li>
-                    <li>کاهش ریسک فنی و زمانی با استفاده از ماژول‌ها و تجربیات عملی در پروژه‌های واقعی</li>
-                    <li>باز کردن مسیر ورود به حوزه‌های جدید: از کسب‌وکارهای خدماتی تا فضاهای زندگی و کار هوشمند</li>
-                </ul>
+                <h3 className="text-2xl font-bold md:text-4xl">
+                    هم‌افزایی برای خلق <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">آینده هوشمند</span>
+                </h3>
 
-                <div className="mt-4 flex justify-end">
+                <p className="text-sm leading-8 text-slate-300 md:text-base">
+                    ما در بارمان به دنبال شرکای تجاری و سرمایه‌گذارانی هستیم که دیدگاهی فراتر از امروز دارند.
+                    زیرساخت ماژولار ما (WIT) آماده است تا بستر توسعه محصولات نوآورانه در صنایع جدید باشد.
+                </p>
+
+                <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
                     <Link
                         href="/intelligentautomation"
-                        className="inline-flex items-center gap-1 rounded-full bg-bms-primary px-5 py-2 text-[11px] md:text-xs font-medium text-white hover:bg-bms-dark transition-colors"
+                        className="inline-flex h-11 items-center justify-center rounded-xl bg-white px-8 text-sm font-bold text-slate-900 transition-transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-white/10"
                     >
-                        <span>فرصت‌های همکاری و سرمایه‌گذاری با بارمان</span>
-                        <span className="text-[13px]">↗</span>
+                        مدل‌های همکاری
+                    </Link>
+                    <Link
+                        href="/contact-us"
+                        className="inline-flex h-11 items-center justify-center rounded-xl border border-white/20 bg-transparent px-8 text-sm font-bold text-white transition-colors hover:bg-white/5"
+                    >
+                        تماس با واحد توسعه کسب‌وکار
                     </Link>
                 </div>
             </div>

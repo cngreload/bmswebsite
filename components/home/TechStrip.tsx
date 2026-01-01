@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useState } from "react";
+// components/home/TechStrip.tsx
 import
 {
     SiLaravel,
@@ -14,163 +12,140 @@ import
     SiRedis,
 } from "react-icons/si";
 import { LuCpu } from "react-icons/lu";
-import { BackgroundGradient } from "@/components/ui/background-gradient";
 
-type TechItem = {
-    id: number;
-    name: string;
-    label: string;
-    description: string;
-    icon: React.ComponentType<{ className?: string; }>;
-};
-
-const techItems: TechItem[] = [
+// 🧠 SEMANTIC DATA: Defined statically for stability
+const techItems = [
     {
         id: 1,
-        name: "Laravel",
         label: "Laravel",
-        description: "هسته‌ی وب‌سرویس‌ها و پلتفرم‌های کسب‌وکار",
+        description: "هسته‌ی وب‌سرویس‌ها",
         icon: SiLaravel,
+        color: "text-red-600",
     },
     {
         id: 2,
-        name: "CSharp",
         label: "C#",
-        description: "توسعه‌ی صنعتی و یکپارچه‌سازی سامانه‌ها",
+        description: "توسعه‌ی صنعتی",
         icon: SiSharp,
+        color: "text-purple-600",
     },
     {
         id: 3,
-        name: "Microcoding",
-        label: "Microcoding / Firmware",
-        description: "طراحی میکروکد کنترلرهای صنعتی و سامانه‌های میدانی",
+        label: "Microcoding",
+        description: "کنترلرهای میدانی",
         icon: LuCpu,
+        color: "text-emerald-600",
     },
     {
         id: 4,
-        name: "Next.js",
         label: "Next.js",
-        description: "فرانت‌اند مدرن، SEO-Ready و مقیاس‌پذیر",
+        description: "فرانت‌اند مدرن",
         icon: SiNextdotjs,
+        color: "text-slate-900",
     },
     {
         id: 5,
-        name: ".NET",
         label: ".NET",
-        description: "زیرساخت نرم‌افزاری سازمانی و صنعتی",
+        description: "زیرساخت سازمانی",
         icon: SiDotnet,
+        color: "text-indigo-600",
     },
     {
         id: 6,
-        name: "PostgreSQL",
         label: "PostgreSQL",
-        description: "پایگاه داده‌ی ساخت‌یافته، پایدار و قابل اتکا",
+        description: "پایگاه داده‌ی پایدار",
         icon: SiPostgresql,
+        color: "text-blue-500",
     },
     {
         id: 7,
-        name: "Tailwind",
-        label: "Tailwind CSS",
-        description: "رابط‌های کاربری مینیمال و پاسخ‌گو",
+        label: "Tailwind",
+        description: "رابط‌های کاربری",
         icon: SiTailwindcss,
+        color: "text-cyan-500",
     },
     {
         id: 8,
-        name: "Prisma",
         label: "Prisma",
-        description: "لایه‌ی مدرن دسترسی به داده و مدل‌سازی",
+        description: "مدل‌سازی داده",
         icon: SiPrisma,
+        color: "text-slate-700",
     },
     {
         id: 9,
-        name: "Docker",
         label: "Docker",
-        description: "استقرار کانتینری و محیط‌های تکرارپذیر",
+        description: "استقرار کانتینری",
         icon: SiDocker,
+        color: "text-blue-600",
     },
     {
         id: 10,
-        name: "Redis",
         label: "Redis",
-        description: "کش، صف و پردازش سبک داده‌ها",
+        description: "کش و پردازش سریع",
         icon: SiRedis,
+        color: "text-red-500",
     },
 ];
 
-const CARD_COUNT = 3;
-const BASE_INTERVAL_MS = 4500;
-const CARD_STAGGER_MS = 1000;
-
 export default function TechStrip ()
 {
-    const [ cardIndices, setCardIndices ] = useState<number[]>( () =>
-        Array.from( { length: CARD_COUNT }, ( _, i ) => i ),
-    );
-
-    useEffect( () =>
-    {
-        const intervals = Array.from( { length: CARD_COUNT }, ( _, cardIdx ) =>
-        {
-            const delay = BASE_INTERVAL_MS + cardIdx * CARD_STAGGER_MS;
-            return window.setInterval( () =>
-            {
-                setCardIndices( ( prev ) =>
-                    prev.map( ( val, idx ) =>
-                        idx === cardIdx ? ( val + 1 ) % techItems.length : val,
-                    ),
-                );
-            }, delay );
-        } );
-
-        return () =>
-        {
-            intervals.forEach( ( id ) => clearInterval( id ) );
-        };
-    }, [] );
-
-    const visibleItems = cardIndices.map(
-        ( itemIndex ) => techItems[ itemIndex ] as TechItem,
-    );
-
     return (
-        <section className="border-t border-slate-100 bg-white py-8">
-            <div className="mx-auto max-w-6xl">
-                <div className="mb-5 flex items-center justify-between gap-2">
-                    <div className="text-xs font-medium tracking-wide text-slate-600 md:text-sm">
-                        پشته‌ی فناوری بارمان
-                    </div>
+        <section
+            className="border-t border-slate-200 bg-slate-50/50 py-10 lg:py-14"
+            aria-labelledby="tech-stack-heading"
+        >
+            <div className="container mx-auto px-4 max-w-7xl">
+                {/* 
+          🧠 SEMANTIC HEADER
+          Hidden visibly if needed, but present for screen readers to define the section.
+        */}
+                <div className="mb-8 flex items-center justify-between">
+                    <h2
+                        id="tech-stack-heading"
+                        className="text-xs font-bold tracking-wider text-slate-500 uppercase"
+                    >
+                        زیرساخت‌های فنی و تکنولوژی‌های مورد استفاده
+                    </h2>
+                    <div className="h-px flex-1 bg-slate-200 mr-4"></div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    { visibleItems.map( ( item, cardIndex ) =>
+                {/* 
+          ⚡ PERFORMANCE GRID 
+          - Grid layout minimizes CLS (Cumulative Layout Shift).
+          - No JavaScript required.
+          - Semantic <ul> for list of items.
+        */}
+                <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:gap-6">
+                    { techItems.map( ( item ) =>
                     {
                         const Icon = item.icon;
-                        const key = `${ cardIndex }-${ item.id }`;
-
                         return (
-                            <BackgroundGradient
-                                key={ key }
-                                containerClassName="h-full"
-                                className="flex h-full flex-col items-center justify-start rounded-[22px] bg-white px-4 py-5 text-center shadow-sm sm:px-6 sm:py-6"
-                            >
-                                {/* icon */ }
-                                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-sm sm:h-12 sm:w-12">
-                                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                                </div>
+                            <li key={ item.id } className="h-full">
+                                <div
+                                    className="group relative flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-bms-primary/20"
+                                >
+                                    {/* Icon Container with subtle hover glow */ }
+                                    <div className={ `mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 transition-colors group-hover:bg-slate-100 ${ item.color }` }>
+                                        <Icon className="h-6 w-6 opacity-80 transition-opacity group-hover:opacity-100" />
+                                    </div>
 
-                                {/* label + description */ }
-                                <div className="space-y-1">
-                                    <div className="text-xs font-semibold text-bms-dark sm:text-sm">
-                                        { item.label }
+                                    {/* Text Content */ }
+                                    <div className="space-y-1">
+                                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-bms-primary transition-colors">
+                                            { item.label }
+                                        </h3>
+                                        <p className="text-[11px] font-medium text-slate-500">
+                                            { item.description }
+                                        </p>
                                     </div>
-                                    <div className="text-[11px] leading-relaxed text-slate-600 sm:text-xs">
-                                        { item.description }
-                                    </div>
+
+                                    {/* 🎨 UX: Subtle bottom accent on hover */ }
+                                    <div className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-bms-primary transition-all duration-300 group-hover:w-1/3 rounded-full"></div>
                                 </div>
-                            </BackgroundGradient>
+                            </li>
                         );
                     } ) }
-                </div>
+                </ul>
             </div>
         </section>
     );

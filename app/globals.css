@@ -2,10 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base knobs exactly like requested */
+/* =========================
+   BASE TOKENS & ROOT
+========================= */
 @layer base {
   :root {
-    /* Odoo-ish neutral scale (for references / optional usage) */
+    /* =====================
+       BMS BRAND PALETTE
+    ===================== */
+    --color-primary: 20 92 152;           /* #145C98 */
+    --color-accent: 16 185 129;           /* #10B981 */
+    --color-dark: 15 23 42;               /* #0F172A */
+    --color-surface: 255 255 255;
+    --color-surface-subtle: 248 250 252;
+
+    /* Typography */
+    --font-sans: var(--font-bms-sans), system-ui, -apple-system, sans-serif;
+
+    /* =====================
+       ODOO-LIKE REFERENCE TOKENS (OPTIONAL)
+       Non-conflicting, additive only
+    ===================== */
     --odoo-100: #f9fafb;
     --odoo-200: #f3f4f6;
     --odoo-300: #e6e9ed;
@@ -16,97 +33,129 @@
     --odoo-800: #374151;
     --odoo-900: #111827;
 
-    /* Brand-like accents seen in that Odoo theme */
     --odoo-primary: #714b67;
     --odoo-secondary: #017e84;
 
-    /* “Feel” tokens (cards/buttons) */
-    --odoo-border-color: color-mix(in srgb, currentColor 15%, transparent);
-    --odoo-radius: 0.625rem; /* ~10px */
+    --odoo-radius: 0.625rem;
     --odoo-radius-lg: 1.25rem;
     --odoo-radius-xl: 1.5rem;
     --odoo-radius-2xl: 3rem;
 
-    --odoo-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     --odoo-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --odoo-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     --odoo-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 
-    --odoo-gutter: 32px;
-
-    /* Typography refs (optional) */
-    --odoo-font-size-base: 1rem;
-    --odoo-body-line-height: 1.5;
-    --odoo-headings-line-height: 1.2;
-    --odoo-paragraph-mb: 16px;
-    --odoo-display-1: 4rem;
-    --odoo-display-2: 3rem;
-    --odoo-display-3: 2.5rem;
-    --odoo-display-4: 2rem;
-
-    /* Focus ring feel */
     --odoo-focus-ring: rgba(113, 75, 103, 0.25);
-    --odoo-focus-width: 0.25rem;
   }
 
   html {
-    font-family: var(--font-bms-sans), ui-sans-serif, system-ui, sans-serif,
-      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    line-height: 1.5;
-    font-feature-settings: normal;
-    font-variation-settings: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -webkit-tap-highlight-color: transparent;
+    font-family: var(--font-sans);
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
+    @apply bg-slate-50 text-slate-900 font-sans selection:bg-bms-primary/10 selection:text-bms-primary;
     min-height: 100vh;
   }
-}
 
-/* Global base styles */
-html,
-body {
-  @apply bg-slate-50 text-slate-900 antialiased;
-}
-
-/* Basic typography */
-h1,
-h2,
-h3,
-h4 {
-  @apply font-semibold text-bms-dark;
-}
-
-a {
-  @apply text-bms-primary hover:text-bms-accent transition-colors;
-}
-
-/* Utility for constrained max-width sections */
-.bms-page {
-  @apply container mx-auto py-10;
-}
-
-/* Odoo-like polish (safe, additive) */
-::selection {
-  background: rgba(150, 150, 220, 0.3);
-}
-
-@layer utilities {
-  /* Odoo-style neutral background helper (matches Odoo 200) */
-  .bg-200 {
-    @apply bg-odoo-200;
+  /* =====================
+     TYPOGRAPHY SYSTEM
+  ===================== */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-bms-dark leading-[1.1];
   }
 
-  /* Pill radius helper */
+  h2 {
+    @apply text-3xl md:text-4xl font-semibold tracking-tight text-bms-dark;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-semibold text-bms-dark;
+  }
+
+  h4 {
+    @apply text-lg font-semibold text-bms-dark;
+  }
+
+  p {
+    @apply leading-relaxed text-slate-600;
+  }
+
+  a {
+    @apply text-bms-primary hover:text-bms-accent transition-colors;
+  }
+
+  ::selection {
+    background: rgba(20, 92, 152, 0.15);
+  }
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+@layer components {
+  .bms-container {
+    @apply container mx-auto px-4 md:px-6 max-w-7xl;
+  }
+
+  .bms-page {
+    @apply bms-container py-10;
+  }
+
+  .bms-card {
+    @apply bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+
+  .bms-input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none
+           ring-2 ring-transparent focus:border-bms-primary/50 focus:ring-bms-primary/10
+           transition-all placeholder:text-slate-400;
+  }
+
+  .bms-button {
+    @apply inline-flex items-center justify-center rounded-xl font-medium
+           transition-all focus:outline-none focus:ring-2 focus:ring-offset-2
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .bms-button-primary {
+    @apply bms-button bg-bms-primary text-white hover:bg-bms-dark focus:ring-bms-primary;
+  }
+
+  .bms-button-outline {
+    @apply bms-button border border-slate-200 bg-white text-slate-700
+           hover:bg-slate-50 focus:ring-slate-200;
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+  }
+
+  /* Odoo-style helpers (optional usage) */
+  .bg-200 {
+    background-color: var(--odoo-200);
+  }
+
   .rounded-pill-md {
     border-radius: 9999px;
   }
 }
 
-/* Simple fade-in-up animation used for technology swap cards */
+/* =========================
+   ANIMATIONS
+========================= */
 @keyframes fade-in-up {
   from {
     opacity: 0;

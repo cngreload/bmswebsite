@@ -1,4 +1,4 @@
-import { requireAdmin  } from "@/lib/server/auth";
+import { requireAdmin } from "@/lib/server/auth";
 import { jsonError, jsonOk } from "@/lib/server/http";
 import { adminCreateCategory, adminListCategories } from "@/lib/server/blog-service";
 

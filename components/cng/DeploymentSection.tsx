@@ -1,73 +1,144 @@
+// components/cng/DeploymentSection.tsx
+import
+{
+    LuSearch,
+    LuPenTool,
+    LuHammer,
+    LuNetwork,
+    LuCirclePlay,
+    LuScaling,
+    LuLifeBuoy,
+    LuCheck
+} from "react-icons/lu";
+
 const deploymentPhases = [
     {
-        title: "فاز ۱ – شناخت میدان و امکان‌سنجی",
-        body:
-            "تیم فنی و کسب‌وکار بارمان با حضور در کنار ذی‌نفعان، تصویر دقیقی از وضعیت موجود، تجهیزات، محدودیت‌های زیرساختی و رویه‌های عملیاتی به‌دست می‌آورد. خروجی این مرحله، گزارشی فنی–اجرایی برای ابعاد، پیش‌نیازها و بازه زمانی استقرار ICTS است."
+        id: 1,
+        title: "شناخت میدان و امکان‌سنجی",
+        icon: LuSearch,
+        description: "حضور تیم فنی در سایت و بررسی زیرساخت‌های موجود (برق، شبکه، لوله‌کشی).",
+        deliverable: "گزارش فنی–اجرایی و برآورد زمان‌بندی"
     },
     {
-        title: "فاز ۲ – طراحی راهکار و برنامه استقرار",
-        body:
-            "بر اساس نتایج امکان‌سنجی، طرح استقرار اختصاصی تدوین می‌شود: معماری سخت‌افزاری، سناریوهای نرم‌افزاری، سطح یکپارچگی با سامانه‌های ملی و مالی و برنامه زمان‌بندی بدون ایجاد اختلال جدی در سرویس‌دهی جایگاه‌ها."
+        id: 2,
+        title: "طراحی راهکار اختصاصی",
+        icon: LuPenTool,
+        description: "تدوین سناریوی نرم‌افزاری و معماری سخت‌افزار متناسب با ترافیک و تجهیزات جایگاه.",
+        deliverable: "بلوپرینت (Blueprint) استقرار و نقشه کابل‌کشی"
     },
     {
-        title: "فاز ۳ – آماده‌سازی زیرساخت و نصب سخت‌افزار",
-        body:
-            "با هماهنگی مسئولان ایمنی و بهره‌برداران، عملیات نصب و راه‌اندازی سخت‌افزار انجام می‌شود: نصب کنترلرها و ماژول‌ها، کابل‌کشی و اتصالات، راه‌اندازی ماژول‌های ارتباطی و تست‌های مرحله‌ای برای کاهش ریسک عملیاتی."
+        id: 3,
+        title: "نصب و تجهیز سخت‌افزار",
+        icon: LuHammer,
+        description: "نصب کنترلرها، سنسورها و ماژول‌های ارتباطی با رعایت کامل استانداردهای ایمنی (Ex).",
+        deliverable: "تاییدیه نصب سخت‌افزار و تست ایمنی"
     },
     {
-        title: "فاز ۴ – راه‌اندازی نرم‌افزار و یکپارچگی با سامانه‌های ملی",
-        body:
-            "نرم‌افزار ICTS در سطح جایگاه و مرکز راه‌اندازی می‌شود. اتصال امن به سامانه‌هایی مانند «سیمفا»، سامانه اطلاعات خودروهای گازسوز و زیرساخت‌های پرداخت برقرار شده و سناریوهای اصلی عملیاتی در میدان تست و تنظیم می‌گردند."
+        id: 4,
+        title: "راه‌اندازی و یکپارچه‌سازی",
+        icon: LuNetwork,
+        description: "اتصال امن به سامانه ملی «سیمفا» و دیتابیس خودروهای گازسوز کشور.",
+        deliverable: "برقراری ارتباط زنده (Live) با سرور مرکزی"
     },
     {
-        title: "فاز ۵ – آموزش، پایلوت عملیاتی و بهینه‌سازی",
-        body:
-            "یک دوره پایلوت عملیاتی در دامنه توافق‌شده اجرا می‌شود: آموزش عملی اپراتورها و مدیران، تنظیم پارامترها بر اساس رفتار واقعی میدان، رصد مستمر عملکرد و رفع اشکالات احتمالی. خروجی، الگوی پایلوت‌شده قابل تعمیم است."
+        id: 5,
+        title: "آموزش و پایلوت عملیاتی",
+        icon: LuCirclePlay,
+        description: "اجرای آزمایشی و آموزش عملی به اپراتورها و مدیران جایگاه در محیط واقعی.",
+        deliverable: "گواهی پایان دوره آموزشی پرسنل"
     },
     {
-        title: "فاز ۶ – تعمیم در مقیاس گسترده و مدیریت تغییر",
-        body:
-            "استقرار ICTS به‌صورت مرحله‌ای در سایر جایگاه‌ها آغاز می‌شود: تعریف موج‌های استقرار، اجرای هم‌زمان آموزش و پشتیبانی و مدیریت تغییر در سطح سازمانی. داشبوردهای مدیریتی برای نهادهای بالادستی نیز فعال می‌شود."
+        id: 6,
+        title: "تعمیم (Roll-out) و مدیریت تغییر",
+        icon: LuScaling,
+        description: "استقرار در سایر جایگاه‌ها بر اساس موج‌های تعریف شده و فعال‌سازی داشبوردها.",
+        deliverable: "تحویل نهایی سامانه در مقیاس شبکه"
     },
     {
-        title: "فاز ۷ – پشتیبانی، نگه‌داری و توسعه‌ی آتی",
-        body:
-            "استقرار آغاز یک همکاری بلندمدت است: مانیتورینگ مداوم سلامت سامانه و تجهیزات، به‌روزرسانی‌های نرم‌افزاری، گزارش‌های دوره‌ای عملکرد و توسعه تدریجی قابلیت‌ها بر اساس نیازهای جدید؛ بر مبنای SLAهای تعریف‌شده."
+        id: 7,
+        title: "پشتیبانی و توسعه پایدار",
+        icon: LuLifeBuoy,
+        description: "مانیتورینگ 24/7 سلامت سامانه، به‌روزرسانی‌های امنیتی و توسعه ماژول‌های جدید.",
+        deliverable: "قرارداد سطح سرویس (SLA) و گزارش‌های دوره‌ای"
     }
 ];
 
 export default function DeploymentSection ()
 {
     return (
-        <section id="deployment" className="pt-8">
-            <div className="mx-auto max-w-6xl space-y-4 text-right">
-                <h2 className="text-lg md:text-xl font-semibold text-bms-dark">
-                    مسیر استقرار ICTS؛ از ارزیابی اولیه تا بهره‌برداری پایدار
-                </h2>
-                <p className="text-xs md:text-sm text-slate-700 max-w-3xl ml-auto">
-                    همراهی مرحله‌به‌مرحله با ذی‌نفعان؛ از جایگاه منفرد تا شبکه ملی.
-                </p>
+        <section
+            id="deployment"
+            className="py-10 md:py-16"
+            aria-labelledby="deployment-heading"
+        >
+            <div className="mx-auto max-w-5xl px-4">
+                {/* Header */ }
+                <div className="mb-12 space-y-4 text-right">
+                    <span className="inline-block rounded-lg bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600">
+                        نقشه راه اجرایی
+                    </span>
+                    <h2
+                        id="deployment-heading"
+                        className="text-2xl font-bold text-bms-dark md:text-3xl"
+                    >
+                        مسیر استقرار <span className="text-bms-primary">ICTS</span>
+                    </h2>
+                    <p className="ml-auto max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+                        ما پروسه پیچیده هوشمندسازی را به گام‌های شفاف و قابل سنجش تبدیل کرده‌ایم.
+                        همراهی مرحله‌به‌مرحله؛ از ارزیابی اولیه تا بهره‌برداری پایدار.
+                    </p>
+                </div>
 
-                <ol className="mt-2 space-y-3">
-                    { deploymentPhases.map( ( phase, idx ) => (
-                        <li
-                            key={ phase.title }
-                            className="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 shadow-sm"
-                        >
-                            <div className="flex items-start gap-3">
-                                <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-bms-primary-soft text-[11px] font-semibold text-bms-primary">
-                                    { idx + 1 }
-                                </div>
-                                <div className="space-y-1 text-[11px] md:text-sm leading-relaxed text-slate-700 text-right flex-1">
-                                    <h3 className="text-sm md:text-base font-semibold text-bms-dark">
-                                        { phase.title }
-                                    </h3>
-                                    <p>{ phase.body }</p>
-                                </div>
-                            </div>
-                        </li>
-                    ) ) }
-                </ol>
+                {/* 
+                   🚦 TIMELINE UI 
+                   Uses a relative container to draw the connecting line.
+                */}
+                <div className="relative">
+                    {/* Vertical Connector Line (Right aligned for RTL) */ }
+                    <div className="absolute right-6 top-4 bottom-4 w-0.5 bg-gradient-to-b from-bms-primary/20 via-slate-200 to-transparent md:right-8" />
+
+                    <ol className="space-y-8 relative">
+                        { deploymentPhases.map( ( phase ) =>
+                        {
+                            const Icon = phase.icon;
+                            return (
+                                <li key={ phase.id } className="group relative flex gap-6 md:gap-10">
+
+                                    {/* 1. The Marker (Timeline Node) */ }
+                                    <div className="flex flex-col items-center">
+                                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-4 border-white bg-slate-50 text-slate-500 shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-bms-primary group-hover:text-white group-hover:shadow-md md:h-16 md:w-16 z-10">
+                                            <Icon className="h-5 w-5 md:h-7 md:w-7" />
+                                        </div>
+                                        <div className="my-2 h-full w-px border-r border-dashed border-slate-300 md:hidden" />
+                                    </div>
+
+                                    {/* 2. The Content Card */ }
+                                    <article className="flex-1 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:border-bms-primary/20 hover:shadow-lg md:p-7">
+                                        <div className="mb-3 flex items-center gap-3">
+                                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 group-hover:bg-bms-primary/10 group-hover:text-bms-primary">
+                                                { phase.id }
+                                            </span>
+                                            <h3 className="text-base font-bold text-slate-900 md:text-lg">
+                                                { phase.title }
+                                            </h3>
+                                        </div>
+
+                                        <p className="text-sm leading-7 text-slate-600 text-pretty">
+                                            { phase.description }
+                                        </p>
+
+                                        {/* Deliverable Pill */ }
+                                        <div className="mt-4 inline-flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-100 px-3 py-2 text-xs text-slate-500 transition-colors group-hover:bg-emerald-50/50 group-hover:border-emerald-100 group-hover:text-emerald-700">
+                                            <LuCheck className="h-3.5 w-3.5 text-emerald-500" />
+                                            <span className="font-medium">خروجی:</span>
+                                            <span>{ phase.deliverable }</span>
+                                        </div>
+                                    </article>
+                                </li>
+                            );
+                        } ) }
+                    </ol>
+                </div>
             </div>
         </section>
     );

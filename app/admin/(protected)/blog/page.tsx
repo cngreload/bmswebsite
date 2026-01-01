@@ -18,14 +18,14 @@ export default async function AdminBlogPage ( {
 {
     const sp = ( ( await searchParams ) ?? {} ) as AdminBlogPageSearchParams;
 
-    const rawPage =
-        typeof sp.page === "string"
-            ? sp.page
-            : Array.isArray( sp.page )
-                ? sp.page[ 0 ]
-                : "1";
-
-    const currentPage = Number( rawPage ?? "1" ) || 1;
+    const currentPage =
+        Number(
+            typeof sp.page === "string"
+                ? sp.page
+                : Array.isArray( sp.page )
+                    ? sp.page[ 0 ]
+                    : "1"
+        ) || 1;
 
     const q =
         typeof sp.q === "string"
@@ -34,15 +34,11 @@ export default async function AdminBlogPage ( {
                 ? sp.q[ 0 ]
                 : undefined;
 
-    const rawStatus =
-        typeof sp.status === "string"
-            ? sp.status
-            : Array.isArray( sp.status )
-                ? sp.status[ 0 ]
-                : undefined;
-
     const status =
-        rawStatus === "PUBLISHED" || rawStatus === "DRAFT" ? rawStatus : "ALL";
+        typeof sp.status === "string" &&
+            ( sp.status === "PUBLISHED" || sp.status === "DRAFT" || sp.status === "ARCHIVED" )
+            ? sp.status
+            : "ALL";
 
     const data = await fetchAdminBlogPosts( {
         page: currentPage,
@@ -51,10 +47,32 @@ export default async function AdminBlogPage ( {
         status,
     } );
 
+    // فقط فیلدهای لازم برای جدول ادمین رو normalize کن
+    const normalizedPosts = data.items.map( ( post ) => ( {
+        ...post,
+
+        // تبدیل تاریخ به string اگر Date بود
+        publishedAt:
+            post.publishedAt instanceof Date
+                ? post.publishedAt.toISOString()
+                : post.publishedAt ?? null,
+
+        // category فقط name داره — نیازی به id و slug نیست
+        category: post.category
+            ? { name: post.category.name }
+            : null,
+
+        // isFeatured پیش‌فرض
+        isFeatured: post.isFeatured ?? false,
+
+        // فیلدهای اضافی مثل content, excerpt و ... رو اضافه نکن
+        // چون در AdminBlogPost تعریف نشدن و لازم هم نیستن
+    } ) );
+
     return (
         <div className="mx-auto max-w-6xl px-4 py-6">
             <AdminBlogTable
-                posts={ data.items }
+                posts={ normalizedPosts }
                 page={ data.page }
                 totalPages={ data.totalPages }
             />

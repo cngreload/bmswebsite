@@ -1,77 +1,19 @@
-// lib/admin-api.ts
+import { headers } from "next/headers";
 
-// ---------- Blog admin types & API ----------
+// --- Types ---
 
-export type AdminBlogPostStatus = "DRAFT" | "PUBLISHED";
-
-export type AdminBlogPost = {
-  id: string;
-  title: string;
-  slug: string;
-  status: AdminBlogPostStatus;
-  excerpt?: string | null;
-  publishedAt?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type AdminBlogPostListResponse = {
-  items: AdminBlogPost[];
-  page: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
-};
-
-export async function fetchAdminBlogPosts(params?: {
-  page?: number;
-  pageSize?: number;
-  q?: string;
-  status?: AdminBlogPostStatus | "ALL";
-}): Promise<AdminBlogPostListResponse> {
-  const search = new URLSearchParams();
-
-  if (params?.page) search.set("page", String(params.page));
-  if (params?.pageSize) search.set("pageSize", String(params.pageSize));
-  if (params?.q) search.set("q", params.q);
-  if (params?.status && params.status !== "ALL") {
-    search.set("status", params.status);
-  }
-
-  const qs = search.toString();
-  const url = `/api/admin/blog/posts${qs ? `?${qs}` : ""}`;
-
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch admin blog posts");
-  }
-
-  const data = (await res.json()) as AdminBlogPostListResponse;
-  return data;
-}
-
-// ---------- Contact messages admin types & API ----------
-
-export type AdminContactMessageStatus =
-  | "NEW"
-  | "IN_PROGRESS"
-  | "RESOLVED"
-  | "ARCHIVED"
-  | string;
+export type AdminContactMessageStatus = "NEW" | "READ" | "REPLIED" | "ARCHIVED";
 
 export type AdminContactMessage = {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
   phone?: string | null;
   subject?: string | null;
   message?: string | null;
-  status?: AdminContactMessageStatus | null;
-  createdAt: string;
-  updatedAt?: string | null;
+  status: AdminContactMessageStatus;
+  createdAt: string | Date;
+  updatedAt?: string | Date | null;
 };
 
 export type AdminContactMessageListResponse = {
@@ -82,12 +24,42 @@ export type AdminContactMessageListResponse = {
   totalPages: number;
 };
 
+export type AdminBlogPost = {
+  id: string;
+  title: string;
+  slug: string;
+  status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
+  publishedAt?: string | Date | null;
+  category?: { name: string } | null;
+  isFeatured?: boolean;
+};
+
+export type AdminBlogPostListResponse = {
+  items: AdminBlogPost[];
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+};
+
+// --- Helpers ---
+
+async function getBaseUrl() {
+  const headersList = await headers();
+  const host = headersList.get("host") || "localhost:3000";
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+  return `${protocol}://${host}`;
+}
+
+// --- Fetch Functions ---
+
 export async function fetchAdminContactMessages(params?: {
   page?: number;
   pageSize?: number;
   q?: string;
   status?: string;
 }): Promise<AdminContactMessageListResponse> {
+  const baseUrl = await getBaseUrl();
   const search = new URLSearchParams();
 
   if (params?.page) search.set("page", String(params.page));
@@ -95,10 +67,7 @@ export async function fetchAdminContactMessages(params?: {
   if (params?.q) search.set("q", params.q);
   if (params?.status) search.set("status", params.status);
 
-  const qs = search.toString();
-  const url = `/api/admin/contact-messages${qs ? `?${qs}` : ""}`;
-
-  const res = await fetch(url, {
+  const res = await fetch(`${baseUrl}/api/admin/contact-messages?${search.toString()}`, {
     cache: "no-store",
   });
 
@@ -106,6 +75,34 @@ export async function fetchAdminContactMessages(params?: {
     throw new Error("Failed to fetch admin contact messages");
   }
 
-  const data = (await res.json()) as AdminContactMessageListResponse;
-  return data;
+  return res.json();
+}
+
+export async function fetchAdminBlogPosts(params?: {
+  page?: number;
+  pageSize?: number;
+  q?: string;
+  status?: string;
+}): Promise<AdminBlogPostListResponse> {
+  const baseUrl = await getBaseUrl();
+  const search = new URLSearchParams();
+
+  if (params?.page) search.set("page", String(params.page));
+  if (params?.pageSize) search.set("pageSize", String(params.pageSize));
+  if (params?.q) search.set("q", params.q);
+  if (params?.status) search.set("status", params.status);
+
+  // ✅ FIX: Updated URL to point to /blog/posts
+  const res = await fetch(`${baseUrl}/api/admin/blog/posts?${search.toString()}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    // Log the error text to help debugging if it fails again
+    const errorText = await res.text();
+    console.error("API Error:", errorText);
+    throw new Error(`Failed to fetch admin blog posts: ${res.status} ${res.statusText}`);
+  }
+
+  return res.json();
 }

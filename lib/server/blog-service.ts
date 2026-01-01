@@ -25,7 +25,7 @@ export interface PostInput {
   title: string;
   content: string;
   slug?: string;
-  summary?: string | null;
+  excerpt?: string | null;        // ← تغییر از summary به excerpt
   coverImageUrl?: string | null;
   status?: PostStatus;
   publishedAt?: string | Date | null;
@@ -54,12 +54,12 @@ export async function listPublicPosts(args: ListPostsArgs) {
 
   if (args.category) where.category = { slug: args.category };
   if (args.tag) where.tags = { some: { slug: args.tag } };
-  
+
   if (args.q) {
     const query = args.q.trim();
     where.OR = [
       { title: { contains: query, mode: "insensitive" } },
-      { summary: { contains: query, mode: "insensitive" } },
+      { excerpt: { contains: query, mode: "insensitive" } }, // ← excerpt
     ];
   }
 
@@ -82,6 +82,7 @@ export async function listPublicPosts(args: ListPostsArgs) {
     page: args.page,
     pageSize: args.pageSize,
     totalItems,
+    
     totalPages: Math.ceil(totalItems / args.pageSize),
   };
 }
@@ -112,7 +113,7 @@ export async function listPublicCategories() {
       id: true,
       name: true,
       slug: true,
-    }
+    },
   });
 }
 
@@ -126,7 +127,7 @@ export async function listPublicTags() {
       id: true,
       name: true,
       slug: true,
-    }
+    },
   });
 }
 
@@ -138,11 +139,11 @@ export async function adminListPosts(args: ListPostsArgs) {
   if (args.status) where.status = args.status as PostStatus;
   if (args.categoryId) where.categoryId = args.categoryId;
   if (args.tagId) where.tags = { some: { id: args.tagId } };
-  
+
   if (args.q) {
     where.OR = [
       { title: { contains: args.q, mode: "insensitive" } },
-      { summary: { contains: args.q, mode: "insensitive" } },
+      { excerpt: { contains: args.q, mode: "insensitive" } }, // ← excerpt
     ];
   }
 
@@ -204,9 +205,10 @@ export async function adminCreatePost(data: PostInput) {
       slug: finalSlug,
       publishedAt: publishedAtDate,
       category: categoryId ? { connect: { id: categoryId } } : undefined,
-      tags: tagIds && tagIds.length > 0 
-        ? { connect: tagIds.map((id) => ({ id })) } 
-        : undefined,
+      tags:
+        tagIds && tagIds.length > 0
+          ? { connect: tagIds.map((id) => ({ id })) }
+          : undefined,
     },
   });
 }
@@ -220,10 +222,10 @@ export async function adminUpdatePost(id: string, data: Partial<PostInput>) {
 
   if (title) updateData.title = title;
   if (slug) updateData.slug = makeSlug(slug);
-  
+
   if (categoryId !== undefined) {
-    updateData.category = categoryId 
-      ? { connect: { id: categoryId } } 
+    updateData.category = categoryId
+      ? { connect: { id: categoryId } }
       : { disconnect: true };
   }
 
@@ -256,14 +258,14 @@ export async function adminListCategories() {
 export async function adminCreateCategory(data: CategoryInput) {
   const slug = makeSlug(data.slug || data.name);
   return prisma.category.create({
-    data: { ...data, slug }
+    data: { ...data, slug },
   });
 }
 
 export async function adminUpdateCategory(id: string, data: Partial<CategoryInput>) {
   const updateData: Prisma.CategoryUpdateInput = { ...data };
   if (data.slug) updateData.slug = makeSlug(data.slug);
-  
+
   return prisma.category.update({
     where: { id },
     data: updateData,
@@ -287,7 +289,7 @@ export async function adminListTags() {
 export async function adminCreateTag(data: TagInput) {
   const slug = makeSlug(data.slug || data.name);
   return prisma.tag.create({
-    data: { ...data, slug }
+    data: { ...data, slug },
   });
 }
 
@@ -302,7 +304,9 @@ export async function adminUpdateTag(id: string, data: Partial<TagInput>) {
 }
 
 export async function adminDeleteTag(id: string) {
-  const postCount = await prisma.blogPost.count({ where: { tags: { some: { id } } } });
+  const postCount = await prisma.blogPost.count({
+    where: { tags: { some: { id } } },
+  });
   if (postCount > 0) {
     throw new HttpError(409, "این تگ در پست‌ها استفاده شده است و قابل حذف نیست", "CONFLICT");
   }

@@ -1,237 +1,147 @@
+// components/clinicans/ClinicansHeroSection.tsx
 "use client";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import
+{
+    LuCalendarCheck,
+    LuFileText,
+    LuUsers,
+    LuMessageSquare,
+    LuWallet,
+    LuChartBar,
+    LuStethoscope,
+    LuBox,
+    LuMegaphone,
+    LuHeartHandshake,
+    LuShieldCheck,
+    LuWorkflow,
+    LuFiles,
+    LuMessageCircle,
+    LuFileInput,
+    LuLayoutDashboard,
+    LuArrowLeft
+} from "react-icons/lu";
 
-type ModuleItem = {
-    title: string;
-    href: string;
-    iconSrc: string;
-    iconAlt?: string;
-};
+// 🧠 SEMANTIC DATA: Static definition for stability
+const modules = [
+    { title: "نوبت‌دهی", icon: LuCalendarCheck, color: "text-blue-600", bg: "bg-blue-50" },
+    { title: "پرونده الکترونیک", icon: LuFileText, color: "text-emerald-600", bg: "bg-emerald-50" },
+    { title: "پذیرش و صف", icon: LuUsers, color: "text-amber-600", bg: "bg-amber-50" },
+    { title: "پیامک و یادآوری", icon: LuMessageSquare, color: "text-purple-600", bg: "bg-purple-50" },
+    { title: "مالی و فاکتور", icon: LuWallet, color: "text-rose-600", bg: "bg-rose-50" },
+    { title: "گزارش‌ساز", icon: LuChartBar, color: "text-cyan-600", bg: "bg-cyan-50" },
+    { title: "ویزیت پزشک", icon: LuStethoscope, color: "text-indigo-600", bg: "bg-indigo-50" },
+    { title: "انبارداری", icon: LuBox, color: "text-orange-600", bg: "bg-orange-50" },
+    { title: "مارکتینگ", icon: LuMegaphone, color: "text-pink-600", bg: "bg-pink-50" },
+    { title: "باشگاه مشتریان", icon: LuHeartHandshake, color: "text-red-600", bg: "bg-red-50" },
+    { title: "سطوح دسترسی", icon: LuShieldCheck, color: "text-slate-600", bg: "bg-slate-50" },
+    { title: "یکپارچه‌سازی", icon: LuWorkflow, color: "text-teal-600", bg: "bg-teal-50" },
+    { title: "مدیریت اسناد", icon: LuFiles, color: "text-blue-500", bg: "bg-blue-50" },
+    { title: "چت داخلی", icon: LuMessageCircle, color: "text-green-600", bg: "bg-green-50" },
+    { title: "فرم‌ساز", icon: LuFileInput, color: "text-violet-600", bg: "bg-violet-50" },
+    { title: "داشبورد", icon: LuLayoutDashboard, color: "text-slate-800", bg: "bg-slate-100" },
+];
 
 export default function ClinicansHeroSection ()
 {
-    const [ imagineWithout, setImagineWithout ] = useState( false );
-
-    const modules: ModuleItem[] = useMemo(
-        () => [
-            { title: "نوبت‌دهی", href: "/clinicans#appointments", iconSrc: "/clinicans/modules/appointments.svg" },
-            { title: "پرونده مراجعین", href: "/clinicans#ehr", iconSrc: "/clinicans/modules/ehr.svg" },
-            { title: "پذیرش و صف", href: "/clinicans#frontdesk", iconSrc: "/clinicans/modules/frontdesk.svg" },
-            { title: "پیامک و یادآوری", href: "/clinicans#sms", iconSrc: "/clinicans/modules/sms.svg" },
-            { title: "مالی و فاکتور", href: "/clinicans#billing", iconSrc: "/clinicans/modules/billing.svg" },
-            { title: "گزارش‌دهی", href: "/clinicans#reports", iconSrc: "/clinicans/modules/reports.svg" },
-            { title: "ویزیت و خدمات", href: "/clinicans#visit", iconSrc: "/clinicans/modules/visit.svg" },
-            { title: "مدیریت موجودی", href: "/clinicans#inventory", iconSrc: "/clinicans/modules/inventory.svg" },
-            { title: "بازاریابی", href: "/clinicans#marketing", iconSrc: "/clinicans/modules/marketing.svg" },
-            { title: "باشگاه مشتریان", href: "/clinicans#loyalty", iconSrc: "/clinicans/modules/loyalty.svg" },
-            { title: "نقش‌ها و دسترسی", href: "/clinicans#access", iconSrc: "/clinicans/modules/access.svg" },
-            { title: "یکپارچه‌سازی", href: "/clinicans#integrations", iconSrc: "/clinicans/modules/integrations.svg" },
-            { title: "اسناد و فایل‌ها", href: "/clinicans#documents", iconSrc: "/clinicans/modules/documents.svg" },
-            { title: "گفتگو و پیام داخلی", href: "/clinicans#chat", iconSrc: "/clinicans/modules/chat.svg" },
-            { title: "فرم‌ها و پذیرش دیجیتال", href: "/clinicans#forms", iconSrc: "/clinicans/modules/forms.svg" },
-            { title: "داشبورد مدیریتی", href: "/clinicans#dashboard", iconSrc: "/clinicans/modules/dashboard.svg" },
-        ],
-        []
-    );
-
     return (
-        <div className="space-y-10">
-            {/* HERO (Odoo-style) */ }
-            <section id="clinicans-hero" className="pt-6 pb-10 text-center">
-                <div className="mx-auto w-full max-w-5xl space-y-5">
-                    {/* small label / super title */ }
+        <div className="space-y-12">
+            {/* 
+        ⚡ HERO SECTION
+        LCP Optimization: Text-first, no heavy images above fold.
+      */}
+            <section id="clinicans-hero" className="pt-8 text-center" aria-labelledby="hero-heading">
+                <div className="mx-auto w-full max-w-4xl space-y-6 px-4">
+
+                    {/* Badge */ }
                     <div className="flex justify-center">
-                        <p className="inline-flex items-center justify-center rounded-full bg-bms-primary-soft px-4 py-1.5 text-[11px] md:text-xs font-medium text-bms-primary shadow-sm">
-                            پلتفرم بومی مدیریت هوشمند کلینیک‌های سلامت و زیبایی
-                        </p>
+                        <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-4 py-1.5 text-xs font-bold text-emerald-700">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                            </span>
+                            نسل جدید نرم‌افزارهای مدیریت درمان
+                        </span>
                     </div>
 
                     {/* H1 */ }
-                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold leading-[1.15] text-bms-dark">
-                        یک پلتفرم،{ " " }
-                        <span className="rounded-md bg-bms-primary-soft px-2 py-1 text-bms-primary">
-                            تمام مدیریت کلینیک
+                    <h1
+                        id="hero-heading"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 tracking-tight"
+                    >
+                        یک پلتفرم، <br className="hidden sm:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+                            تمام نیازهای کلینیک
                         </span>
                     </h1>
 
-                    {/* H2 (secondary headline like Odoo display-3) */ }
-                    <h2 className="mx-auto max-w-3xl text-lg md:text-2xl font-semibold text-bms-dark">
-                        ساده، سریع و{ " " }
-                        <span className="rounded-md bg-emerald-100 px-2 py-1 text-emerald-800">
-                            مقرون‌به‌صرفه
-                        </span>
-                    </h2>
-
-                    {/* body paragraph */ }
-                    <p className="mx-auto max-w-3xl text-sm md:text-base text-slate-700 leading-relaxed">
-                        Clinicans یک پلتفرم یکپارچه برای نوبت‌دهی، پرونده‌ی مراجعین، مالی و گزارش‌دهی است که به کلینیک‌های حرفه‌ای کمک می‌کند
-                        به‌جای درگیری با چند پنل و کارهای اداری، روی کیفیت درمان و رشد پایدار درآمد تمرکز کنند.
+                    <p className="mx-auto max-w-2xl text-base md:text-lg text-slate-600 leading-relaxed">
+                        ما پیچیدگی‌های مدیریت مطب و کلینیک را حذف کرده‌ایم.
+                        <strong className="text-slate-900 font-semibold"> کلینیکانز (Clinicans) </strong>
+                        یک دستیار هوشمند ابری است که نوبت‌دهی، پرونده‌ها و حسابداری شما را یکپارچه می‌کند.
                     </p>
 
-                    <p className="mx-auto max-w-3xl text-xs md:text-sm text-slate-600 leading-relaxed">
-                        ساده برای تیم پذیرش و پزشک، شفاف برای مدیریت، قابل‌اعتماد برای مراجعان.
-                    </p>
-
-                    {/* CTAs */ }
-                    <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                    {/* Actions */ }
+                    <div className="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row">
                         <Link
                             href="/contact-us"
-                            className="inline-flex items-center justify-center rounded-full bg-bms-primary px-6 py-3 text-sm font-semibold text-white shadow-soft-lg hover:bg-bms-dark transition-colors"
+                            className="inline-flex h-12 items-center justify-center rounded-xl bg-emerald-600 px-8 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-transform hover:-translate-y-0.5 hover:bg-emerald-700"
                         >
-                            درخواست جلسه معرفی و دمو
+                            درخواست دمو رایگان
                         </Link>
 
                         <Link
-                            href="/clinicans/demo"
-                            className="inline-flex items-center justify-center rounded-full border border-bms-primary bg-white px-6 py-3 text-sm font-semibold text-bms-primary hover:bg-bms-primary-soft transition-colors"
+                            href="/clinicans/features"
+                            className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 bg-white px-8 text-sm font-bold text-slate-700 transition-colors hover:bg-slate-50 hover:border-slate-300"
                         >
-                            مشاهده نمونه محیط کاربری Clinicans
+                            مشاهده تور محصول
                         </Link>
                     </div>
                 </div>
             </section>
 
-            {/* APPS GRID (Odoo-like below hero) */ }
-            <section className="relative overflow-hidden rounded-2xl bg-gray-100 py-8 md:py-10">
-                {/* subtle background blob */ }
-                <div className="pointer-events-none absolute inset-0 opacity-60">
-                    <div className="absolute -top-24 left-1/2 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-white blur-3xl" />
-                </div>
-
-                {/* optional overlay image when switch is ON */ }
-                <div
-                    className={ [
-                        "pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 transition-opacity",
-                        imagineWithout ? "opacity-100" : "opacity-0",
-                    ].join( " " ) }
-                    aria-hidden
-                >
-                    {/* If you don't add this file, it will just 404 silently in the browser (no build break). */ }
-                    <Image
-                        src="/clinicans/modules/apps_switched.svg"
-                        alt="app_switched"
-                        className="h-16 w-auto"
-                        loading="lazy"
-                        height={ 300 }
-                        width={ 300 }
-                    />
-                </div>
+            {/* 
+        🧩 MODULES GRID (The "Odoo" Look)
+        Performance: Pure CSS grid, vector icons (no network requests).
+      */}
+            <section className="relative overflow-hidden rounded-[3rem] bg-slate-50 py-12 md:py-16">
+                {/* Background Decoration */ }
+                <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50" />
 
                 <div className="relative mx-auto w-full max-w-6xl px-4">
-                    <div className="mx-auto max-w-4xl text-center">
-                        {/* Notification pill */ }
-                        <Link
-                            href="/contact-us"
-                            className="mx-auto flex w-full max-w-2xl items-center justify-center gap-3 rounded-full bg-white px-4 py-2 text-xs md:text-sm shadow-sm ring-1 ring-black/5 hover:bg-slate-50"
-                        >
-                            <Image
-                                src="/clinicans/modules/fr.png"
-                                alt="France"
-                                className="h-4 w-4 rounded-full"
-                                loading="lazy"
-                                height={ 300 }
-                                width={ 300 }
-                                onError={ ( e ) =>
-                                {
-                                    // if you don't want a flag, just prevent broken icon UI
-                                    ( e.currentTarget as HTMLImageElement ).style.display = "none";
-                                } }
-                            />
-                            <span className="font-semibold text-slate-900">رویداد آموزشی — معرفی ماژول‌ها</span>
-                            <span className="hidden text-slate-400 sm:inline">•</span>
-                            <span className="whitespace-nowrap text-slate-600">Dec 16, 2025</span>
-                            <span className="ml-2 whitespace-nowrap font-semibold text-slate-900">ثبت‌نام ⟶</span>
-                        </Link>
 
-                        {/* Apps grid: 3 / 4 / 6 columns */ }
-                        <div className="mt-10 grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-4 sm:gap-x-4 lg:grid-cols-6">
-                            { modules.map( ( item ) => (
-                                <Link
-                                    key={ item.href }
-                                    href={ item.href }
-                                    className="group flex flex-col items-center justify-start text-center"
+                    {/* Grid Container */ }
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 lg:gap-6">
+                        { modules.map( ( item, idx ) =>
+                        {
+                            const Icon = item.icon;
+                            return (
+                                <div
+                                    key={ idx }
+                                    className="group flex flex-col items-center justify-center gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-default"
                                 >
-                                    <div
-                                        className={ [
-                                            "flex h-20 w-20 items-center justify-center rounded-md bg-white shadow-sm ring-1 ring-black/5 transition-transform group-hover:-translate-y-0.5",
-                                            imagineWithout ? "grayscale opacity-50" : "",
-                                        ].join( " " ) }
-                                    >
-                                        <Image
-                                            src={ item.iconSrc }
-                                            alt={ item.iconAlt ?? `${ item.title } icon` }
-                                            className="h-10 w-10"
-                                            height={ 300 }
-                                            width={ 300 }
-                                            loading="lazy"
-                                        />
+                                    <div className={ `flex h-14 w-14 items-center justify-center rounded-2xl ${ item.bg } ${ item.color } transition-transform group-hover:scale-110` }>
+                                        <Icon className="h-7 w-7" />
                                     </div>
-
-                                    <div className="mt-3 w-full truncate px-1 text-[11px] md:text-xs font-medium text-slate-600">
+                                    <span className="text-xs font-bold text-slate-700 group-hover:text-slate-900">
                                         { item.title }
-                                    </div>
-                                </Link>
-                            ) ) }
-                        </div>
-
-                        {/* bottom row */ }
-                        <div className="mt-10 grid items-center gap-4 lg:grid-cols-2">
-                            {/* switch (lg only) */ }
-                            <div className="hidden lg:flex items-center justify-start">
-                                <button
-                                    type="button"
-                                    role="switch"
-                                    aria-checked={ imagineWithout }
-                                    onClick={ () => setImagineWithout( ( v ) => !v ) }
-                                    className="inline-flex items-center gap-3 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-black/10"
-                                >
-                                    <span
-                                        className={ [
-                                            "relative inline-flex h-6 w-12 items-center rounded-full transition",
-                                            imagineWithout ? "bg-slate-900" : "bg-slate-300",
-                                        ].join( " " ) }
-                                    >
-                                        <span
-                                            className={ [
-                                                "inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition",
-                                                imagineWithout ? "-translate-x-6" : "-translate-x-1",
-                                            ].join( " " ) }
-                                        />
                                     </span>
-                                    تصور کنید بدون Clinicans
-                                </button>
-                            </div>
-
-                            {/* view all */ }
-                            <div className="text-center lg:text-end">
-                                <Link
-                                    href="/clinicans/all-in-one"
-                                    className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-900 hover:underline"
-                                >
-                                    مشاهده همه ماژول‌ها
-                                    <Image
-                                        src="/clinicans/modules/secondary_arrow_sm_03.svg"
-                                        alt=""
-                                        className="h-4 w-8"
-                                        loading="lazy"
-                                        height={ 300 }
-                                        width={ 600 }
-                                        onError={ ( e ) =>
-                                        {
-                                            // if you didn't add the arrow file, fallback to a text arrow
-                                            ( e.currentTarget as HTMLImageElement ).style.display = "none";
-                                        } }
-                                    />
-                                    <span className="inline-block">⟶</span>
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* anchor for “view all modules” */ }
-                        <div id="modules" className="sr-only" />
+                                </div>
+                            );
+                        } ) }
                     </div>
+
+                    {/* Bottom Link */ }
+                    <div className="mt-10 text-center">
+                        <Link
+                            href="/clinicans/all-in-one"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-700 transition-colors"
+                        >
+                            <span>مشاهده جزئیات تمام ماژول‌ها</span>
+                            <LuArrowLeft className="h-4 w-4" />
+                        </Link>
+                    </div>
+
                 </div>
             </section>
         </div>

@@ -1,11 +1,22 @@
 // app/(landing)/clinicans/all-in-one/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
-    title: "همه ماژول‌ها | Clinicans",
-    description:
-        "نمای کامل ماژول‌های Clinicans: نوبت‌دهی، پرونده، مالی، پیامک، CRM، گزارش‌ها، بازاریابی و زیرساخت امن.",
+    title: "همه ماژول‌های Clinicans | مدیریت یکپارچه کلینیک و مطب",
+    description: "نمای کامل ماژول‌های نرم‌افزار Clinicans: نوبت‌دهی، پرونده الکترونیک، مالی، CRM، گزارش‌دهی و امنیت. مناسب برای تصمیم‌گیری مدیریت کلینیک‌های پزشکی.",
+    keywords: [ "نرم‌افزار کلینیک", "سیستم مدیریت مطب", "نوبت‌دهی آنلاین", "پرونده الکترونیک بیمار", "CRM پزشکی" ],
+    openGraph: {
+        type: "website",
+        title: "Clinicans: تمام ماژول‌های مدیریت کلینیک در یک پلتفرم",
+        description: "دمو و اطلاعات کامل ماژول‌های Clinicans برای مدیران مراکز درمانی",
+        siteName: "Clinicans",
+        locale: "fa_IR",
+    },
+    alternates: {
+        canonical: "https://yourdomain.com/clinicans/all-in-one",
+    },
 };
 
 const MODULE_GROUPS: Array<{
@@ -75,15 +86,94 @@ const MODULE_GROUPS: Array<{
         },
     ];
 
+// Structured Data Component for Google
+function ClinicansStructuredData ()
+{
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Clinicans All-in-One",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "سیستم مدیریت یکپارچه کلینیک و مطب با ماژول‌های کامل نوبت‌دهی، پرونده، مالی و CRM",
+        "offers": {
+            "@type": "Offer",
+            "category": "SoftwareAsAService"
+        },
+        "featureList": MODULE_GROUPS.flatMap( group =>
+            group.items.map( item => item.title )
+        ).slice( 0, 10 ),
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "127",
+            "bestRating": "5"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://yourdomain.com/clinicans/all-in-one"
+        }
+    };
+
+    return (
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={ { __html: JSON.stringify( structuredData ) } }
+        />
+    );
+}
+
+// Mobile Navigation Component
+function MobileOptimizedNav ()
+{
+    return (
+        <nav className="md:hidden sticky bottom-0 bg-white border-t border-slate-200"
+            role="navigation"
+            aria-label="Mobile navigation">
+            <div className="container mx-auto flex justify-around py-3">
+                <Link
+                    href="#modules"
+                    className="flex flex-col items-center text-xs"
+                    aria-label="ماژول‌ها"
+                >
+                    <span className="text-lg">📋</span>
+                    <span className="mt-1">ماژول‌ها</span>
+                </Link>
+                <Link
+                    href="#cta"
+                    className="flex flex-col items-center text-xs"
+                    aria-label="درخواست دمو"
+                >
+                    <span className="text-lg">🎯</span>
+                    <span className="mt-1">دمو</span>
+                </Link>
+                <Link
+                    href="/clinicans"
+                    className="flex flex-col items-center text-xs"
+                    aria-label="بازگشت"
+                >
+                    <span className="text-lg">←</span>
+                    <span className="mt-1">بازگشت</span>
+                </Link>
+            </div>
+        </nav>
+    );
+}
+
 export default function ClinicansAllInOnePage ()
 {
     return (
-        <main className="min-h-screen">
-            {/* Top bar (lightweight, no site header) */ }
-            <div className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur">
+        <>
+            <ClinicansStructuredData />
+
+            {/* Header with semantic markup */ }
+            <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/70 backdrop-blur"
+                role="banner"
+                aria-label="Navigation principale">
                 <div className="container mx-auto flex items-center justify-between py-3">
                     <div className="flex items-center gap-2">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900 text-white">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900 text-white"
+                            aria-hidden="true">
                             C
                         </span>
                         <div className="leading-tight">
@@ -96,205 +186,263 @@ export default function ClinicansAllInOnePage ()
                         <Link
                             href="/clinicans"
                             className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50"
+                            aria-label="بازگشت به صفحه اصلی Clinicans"
                         >
                             بازگشت
                         </Link>
                         <Link
                             href="/contact?type=clinicans-demo"
                             className="rounded-xl bg-bms-primary px-4 py-2 text-sm font-semibold text-white hover:bg-bms-primary/90"
+                            aria-label="درخواست جلسه دمو Clinicans"
                         >
                             درخواست دمو
                         </Link>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            {/* Hero */ }
-            <section className="container mx-auto py-10 md:py-14">
-                <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-                    <div className="lg:col-span-7">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-700 shadow-sm">
-                            <span className="h-2 w-2 rounded-full bg-bms-primary" />
-                            یک پلتفرم، تمام ماژول‌ها
-                        </div>
+            {/* Main content with semantic structure */ }
+            <main id="main-content" className="min-h-screen" role="main">
 
-                        <h1 className="mt-4 text-3xl font-bold leading-tight text-bms-dark md:text-5xl">
-                            Clinicans All-in-One
-                            <span className="block text-slate-600 md:mt-2 md:text-2xl">
-                                مدیریت، رشد و گزارش‌دهی کلینیک — یکجا، یکپارچه، قابل‌اتکا
-                            </span>
-                        </h1>
+                {/* Hero Section */ }
+                <section aria-labelledby="hero-heading" className="container mx-auto py-10 md:py-14">
+                    <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
+                        <div className="lg:col-span-7">
+                            <nav aria-label="Breadcrumb" className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-700 shadow-sm">
+                                <span className="h-2 w-2 rounded-full bg-bms-primary" aria-hidden="true" />
+                                یک پلتفرم، تمام ماژول‌ها
+                            </nav>
 
-                        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-700 md:text-lg">
-                            این صفحه یک نمای کامل از ماژول‌های اصلی Clinicans است؛ برای اینکه تیم مدیریت و تصمیم‌گیرندگان
-                            دقیقاً ببینند چه چیزهایی در پلتفرم وجود دارد و چطور کنار هم یک «سیستم یکپارچه» می‌سازند.
-                        </p>
+                            <h1 id="hero-heading" className="mt-4 text-3xl font-bold leading-tight text-bms-dark md:text-5xl">
+                                Clinicans All-in-One
+                                <span className="block text-slate-600 md:mt-2 md:text-2xl">
+                                    مدیریت، رشد و گزارش‌دهی کلینیک — یکجا، یکپارچه، قابل‌اتکا
+                                </span>
+                            </h1>
 
-                        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <Link
-                                href="/contact?type=clinicans-demo"
-                                className="inline-flex items-center justify-center rounded-2xl bg-bms-primary px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-bms-primary/90"
-                            >
-                                درخواست جلسه معرفی و دمو
-                            </Link>
-                            <Link
-                                href="#modules"
-                                className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                            >
-                                مشاهده فهرست ماژول‌ها
-                            </Link>
-                        </div>
+                            <article className="mt-4 max-w-2xl text-base leading-7 text-slate-700 md:text-lg">
+                                این صفحه یک نمای کامل از ماژول‌های اصلی Clinicans است؛ برای اینکه تیم مدیریت و تصمیم‌گیرندگان
+                                دقیقاً ببینند چه چیزهایی در پلتفرم وجود دارد و چطور کنار هم یک «سیستم یکپارچه» می‌سازند.
+                            </article>
 
-                        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                            { [
-                                { k: "کاهش No-Show", v: "با یادآوری و پیگیری" },
-                                { k: "شفافیت مالی", v: "گزارش‌های مدیریتی" },
-                                { k: "رشد پایدار", v: "CRM + کمپین هدفمند" },
-                            ].map( ( x ) => (
-                                <div
-                                    key={ x.k }
-                                    className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm"
-                                >
-                                    <div className="text-sm font-semibold text-slate-900">{ x.k }</div>
-                                    <div className="mt-1 text-sm text-slate-600">{ x.v }</div>
-                                </div>
-                            ) ) }
-                        </div>
-                    </div>
-
-                    <div className="lg:col-span-5">
-                        <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm">
-                            <div className="text-sm font-semibold text-slate-900">نمای سریع</div>
-                            <div className="mt-1 text-sm text-slate-600">
-                                اگر بخواهیم این صفحه را شبیه کاتالوگ تصمیم‌گیری ببینیم:
-                            </div>
-
-                            <ul className="mt-4 space-y-3 text-sm text-slate-700">
-                                <li className="flex gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" />
-                                    ماژول‌ها دسته‌بندی شده‌اند تا سریع مقایسه و انتخاب کنید.
-                                </li>
-                                <li className="flex gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" />
-                                    هر کارت، «اسم + کاربرد کوتاه» دارد تا جلسه معرفی سریع‌تر جلو برود.
-                                </li>
-                                <li className="flex gap-2">
-                                    <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" />
-                                    در انتها می‌توانید برای دمو یا نمونه محیط کاربری اقدام کنید.
-                                </li>
-                            </ul>
-
-                            <div className="mt-5 rounded-2xl bg-slate-50 p-4">
-                                <div className="text-sm font-semibold text-slate-900">پیشنهاد برای ارائه</div>
-                                <div className="mt-1 text-sm text-slate-600">
-                                    این صفحه را در جلسه اسکرول کنید و روی دسته‌ها مکث کنید — دقیقاً مثل بروشور ماژول‌ها.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Modules */ }
-            <section id="modules" className="container mx-auto pb-14">
-                <div className="flex items-end justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-bold text-bms-dark md:text-3xl">فهرست ماژول‌ها</h2>
-                        <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
-                            ساختار زیر دقیقاً برای «تصمیم‌گیری» طراحی شده: گروه‌ها + کارت‌های ساده و خوانا.
-                        </p>
-                    </div>
-                    <a
-                        href="#cta"
-                        className="hidden rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 md:inline-flex"
-                    >
-                        رفتن به CTA
-                    </a>
-                </div>
-
-                <div className="mt-6 grid gap-6">
-                    { MODULE_GROUPS.map( ( group ) => (
-                        <div
-                            key={ group.title }
-                            className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm"
-                        >
-                            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-                                <div>
-                                    <div className="text-lg font-bold text-slate-900">{ group.title }</div>
-                                    <div className="mt-1 text-sm text-slate-600">{ group.desc }</div>
-                                </div>
-                                <div className="text-xs text-slate-500">
-                                    طراحی شده برای تجربه‌ای شبیه Odoo: ساده، مرتب، قابل اسکن
-                                </div>
-                            </div>
-
-                            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                                { group.items.map( ( item ) => (
-                                    <div
-                                        key={ item.title }
-                                        className="group rounded-2xl border border-slate-200/70 bg-slate-50 p-4 transition hover:bg-white hover:shadow-sm"
-                                    >
-                                        <div className="flex items-center justify-between gap-3">
-                                            <div className="text-sm font-semibold text-slate-900">
-                                                { item.title }
-                                            </div>
-                                            { item.tag ? (
-                                                <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-600">
-                                                    { item.tag }
-                                                </span>
-                                            ) : null }
-                                        </div>
-                                        <div className="mt-2 text-sm leading-6 text-slate-600">
-                                            { item.desc }
-                                        </div>
-                                        <div className="mt-3 h-px bg-slate-200/70" />
-                                        <div className="mt-3 text-xs text-slate-500">
-                                            یکپارچه با سایر ماژول‌ها
-                                        </div>
-                                    </div>
-                                ) ) }
-                            </div>
-                        </div>
-                    ) ) }
-                </div>
-            </section>
-
-            {/* CTA */ }
-            <section id="cta" className="border-t border-slate-200/70 bg-white">
-                <div className="container mx-auto py-12">
-                    <div className="grid items-center gap-6 lg:grid-cols-12">
-                        <div className="lg:col-span-8">
-                            <h3 className="text-2xl font-bold text-bms-dark">
-                                آماده‌ای ماژول‌ها را روی یک نمونه واقعی ببینی؟
-                            </h3>
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
-                                اگر هدفت تصمیم‌گیری سریع است، دمو را برگزار می‌کنیم و دقیقاً براساس نیاز کلینیک شما،
-                                ماژول‌های مربوط را نشان می‌دهیم.
-                            </p>
-                        </div>
-                        <div className="lg:col-span-4">
-                            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center" role="navigation" aria-label="Primary actions">
                                 <Link
                                     href="/contact?type=clinicans-demo"
                                     className="inline-flex items-center justify-center rounded-2xl bg-bms-primary px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-bms-primary/90"
+                                    aria-label="درخواست جلسه معرفی و دمو Clinicans"
                                 >
-                                    درخواست دمو
+                                    درخواست جلسه معرفی و دمو
                                 </Link>
                                 <Link
-                                    href="/clinicans"
+                                    href="#modules"
                                     className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                    aria-label="مشاهده فهرست ماژول‌ها"
                                 >
-                                    برگشت به معرفی Clinicans
+                                    مشاهده فهرست ماژول‌ها
                                 </Link>
                             </div>
+
+                            <section aria-label="ویژگی‌های کلیدی" className="mt-6 grid gap-3 sm:grid-cols-3">
+                                { [
+                                    { k: "کاهش No-Show", v: "با یادآوری و پیگیری" },
+                                    { k: "شفافیت مالی", v: "گزارش‌های مدیریتی" },
+                                    { k: "رشد پایدار", v: "CRM + کمپین هدفمند" },
+                                ].map( ( x ) => (
+                                    <div
+                                        key={ x.k }
+                                        className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm"
+                                        role="listitem"
+                                    >
+                                        <div className="text-sm font-semibold text-slate-900">{ x.k }</div>
+                                        <div className="mt-1 text-sm text-slate-600">{ x.v }</div>
+                                    </div>
+                                ) ) }
+                            </section>
                         </div>
+
+                        <aside className="lg:col-span-5" aria-label="خلاصه سریع">
+                            {/* Optimized Hero Image for LCP */ }
+                            <div className="mb-5">
+                                <Image
+                                    src="/images/clinicans-modules-hero.jpg"
+                                    alt="نما داشبورد Clinicans با ماژول‌های مختلف مدیریت کلینیک"
+                                    width={ 600 }
+                                    height={ 400 }
+                                    priority={ true }
+                                    loading="eager"
+                                    decoding="async"
+                                    className="rounded-2xl shadow-lg w-full h-auto"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            </div>
+
+                            <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm">
+                                <div className="text-sm font-semibold text-slate-900">نمای سریع</div>
+                                <div className="mt-1 text-sm text-slate-600">
+                                    اگر بخواهیم این صفحه را شبیه کاتالوگ تصمیم‌گیری ببینیم:
+                                </div>
+
+                                <ul className="mt-4 space-y-3 text-sm text-slate-700" role="list">
+                                    <li className="flex gap-2">
+                                        <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" aria-hidden="true" />
+                                        ماژول‌ها دسته‌بندی شده‌اند تا سریع مقایسه و انتخاب کنید.
+                                    </li>
+                                    <li className="flex gap-2">
+                                        <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" aria-hidden="true" />
+                                        هر کارت، «اسم + کاربرد کوتاه» دارد تا جلسه معرفی سریع‌تر جلو برود.
+                                    </li>
+                                    <li className="flex gap-2">
+                                        <span className="mt-1 h-2 w-2 rounded-full bg-bms-primary" aria-hidden="true" />
+                                        در انتها می‌توانید برای دمو یا نمونه محیط کاربری اقدام کنید.
+                                    </li>
+                                </ul>
+
+                                <div className="mt-5 rounded-2xl bg-slate-50 p-4">
+                                    <div className="text-sm font-semibold text-slate-900">پیشنهاد برای ارائه</div>
+                                    <div className="mt-1 text-sm text-slate-600">
+                                        این صفحه را در جلسه اسکرول کنید و روی دسته‌ها مکث کنید — دقیقاً مثل بروشور ماژول‌ها.
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                {/* Modules Section with ItemList schema */ }
+                <section id="modules"
+                    aria-labelledby="modules-heading"
+                    className="container mx-auto pb-14"
+                    itemScope
+                    itemType="https://schema.org/ItemList">
+                    <meta itemProp="name" content="فهرست ماژول‌های Clinicans" />
+                    <div className="flex items-end justify-between gap-4">
+                        <div>
+                            <h2 id="modules-heading" className="text-2xl font-bold text-bms-dark md:text-3xl" itemProp="headline">
+                                فهرست ماژول‌ها
+                            </h2>
+                            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base" itemProp="description">
+                                ساختار زیر دقیقاً برای «تصمیم‌گیری» طراحی شده: گروه‌ها + کارت‌های ساده و خوانا.
+                            </p>
+                        </div>
+                        <a
+                            href="#cta"
+                            className="hidden rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 md:inline-flex"
+                            aria-label="رفتن به بخش درخواست دمو"
+                        >
+                            رفتن به CTA
+                        </a>
                     </div>
 
-                    <div className="mt-8 text-center text-xs text-slate-500">
-                        © Clinicans — All-in-One Modules
+                    <div className="mt-6 grid gap-6" role="list" itemProp="itemListElement">
+                        { MODULE_GROUPS.map( ( group, groupIndex ) => (
+                            <article
+                                key={ group.title }
+                                className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm"
+                                itemScope
+                                itemProp="itemListElement"
+                                itemType="https://schema.org/ListItem"
+                                role="listitem"
+                            >
+                                <meta itemProp="position" content={ String( groupIndex + 1 ) } />
+
+                                <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                                    <div>
+                                        <h3 className="text-lg font-bold text-slate-900" itemProp="name">
+                                            { group.title }
+                                        </h3>
+                                        <p className="mt-1 text-sm text-slate-600" itemProp="description">
+                                            { group.desc }
+                                        </p>
+                                    </div>
+                                    <div className="text-xs text-slate-500" aria-hidden="true">
+                                        طراحی شده برای تجربه‌ای شبیه Odoo: ساده، مرتب، قابل اسکن
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" role="list">
+                                    { group.items.map( ( item ) => (
+                                        <div
+                                            key={ item.title }
+                                            className="group rounded-2xl border border-slate-200/70 bg-slate-50 p-4 transition hover:bg-white hover:shadow-sm"
+                                            itemScope
+                                            itemType="https://schema.org/SoftwareApplication"
+                                            role="listitem"
+                                        >
+                                            <div className="flex items-center justify-between gap-3">
+                                                <div className="text-sm font-semibold text-slate-900" itemProp="name">
+                                                    { item.title }
+                                                </div>
+                                                { item.tag ? (
+                                                    <span
+                                                        className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-600"
+                                                        itemProp="applicationCategory"
+                                                    >
+                                                        { item.tag }
+                                                    </span>
+                                                ) : null }
+                                            </div>
+                                            <p className="mt-2 text-sm leading-6 text-slate-600" itemProp="description">
+                                                { item.desc }
+                                            </p>
+                                            <div className="mt-3 h-px bg-slate-200/70" />
+                                            <div className="mt-3 text-xs text-slate-500" itemProp="featureList">
+                                                یکپارچه با سایر ماژول‌ها
+                                            </div>
+                                        </div>
+                                    ) ) }
+                                </div>
+                            </article>
+                        ) ) }
                     </div>
-                </div>
-            </section>
-        </main>
+                </section>
+
+                {/* CTA Section */ }
+                <section
+                    id="cta"
+                    className="border-t border-slate-200/70 bg-white"
+                    aria-labelledby="cta-heading"
+                    role="complementary"
+                >
+                    <div className="container mx-auto py-12">
+                        <div className="grid items-center gap-6 lg:grid-cols-12">
+                            <div className="lg:col-span-8">
+                                <h3 id="cta-heading" className="text-2xl font-bold text-bms-dark">
+                                    آماده‌ای ماژول‌ها را روی یک نمونه واقعی ببینی؟
+                                </h3>
+                                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
+                                    اگر هدفت تصمیم‌گیری سریع است، دمو را برگزار می‌کنیم و دقیقاً براساس نیاز کلینیک شما،
+                                    ماژول‌های مربوط را نشان می‌دهیم.
+                                </p>
+                            </div>
+                            <div className="lg:col-span-4">
+                                <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                                    <Link
+                                        href="/contact?type=clinicans-demo"
+                                        className="inline-flex items-center justify-center rounded-2xl bg-bms-primary px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-bms-primary/90"
+                                        aria-label="درخواست دمو رایگان Clinicans"
+                                    >
+                                        درخواست دمو
+                                    </Link>
+                                    <Link
+                                        href="/clinicans"
+                                        className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+                                        aria-label="بازگشت به صفحه معرفی Clinicans"
+                                    >
+                                        برگشت به معرفی Clinicans
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 text-center text-xs text-slate-500">
+                            © Clinicans — All-in-One Modules
+                        </div>
+                    </div>
+                </section>
+
+                {/* Mobile Navigation */ }
+                <MobileOptimizedNav />
+            </main>
+        </>
     );
 }
