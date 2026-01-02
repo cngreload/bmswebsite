@@ -1,8 +1,7 @@
 // app/clinicans/page.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
-import Link from "next/link";
-import { LuChevronLeft, LuHouse } from "react-icons/lu";
+import ClinicansNavbar from "@/components/clinicans/ClinicansNavbar"; // 👈 Import the new navbar
 
 import ClinicansHeroSection from "@/components/clinicans/ClinicansHeroSection";
 import ClinicansProblemsSection from "@/components/clinicans/ClinicansProblemsSection";
@@ -13,50 +12,87 @@ import ClinicansSecuritySection from "@/components/clinicans/ClinicansSecuritySe
 import ClinicansTechSection from "@/components/clinicans/ClinicansTechSection";
 import ClinicansGetStartedSection from "@/components/clinicans/ClinicansGetStartedSection";
 
-// 🧠 CRAWLER EMPATHY: Targeted SaaS Keywords
+// 🧠 PRODUCT METADATA — SaaS + Healthcare aligned
 export const metadata: Metadata = {
-    title: "کلینیکانز (Clinicans) | نرم‌افزار مدیریت مطب و کلینیک",
-    description: "پلتفرم جامع و ابری برای مدیریت کلینیک‌های زیبایی و سلامت. نوبت‌دهی آنلاین، پرونده الکترونیک (EHR)، حسابداری یکپارچه و CRM تخصصی پزشکی.",
-    keywords: [ "نرم‌افزار کلینیک", "مدیریت مطب", "پرونده الکترونیک سلامت", "EHR", "نوبت‌دهی آنلاین پزشکی", "CRM پزشکی" ],
+    title: "کلینیکانز (Clinicans) | پلتفرم مدیریت هوشمند کلینیک",
+    description:
+        "Clinicans یک پلتفرم ابری و یکپارچه برای مدیریت کلینیک‌های سلامت و زیبایی است؛ شامل نوبت‌دهی آنلاین، پرونده الکترونیک سلامت (EHR)، مدیریت مالی و ارتباط با بیمار.",
+    keywords: [
+        "نرم‌افزار مدیریت کلینیک",
+        "مدیریت مطب",
+        "پرونده الکترونیک سلامت",
+        "EHR",
+        "نوبت‌دهی آنلاین پزشکی",
+        "نرم‌افزار کلینیک زیبایی",
+        "CRM پزشکی",
+    ],
     alternates: {
         canonical: "https://barman-mes.ir/clinicans",
-    }
+    },
 };
 
 export default function ClinicansPage ()
 {
-    // 🧠 CRAWLER EMPATHY: Rich Software Schema
+    // 🧠 RICH SOFTWARE + PRODUCT SCHEMA
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "SoftwareApplication",
+                "@id": "https://barman-mes.ir/clinicans#software",
                 "name": "Clinicans",
-                "applicationCategory": "BusinessApplication", // or MedicalApplication
+                "applicationCategory": [
+                    "MedicalApplication",
+                    "BusinessApplication"
+                ],
                 "operatingSystem": "Web Browser",
-                "description": "پلتفرم ابری مدیریت یکپارچه کلینیک‌های سلامت و زیبایی با قابلیت نوبت‌دهی، پرونده‌سازی و حسابداری.",
+                "softwareVersion": "1.0",
+                "isAccessibleForFree": true,
+                "description":
+                    "Clinicans یک پلتفرم نرم‌افزاری ابری برای مدیریت یکپارچه کلینیک‌های سلامت و زیبایی است که فرآیندهای بالینی، مالی و ارتباط با بیمار را در یک سیستم امن و مقیاس‌پذیر تجمیع می‌کند.",
+                "featureList": [
+                    "نوبت‌دهی آنلاین پزشکی",
+                    "پرونده الکترونیک سلامت (EHR)",
+                    "مدیریت مالی و حسابداری",
+                    "ارتباط با بیمار و CRM پزشکی",
+                    "گزارش‌های تحلیلی و مدیریتی"
+                ],
                 "offers": {
                     "@type": "Offer",
                     "price": "0",
                     "priceCurrency": "IRR",
                     "availability": "https://schema.org/InStock"
                 },
-                "brand": {
-                    "@type": "Brand",
-                    "name": "Barman Mehvar Spadana"
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Barman Mehvar Spadana",
+                    "url": "https://barman-mes.ir"
                 },
-                "featureList": [
-                    "نوبت‌دهی آنلاین",
-                    "پرونده الکترونیک (EHR)",
-                    "مدیریت مالی و فاکتور",
-                    "باشگاه مشتریان"
-                ]
+                "audience": {
+                    "@type": "Audience",
+                    "audienceType": [
+                        "کلینیک‌های درمانی",
+                        "کلینیک‌های زیبایی",
+                        "پزشکان",
+                        "مدیران مراکز درمانی"
+                    ]
+                }
             },
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
-                    { "@type": "ListItem", "position": 2, "name": "پلتفرم Clinicans", "item": "https://barman-mes.ir/clinicans" }
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "خانه",
+                        "item": "https://barman-mes.ir"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "پلتفرم Clinicans",
+                        "item": "https://barman-mes.ir/clinicans"
+                    }
                 ]
             }
         ]
@@ -70,48 +106,40 @@ export default function ClinicansPage ()
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
 
-            <main id="main-content" className="min-h-screen bg-slate-50">
-                {/* 
-                  🎨 UX: Navigation Anchor
-                  Consistent with other product pages.
-                */}
-                <div className="sticky top-[64px] z-30 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 py-3 transition-all">
-                    <div className="container mx-auto flex max-w-6xl items-center gap-2 px-4 text-xs text-slate-500">
-                        <Link href="/" className="flex items-center gap-1 hover:text-emerald-600 transition-colors">
-                            <LuHouse className="h-3 w-3" />
-                            <span>خانه</span>
-                        </Link>
-                        <LuChevronLeft className="h-3 w-3 opacity-50" />
-                        <span className="font-medium text-emerald-600">پلتفرم سلامت Clinicans</span>
+            <main id="main-content" className="min-h-screen bg-slate-50 selection:bg-emerald-100 selection:text-emerald-800">
+
+                {/* 🔗 NEW PRODUCT NAVBAR */ }
+                <ClinicansNavbar />
+
+                {/* 📘 CONTENT FLOW */ }
+                <div className="container mx-auto max-w-6xl px-4 py-8 md:py-16 space-y-24 md:space-y-32">
+
+                    {/* Chapter 1: Hero */ }
+                    <div id="overview">
+                        <ClinicansHeroSection />
                     </div>
-                </div>
 
-                {/* 
-                  ⚡ CONTENT FLOW
-                  Grouped logically to create "Reading Chapters".
-                */}
-                <div className="container mx-auto max-w-6xl px-4 py-12 md:py-20 space-y-24 md:space-y-32">
-
-                    {/* Chapter 1: The Hook */ }
-                    <ClinicansHeroSection />
-
-                    {/* Chapter 2: The Why (Problem/Solution) */ }
+                    {/* Chapter 2: Problem & Overview */ }
                     <div className="space-y-16">
                         <ClinicansProblemsSection />
                         <ClinicansOverviewSection />
                     </div>
 
-                    {/* Chapter 3: The Value (Features & Audience) */ }
-                    <div className="relative rounded-[3rem] bg-white p-8 shadow-sm border border-slate-100 md:p-12 overflow-hidden">
+                    {/* Chapter 3: Features & Audience */ }
+                    {/* Added IDs for Scroll Navigation */ }
+                    <div id="features" className="relative rounded-[3rem] bg-white p-8 shadow-sm border border-slate-100 md:p-12 overflow-hidden scroll-mt-24">
                         <div className="absolute top-0 right-0 w-full h-2 bg-gradient-to-l from-emerald-400 to-blue-500" />
                         <div className="space-y-20">
                             <ClinicansFeaturesSection />
-                            <ClinicansForWhomSection />
+
+                            <div id="audience" className="scroll-mt-24">
+                                <ClinicansForWhomSection />
+                            </div>
                         </div>
                     </div>
 
-                    {/* Chapter 4: Trust & Tech */ }
-                    <div className="space-y-16">
+                    {/* Chapter 4: Trust & Technology */ }
+                    <div id="security" className="space-y-16 scroll-mt-24">
                         <ClinicansSecuritySection />
                         <ClinicansTechSection />
                     </div>

@@ -6,46 +6,55 @@ import
     LuDatabaseBackup,
     LuEyeOff,
     LuShieldCheck,
-    LuServer
+    LuServer,
+    LuTriangleAlert,
 } from "react-icons/lu";
 
 const securityBlocks = [
     {
         id: "encryption",
-        title: "رمزنگاری سراسری (End-to-End)",
+        capability: "Data Integrity & Protection",
+        title: "حفاظت و یکپارچگی داده‌ها",
         icon: LuLock,
         color: "text-blue-600",
         bg: "bg-blue-50",
         border: "group-hover:border-blue-200",
-        body: "تمام داده‌ها در مسیر انتقال (SSL/TLS) و در حالت استراحت (At Rest) رمزنگاری می‌شوند. حتی توسعه‌دهندگان سیستم نیز امکان خواندن پرونده‌های پزشکی بیماران را ندارند."
+        body:
+            "اطلاعات درمانی و عملیاتی در Clinicans با معماری رمزنگاری‌شده محافظت می‌شوند تا از هرگونه دسترسی غیرمجاز، تغییر یا افشای ناخواسته جلوگیری شود و یکپارچگی داده‌ها در تمام چرخه استفاده حفظ گردد.",
     },
     {
         id: "rbac",
-        title: "کنترل دسترسی دقیق (RBAC)",
+        capability: "Governed Access",
+        title: "حاکمیت دسترسی مبتنی بر نقش",
         icon: LuFingerprint,
         color: "text-indigo-600",
         bg: "bg-indigo-50",
         border: "group-hover:border-indigo-200",
-        body: "دسترسی‌ها بر اساس نقش تعریف می‌شوند. منشی فقط تقویم را می‌بیند، پزشک پرونده را، و حسابدار فقط فاکتورها را. هیچ‌کس بیشتر از نیاز کاری‌اش دسترسی ندارد."
+        body:
+            "Clinicans بر اساس نقش‌های واقعی سازمانی طراحی شده است. هر کاربر تنها به بخشی از اکوسیستم دسترسی دارد که با مسئولیت حرفه‌ای او هم‌راستاست؛ نه کمتر، نه بیشتر.",
     },
     {
         id: "backup",
-        title: "پشتیبان‌گیری خودکار و توزیع‌شده",
+        capability: "Operational Continuity",
+        title: "تداوم عملیاتی و بازیابی اطلاعات",
         icon: LuDatabaseBackup,
         color: "text-teal-600",
         bg: "bg-teal-50",
         border: "group-hover:border-teal-200",
-        body: "از داده‌های شما به صورت ساعتی در سرورهای جداگانه بکاپ گرفته می‌شود. سناریوهای بازجشانی (Disaster Recovery) تضمین می‌کنند که حتی در حوادث سخت‌افزاری، داده‌ای گم نمی‌شود."
+        body:
+            "پایداری اکوسیستم Clinicans به معنای آمادگی در برابر سناریوهای پیش‌بینی‌نشده است. سازوکارهای پشتیبان‌گیری و بازیابی، تداوم فعالیت کلینیک را حتی در شرایط بحرانی تضمین می‌کنند.",
     },
     {
         id: "privacy",
-        title: "حریم خصوصی و مالکیت داده",
+        capability: "Data Ownership & Privacy",
+        title: "مالکیت و حریم خصوصی اطلاعات",
         icon: LuEyeOff,
         color: "text-slate-600",
         bg: "bg-slate-100",
         border: "group-hover:border-slate-300",
-        body: "در کلینیکانز، داده‌ها دارایی انحصاری شما هستند. ما متعهد به عدم استفاده تجاری از اطلاعات بیماران هستیم و لاگ تمام دسترسی‌ها برای ممیزی ثبت می‌شود."
-    }
+        body:
+            "داده‌های بیماران بخشی از دارایی‌های کلینیک محسوب می‌شوند. Clinicans هیچ استفاده ثانویه‌ای از اطلاعات انجام نمی‌دهد و تمام دسترسی‌ها شفاف، قابل ردیابی و تحت حاکمیت کامل مجموعه درمانی است.",
+    },
 ];
 
 export default function ClinicansSecuritySection ()
@@ -57,26 +66,30 @@ export default function ClinicansSecuritySection ()
             aria-labelledby="security-heading"
         >
             <div className="mx-auto max-w-6xl px-4">
-
                 {/* Header */ }
-                <div className="mb-12 text-right space-y-4">
+                <div className="mb-14 text-right space-y-4">
                     <div className="inline-flex items-center gap-2 rounded-lg bg-slate-200/50 px-3 py-1 text-xs font-bold text-slate-700 border border-slate-300">
                         <LuShieldCheck className="h-3.5 w-3.5" />
-                        <span>اولویت شماره یک</span>
+                        <span>پایه اعتماد اکوسیستم</span>
                     </div>
+
                     <h2
                         id="security-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
                     >
-                        امنیت داده و <span className="text-slate-500">حریم خصوصی</span>
+                        امنیت، حریم خصوصی و{ " " }
+                        <span className="text-slate-500">اعتماد پایدار</span>
                     </h2>
+
                     <p className="max-w-3xl ml-auto text-sm leading-8 text-slate-600 md:text-base text-justify">
-                        در دنیای سلامت، اعتماد مهم‌ترین ارز است. ما با استانداردهای امنیتی در سطح بانکداری،
-                        از اطلاعات حساس کلینیک و بیماران شما محافظت می‌کنیم.
+                        در اکوسیستم سلامت، اعتماد مهم‌ترین دارایی است.
+                        Clinicans با درک حساسیت داده‌های درمانی،
+                        امنیت را نه به‌عنوان یک قابلیت جانبی،
+                        بلکه به‌عنوان بخشی جدایی‌ناپذیر از معماری هسته‌ای خود تعریف کرده است.
                     </p>
                 </div>
 
-                {/* Grid */ }
+                {/* Security Grid */ }
                 <div className="grid gap-6 md:grid-cols-2">
                     { securityBlocks.map( ( block ) =>
                     {
@@ -87,12 +100,22 @@ export default function ClinicansSecuritySection ()
                                 className={ `group relative flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${ block.border }` }
                             >
                                 <div className="flex items-center gap-4">
-                                    <div className={ `flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${ block.bg } ${ block.color } transition-transform group-hover:scale-110` }>
+                                    <div
+                                        className={ `flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${ block.bg } ${ block.color } transition-transform group-hover:scale-110` }
+                                    >
                                         <Icon className="h-6 w-6" />
                                     </div>
-                                    <h3 className="text-lg font-bold text-slate-900">
-                                        { block.title }
-                                    </h3>
+
+                                    <div className="space-y-1">
+                                        <h3 className="text-lg font-bold text-slate-900">
+                                            { block.title }
+                                        </h3>
+                                        {/* Capability Tag */ }
+                                        <span className="inline-flex items-center gap-1 rounded-md bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-500 border border-slate-200">
+                                            <LuTriangleAlert className="h-3 w-3" />
+                                            { block.capability }
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <p className="text-sm leading-7 text-slate-600 text-pretty pr-16 border-r-2 border-slate-100">
@@ -103,19 +126,19 @@ export default function ClinicansSecuritySection ()
                     } ) }
                 </div>
 
-                {/* Trust Seal Footer */ }
-                <div className="mt-8 flex items-center justify-center">
-                    <div className="flex w-full max-w-2xl items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                        <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                {/* Security Summary */ }
+                <div className="mt-14 text-right">
+                    <div className="inline-flex items-start gap-4 rounded-2xl bg-white p-4 border border-slate-200 shadow-sm">
+                        <div className="mt-1 text-slate-600">
                             <LuServer className="h-5 w-5" />
                         </div>
-                        <div className="text-xs md:text-sm text-slate-500 leading-relaxed">
-                            <span className="font-bold text-slate-800">اصل مالکیت داده:</span> تمام اطلاعات ثبت شده در سیستم، متعلق به کلینیک است.
-                            شما هر زمان می‌توانید نسخه کامل دیتابیس خود را دریافت کنید.
-                        </div>
+                        <p className="max-w-3xl text-sm md:text-base text-slate-600 leading-7">
+                            در Clinicans، امنیت نتیجه تصمیمات معماری است، نه افزودن ابزارهای
+                            مقطعی. این رویکرد، اعتماد بلندمدت میان کلینیک، تیم درمان
+                            و مراجعان را تضمین می‌کند.
+                        </p>
                     </div>
                 </div>
-
             </div>
         </section>
     );

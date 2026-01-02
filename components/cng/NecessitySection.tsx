@@ -1,4 +1,3 @@
-// components/cng/NecessitySection.tsx
 import
 {
     LuTriangleAlert,
@@ -9,31 +8,34 @@ import
 const necessityPoints = [
     {
         id: "risk",
-        title: "تلاقی زیرساخت و زندگی",
+        title: "تلاقی زیرساخت حیاتی با زندگی روزمره",
         icon: LuTriangleAlert,
         color: "text-amber-600",
         bg: "bg-amber-50",
         border: "border-amber-100",
-        description: "جایگاه‌های CNG نقطه تماس مستقیم انرژی پرفشار با شهروندان هستند. هر خطای انسانی یا نقص فنی کوچک می‌تواند به حوادث جانی جبران‌ناپذیر و زیان مالی منجر شود."
+        description:
+            "جایگاه‌های CNG تنها یک تأسیسات صنعتی نیستند؛ بلکه نقطه تماس مستقیم انرژی پرفشار با شهروندان در بطن شهرها هستند. هر نقص فنی، خطای انسانی یا تأخیر در تشخیص—even در سطح محدود—می‌تواند به حوادث جانی، خسارات اقتصادی گسترده و خدشه‌دار شدن اعتماد عمومی منجر شود."
     },
     {
         id: "manual",
-        title: "پایان دوران نظارت دستی",
+        title: "بن‌بست نظارت سنتی و گزارش‌های غیرقابل اتکا",
         icon: LuFileX,
         color: "text-red-600",
         bg: "bg-red-50",
         border: "border-red-100",
-        description: "در شبکه پیچیده امروز، اتکا به نظارت چشمی و گزارش‌های کاغذی «نابینایی مدیریتی» ایجاد می‌کند. ایمنی واقعی نیازمند داده‌های لحظه‌ای است، نه بایگانی‌های کاغذی."
+        description:
+            "در شبکه‌ای متشکل از هزاران جایگاه فعال، اتکا به بازدیدهای دوره‌ای، چک‌لیست‌های کاغذی و گزارش‌های دستی، عملاً به «نابینایی مدیریتی» منجر می‌شود. ایمنی واقعی نیازمند داده‌های لحظه‌ای، قابل ممیزی و مبتنی بر شواهد است؛ نه برداشت‌های مقطعی و تأخیردار."
     },
     {
         id: "solution",
-        title: "زیرساخت دائمی، نه تزئینی",
+        title: "زیرساخت پیشگیرانه، نه واکنش پس از حادثه",
         icon: LuShieldCheck,
         color: "text-bms-primary",
         bg: "bg-blue-50",
         border: "border-blue-100",
-        description: "ICTS هوشمندسازی را از یک «آپشن لوکس» به یک «استاندارد اجباری» تبدیل می‌کند. سیستمی که لحظه‌ای می‌بیند، دقیق ثبت می‌کند و پیش از وقوع حادثه هشدار می‌دهد."
-    },
+        description:
+            "ICTS هوشمندسازی را از یک انتخاب اختیاری یا پروژه مقطعی، به یک استاندارد عملیاتی دائمی تبدیل می‌کند؛ سامانه‌ای که به‌صورت پیوسته پایش می‌کند، داده معتبر ثبت می‌نماید و پیش از وقوع حادثه، امکان هشدار، مداخله و پیشگیری مؤثر را فراهم می‌سازد."
+    }
 ];
 
 export default function NecessitySection ()
@@ -45,25 +47,31 @@ export default function NecessitySection ()
             aria-labelledby="necessity-heading"
         >
             <div className="mx-auto max-w-6xl px-4">
-
                 {/* Header */ }
-                <div className="mb-12 text-right space-y-3">
+                <div className="mb-12 space-y-4 text-right">
                     <span className="inline-block rounded-lg bg-red-50 px-3 py-1 text-xs font-bold text-red-600 border border-red-100">
-                        چرا هوشمندسازی؟
+                        چرایی هوشمندسازی
                     </span>
+
                     <h2
                         id="necessity-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl leading-tight"
                     >
-                        یک <span className="text-red-600 underline decoration-red-200 underline-offset-4">ضرورت حیاتی</span>،<br className="hidden md:block" />
-                        نه یک انتخاب لوکس
+                        یک{ " " }
+                        <span className="text-red-600 underline decoration-red-200 underline-offset-4">
+                            ضرورت ایمنی و حاکمیتی
+                        </span>
+                        ،<br className="hidden md:block" />
+                        نه یک انتخاب فناورانه
                     </h2>
+
                     <p className="ml-auto max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
-                        وقتی پای ایمنی عمومی در میان است، روش‌های سنتی دیگر پاسخگو نیستند.
+                        در زیرساخت‌هایی که مستقیماً با جان شهروندان، امنیت انرژی و اعتماد
+                        اجتماعی گره خورده‌اند، روش‌های سنتی و واکنشی دیگر پاسخگو نیستند.
                     </p>
                 </div>
 
-                {/* The Grid */ }
+                {/* Grid */ }
                 <div className="grid gap-6 md:grid-cols-3">
                     { necessityPoints.map( ( item ) =>
                     {
@@ -73,8 +81,10 @@ export default function NecessitySection ()
                                 key={ item.id }
                                 className={ `group relative flex flex-col items-start gap-4 rounded-3xl border bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${ item.border }` }
                             >
-                                {/* Icon Badge */ }
-                                <div className={ `flex h-14 w-14 items-center justify-center rounded-2xl ${ item.bg } ${ item.color } transition-transform group-hover:scale-110 group-hover:rotate-3` }>
+                                {/* Icon */ }
+                                <div
+                                    className={ `flex h-14 w-14 items-center justify-center rounded-2xl ${ item.bg } ${ item.color } transition-transform group-hover:scale-110 group-hover:rotate-3` }
+                                >
                                     <Icon className="h-7 w-7" />
                                 </div>
 
@@ -88,13 +98,17 @@ export default function NecessitySection ()
                                     </p>
                                 </div>
 
-                                {/* Status Indicator Bar */ }
-                                <div className={ `absolute bottom-0 inset-x-8 h-1 rounded-t-full ${ item.bg.replace( 'bg-', 'bg-opacity-50 ' ) } opacity-0 transition-opacity group-hover:opacity-100` } />
+                                {/* Accent Bar */ }
+                                <div
+                                    className={ `absolute bottom-0 inset-x-8 h-1 rounded-t-full ${ item.bg.replace(
+                                        "bg-",
+                                        "bg-opacity-60 "
+                                    ) } opacity-0 transition-opacity duration-300 group-hover:opacity-100` }
+                                />
                             </article>
                         );
                     } ) }
                 </div>
-
             </div>
         </section>
     );

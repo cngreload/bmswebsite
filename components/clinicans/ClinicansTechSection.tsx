@@ -5,46 +5,55 @@ import
     LuCpu,
     LuDatabase,
     LuWebhook,
-    LuServer
+    LuServer,
+    LuGitMerge,
 } from "react-icons/lu";
 
 const techBlocks = [
     {
         id: "cloud",
-        title: "معماری تحت‌وب و Cloud-Ready",
+        capability: "Availability & Mobility",
+        title: "معماری تحت‌وب و Cloud-Native",
         icon: LuCloud,
         color: "text-blue-600",
         bg: "bg-blue-50",
         border: "group-hover:border-blue-200",
-        body: "دسترسی از هر مکان و هر دستگاه (Anywhere, Anytime). بدون نیاز به نصب سرور فیزیکی در مطب و دغدغه‌های نگهداری سخت‌افزار."
+        body:
+            "دسترسی ایمن به سیستم از هر مکان و هر دستگاه، بدون نیاز به نصب سرور محلی. زیرساخت ابری، پایداری سرویس و سهولت توسعه را تضمین می‌کند.",
     },
     {
         id: "stack",
-        title: "هسته‌ی مدرن (Modern Stack)",
+        capability: "Performance & UX",
+        title: "هسته‌ی مدرن نرم‌افزار",
         icon: LuCpu,
         color: "text-indigo-600",
         bg: "bg-indigo-50",
         border: "group-hover:border-indigo-200",
-        body: "توسعه یافته با جدیدترین تکنولوژی‌های وب (Next.js & React). رابط کاربری سریع، واکنش‌گرا (Responsive) و تجربه کاربری روان."
+        body:
+            "پیاده‌سازی با معماری مدرن وب برای پاسخ‌گویی سریع، رابط کاربری روان و تجربه‌ای بدون تأخیر — حتی در ساعات پرترافیک کلینیک.",
     },
     {
         id: "db",
+        capability: "Scalability",
         title: "پایگاه داده مقیاس‌پذیر",
         icon: LuDatabase,
         color: "text-cyan-600",
         bg: "bg-cyan-50",
         border: "group-hover:border-cyan-200",
-        body: "طراحی دیتابیس برای حجم عظیم داده‌های پزشکی. بهینه‌سازی شده برای جستجوی سریع در میلیون‌ها رکورد پرونده و تراکنش مالی."
+        body:
+            "طراحی شده برای نگهداری و جستجوی سریع حجم بالای داده‌های پزشکی و مالی، با تمرکز بر دقت، پایداری و رشد بلندمدت.",
     },
     {
         id: "api",
-        title: "آماده برای اتصال (API-First)",
+        capability: "Integration-Ready",
+        title: "معماری API-First",
         icon: LuWebhook,
         color: "text-violet-600",
         bg: "bg-violet-50",
         border: "group-hover:border-violet-200",
-        body: "معماری باز برای اتصال به سایر سرویس‌ها. یکپارچگی آسان با سامانه‌های بیمه، آزمایشگاه‌ها، درگاه‌های پرداخت و پنل‌های پیامکی."
-    }
+        body:
+            "آماده اتصال به سرویس‌های بیرونی مانند سامانه‌های بیمه، آزمایشگاه‌ها، درگاه‌های پرداخت و پیامک. بدون قفل‌شدگی به یک مسیر بسته.",
+    },
 ];
 
 export default function ClinicansTechSection ()
@@ -56,26 +65,30 @@ export default function ClinicansTechSection ()
             aria-labelledby="tech-heading"
         >
             <div className="mx-auto max-w-6xl px-4">
-
                 {/* Header */ }
-                <div className="mb-12 text-right space-y-4">
+                <div className="mb-14 text-right space-y-4">
                     <span className="inline-block rounded-lg bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700 border border-slate-300 font-mono">
-                        Tech Specs
+                        Tech Architecture
                     </span>
+
                     <h2
                         id="tech-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
                     >
-                        زیرساخت فنی و <span className="text-bms-primary">تکنولوژی</span>
+                        زیرساخت فنی و <span className="text-bms-primary">معماری سیستم</span>
                     </h2>
+
                     <p className="max-w-3xl ml-auto text-sm leading-8 text-slate-600 md:text-base">
-                        ما کلینیکانز را نه فقط به عنوان یک نرم‌افزار، بلکه به عنوان یک
-                        <strong className="text-slate-900 mx-1">اکوسیستم دیجیتال</strong> مهندسی کرده‌ایم.
-                        پایداری، سرعت و امنیت، در DNA کدهای ماست.
+                        کلینیکانز به‌عنوان یک{ " " }
+                        <strong className="text-slate-900">
+                            پلتفرم SaaS سلامت
+                        </strong>{ " " }
+                        طراحی شده است؛ با تمرکز بر پایداری، مقیاس‌پذیری و
+                        تجربه کاربری قابل اتکا برای محیط‌های درمانی.
                     </p>
                 </div>
 
-                {/* Grid */ }
+                {/* Tech Grid */ }
                 <div className="grid gap-6 md:grid-cols-2">
                     { techBlocks.map( ( block ) =>
                     {
@@ -85,8 +98,10 @@ export default function ClinicansTechSection ()
                                 key={ block.id }
                                 className={ `group relative flex items-start gap-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${ block.border }` }
                             >
-                                {/* Tech Icon */ }
-                                <div className={ `flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${ block.bg } ${ block.color } shadow-sm transition-transform group-hover:scale-110 group-hover:rotate-6` }>
+                                {/* Icon */ }
+                                <div
+                                    className={ `flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${ block.bg } ${ block.color } shadow-sm transition-transform group-hover:scale-110` }
+                                >
                                     <Icon className="h-7 w-7" />
                                 </div>
 
@@ -95,18 +110,39 @@ export default function ClinicansTechSection ()
                                     <h3 className="text-base font-bold text-slate-900 group-hover:text-bms-primary transition-colors">
                                         { block.title }
                                     </h3>
+
+                                    {/* Capability Tag */ }
+                                    <span className="inline-flex w-fit rounded-md bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-500 border border-slate-200">
+                                        { block.capability }
+                                    </span>
+
                                     <p className="text-sm leading-7 text-slate-600 text-pretty">
                                         { block.body }
                                     </p>
                                 </div>
 
-                                {/* Tech Decoration */ }
+                                {/* Subtle Decoration */ }
                                 <div className="absolute top-4 left-4 opacity-0 transition-opacity group-hover:opacity-100">
                                     <LuServer className="h-4 w-4 text-slate-200" />
                                 </div>
                             </article>
                         );
                     } ) }
+                </div>
+
+                {/* Architecture Summary */ }
+                <div className="mt-14 text-right">
+                    <div className="inline-flex items-start gap-4 rounded-2xl bg-white p-4 border border-slate-200 shadow-sm">
+                        <div className="mt-1 text-bms-primary">
+                            <LuGitMerge className="h-5 w-5" />
+                        </div>
+                        <p className="max-w-3xl text-sm md:text-base text-slate-600 leading-7">
+                            نتیجه این معماری، سیستمی است که با رشد کلینیک شما
+                            بزرگ می‌شود، در ساعات شلوغ پایدار می‌ماند و
+                            به‌راحتی با سرویس‌های جدید یکپارچه می‌شود —
+                            بدون نیاز به بازطراحی یا مهاجرت‌های پرهزینه.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

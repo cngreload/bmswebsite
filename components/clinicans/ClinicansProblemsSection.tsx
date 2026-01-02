@@ -7,63 +7,68 @@ import
     LuUserX,
     LuCircleX,
     LuOctagonAlert,
+    LuTriangleAlert,
 } from "react-icons/lu";
 
 const problems = [
     {
         id: "manager",
-        title: "مدیران و مالکان",
-        subtitle: "داده‌های ناقص = تصمیم‌های اشتباه",
+        title: "مدیران و مالکان کلینیک",
+        subtitle: "نبود تصویر جامع از عملکرد واقعی",
+        category: "Operational Visibility Gap",
         icon: LuTrendingDown,
         color: "text-rose-600",
         bg: "bg-rose-50",
         border: "group-hover:border-rose-200",
         points: [
-            "پراکندگی اطلاعات بین نرم‌افزار حسابداری، اکسل و دفتر نوبت‌دهی",
-            "عدم دسترسی به گزارش‌های تجمیعی و لحظه‌ای از عملکرد کلینیک",
-            "ریسک بالای توسعه شعب بدون داشتن زیرساخت مرکزی و قابل رصد",
+            "پراکنده بودن داده‌ها بین ابزارهای مالی، نوبت‌دهی و گزارش‌گیری",
+            "نبود دید لحظه‌ای و تجمیعی از درآمد، ظرفیت و بهره‌وری",
+            "ریسک بالای تصمیم‌گیری و توسعه بدون زیرساخت مدیریتی یکپارچه",
         ],
     },
     {
         id: "doctor",
         title: "پزشکان و درمانگران",
-        subtitle: "اتلاف وقت روی کاغذبازی",
+        subtitle: "فاصله گرفتن از تمرکز درمان",
+        category: "Clinical Workflow Disruption",
         icon: LuStethoscope,
         color: "text-orange-600",
         bg: "bg-orange-50",
         border: "group-hover:border-orange-200",
         points: [
-            "جستجوی زمان‌بر سوابق بیمار در بایگانی‌های کاغذی",
-            "وقفه‌های مکرر در ویزیت برای هماهنگی با منشی و پذیرش",
-            "نبود تاریخچه تصویری (Before/After) منظم برای پیگیری درمان",
+            "دشواری دسترسی سریع به سوابق درمانی و تاریخچه مراجع",
+            "وقفه‌های غیرضروری در فرآیند ویزیت و ثبت اطلاعات",
+            "نبود مسیر منظم برای پیگیری روند درمان و نتایج قبلی",
         ],
     },
     {
         id: "reception",
-        title: "پذیرش و منشی‌ها",
-        subtitle: "فشار کاری و خطای انسانی",
+        title: "پذیرش و تیم اجرایی",
+        subtitle: "حجم عملیات بالا، خطای ناخواسته",
+        category: "Process Overload",
         icon: LuPhoneMissed,
         color: "text-amber-600",
         bg: "bg-amber-50",
         border: "group-hover:border-amber-200",
         points: [
-            "ترافیک تماس‌های تلفنی برای کارهای ساده‌ای مثل لغو یا جابه‌جایی",
-            "تداخل نوبت‌ها (Double Booking) و نارضایتی در سالن انتظار",
-            "فرسودگی شغلی ناشی از فرآیندهای دستی و تکراری",
+            "ترافیک بالای تماس‌ها برای هماهنگی نوبت و تغییر زمان مراجعه",
+            "تداخل نوبت‌ها و ازدحام در سالن انتظار",
+            "فرسودگی ناشی از فرآیندهای دستی و تکراری",
         ],
     },
     {
         id: "patient",
         title: "مراجعان و بیماران",
-        subtitle: "تجربه‌ای گنگ و کلافه‌کننده",
+        subtitle: "تجربه‌ای ناپیوسته و غیرقابل پیش‌بینی",
+        category: "Patient Experience Gap",
         icon: LuUserX,
         color: "text-red-600",
         bg: "bg-red-50",
         border: "group-hover:border-red-200",
         points: [
-            "معطلی پشت خط تلفن و عدم وجود سیستم نوبت‌دهی آنلاین",
-            "بی‌خبری از کنسلی‌ها و تغییرات ناگهانی برنامه پزشک",
-            "احساس عدم اطمینان به نظم و حرفه‌ای بودن مجموعه",
+            "دشواری دریافت نوبت و وابستگی به تماس تلفنی",
+            "اطلاع‌رسانی ناقص در تغییر یا لغو برنامه پزشک",
+            "کاهش اعتماد به نظم و حرفه‌ای‌بودن مجموعه درمانی",
         ],
     },
 ];
@@ -78,29 +83,37 @@ export default function ClinicansProblemsSection ()
         >
             <div className="mx-auto max-w-6xl px-4">
                 {/* Header */ }
-                <div className="mb-12 text-right space-y-4">
+                <div className="mb-14 text-right space-y-4">
                     <div className="inline-flex items-center gap-2 rounded-lg bg-rose-50 px-3 py-1 text-xs font-bold text-rose-700 border border-rose-100">
                         <LuOctagonAlert className="h-3.5 w-3.5" />
-                        <span>چالش‌های وضعیت موجود</span>
+                        <span>چالش‌های ساختاری مدیریت کلینیک</span>
                     </div>
+
                     <h2
                         id="problems-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
                     >
-                        چرا روش‌های سنتی دیگر{ " " }
+                        چرا ساختارهای سنتی
                         <span className="text-rose-600 underline decoration-rose-200 underline-offset-4">
-                            پاسخگو نیستند؟
+                            { " " }
+                            پاسخگوی کلینیک‌های امروز نیستند؟
                         </span>
                     </h2>
+
                     <p className="max-w-3xl ml-auto text-sm leading-8 text-slate-600 md:text-base">
-                        حتی موفق‌ترین کلینیک‌ها نیز با{ ' ' }
-                        <strong className="font-bold text-rose-700">جزایر اطلاعاتی</strong>{ ' ' }
-                        درگیرند. وقتی نوبت‌دهی، پرونده و مالی به هم متصل نیستند، انرژی تیم صرف
-                        مدیریت بحران می‌شود، نه ارتقای کیفیت درمان.
+                        حتی کلینیک‌های موفق نیز با
+                        <strong className="font-bold text-rose-700">
+                            { " " }
+                            گسست اطلاعاتی{ " " }
+                        </strong>
+                        مواجه‌اند. زمانی که نوبت‌دهی، پرونده درمان و امور مالی
+                        در یک ساختار منسجم به هم متصل نباشند، بخش قابل توجهی از
+                        انرژی تیم صرف هماهنگی و کنترل بحران می‌شود، نه ارتقای
+                        کیفیت درمان و تجربه مراجع.
                     </p>
                 </div>
 
-                {/* Grid */ }
+                {/* Problems Grid */ }
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     { problems.map( ( card ) =>
                     {
@@ -117,27 +130,55 @@ export default function ClinicansProblemsSection ()
                                     >
                                         <Icon className="h-7 w-7" />
                                     </div>
+
                                     <div>
-                                        <h3 className="text-base font-bold text-slate-900">{ card.title }</h3>
-                                        <p className="text-xs font-medium text-slate-500 mt-1">{ card.subtitle }</p>
+                                        <h3 className="text-base font-bold text-slate-900">
+                                            { card.title }
+                                        </h3>
+                                        <p className="text-xs font-medium text-slate-500 mt-1">
+                                            { card.subtitle }
+                                        </p>
                                     </div>
+
+                                    {/* Category Tag */ }
+                                    <span className="mt-1 inline-flex items-center gap-1 rounded-md bg-slate-50 px-2 py-1 text-[11px] font-medium text-slate-500 border border-slate-200">
+                                        <LuTriangleAlert className="h-3 w-3" />
+                                        { card.category }
+                                    </span>
                                 </div>
 
                                 {/* Divider */ }
-                                <div className={ `w-full h-px ${ card.bg.replace( "bg-", "bg-opacity-50 bg-" ) }` } />
+                                <div className="h-px w-full bg-slate-100" />
 
-                                {/* Pain Points List */ }
+                                {/* Pain Points */ }
                                 <ul className="space-y-3 text-right flex-1">
                                     { card.points.map( ( point, idx ) => (
                                         <li key={ idx } className="flex items-start gap-2.5">
-                                            <LuCircleX className={ `h-4 w-4 shrink-0 mt-1 ${ card.color } opacity-70` } />
-                                            <span className="text-xs leading-5 text-slate-600">{ point }</span>
+                                            <LuCircleX
+                                                className={ `h-4 w-4 shrink-0 mt-1 ${ card.color } opacity-70` }
+                                            />
+                                            <span className="text-xs leading-5 text-slate-600">
+                                                { point }
+                                            </span>
                                         </li>
                                     ) ) }
                                 </ul>
                             </article>
                         );
                     } ) }
+                </div>
+
+                {/* Bridge to Solution */ }
+                <div className="mt-16 text-right">
+                    <p className="max-w-3xl ml-auto text-sm md:text-base text-slate-600">
+                        این چالش‌ها نشانه ضعف افراد یا تیم درمان نیست؛
+                        بلکه حاصل استفاده از ابزارهایی است که برای مدیریت
+                        یک کلینیک مدرن طراحی نشده‌اند.
+                        <strong className="text-slate-900">
+                            { " " }
+                            Clinicans برای پر کردن همین شکاف ساختاری شکل گرفته است.
+                        </strong>
+                    </p>
                 </div>
             </div>
         </section>

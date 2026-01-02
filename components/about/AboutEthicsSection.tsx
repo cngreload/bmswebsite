@@ -1,74 +1,60 @@
 // components/about/AboutEthicsSection.tsx
+import { LuShieldCheck, LuCheckCheck } from "react-icons/lu";
 
 export default function AboutEthicsSection ()
 {
+    const points = [
+        "تقدم جان و ایمنی انسان بر هر منفعت اقتصادی",
+        "صداقت و شفافیت در تعاملات فنی و مالی",
+        "حفظ محرمانگی و حریم خصوصی داده‌های کاربران",
+        "پرهیز از تضاد منافع و احترام به حقوق ذی‌نفعان",
+        "تعهد به یادگیری مستمر و استانداردسازی"
+    ];
+
     return (
         <section
             id="code-of-ethics"
-            className="text-right space-y-4 border-t border-slate-100 pt-10"
+            className="border-t border-slate-200 pt-12 text-right"
+            aria-labelledby="ethics-heading"
         >
-            <div className="space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                    منشور حرفه‌ای و کد اخلاقی بارمان
-                </h2>
-                <p className="text-sm font-medium text-emerald-700">
-                    تعهد حرفه‌ای در حوزه‌هایی که با جان و اعتماد مردم گره خورده‌اند
-                </p>
-            </div>
+            <div className="grid gap-10 lg:grid-cols-12 items-center">
 
-            <div className="space-y-4 max-w-4xl text-sm sm:text-base leading-relaxed text-slate-700">
-                <p>
-                    فعالیت در حوزه‌هایی مانند انرژی و سلامت، تنها یک فعالیت تجاری نیست؛
-                    تعهدی است در برابر جان، امنیت و اعتماد مردم. منشور حرفه‌ای و کد
-                    اخلاقی بارمان، چارچوبی است که رفتار فردی و سازمانی ما را در این مسیر
-                    تعریف می‌کند.
-                </p>
+                {/* Visual Anchor */ }
+                <div className="lg:col-span-4 order-2 lg:order-1">
+                    <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-800 to-slate-900 p-8 text-white shadow-lg">
+                        <div className="absolute top-0 left-0 -ml-10 -mt-10 h-32 w-32 rounded-full bg-white/5 blur-2xl" />
+                        <LuShieldCheck className="h-12 w-12 text-emerald-400 mb-4" />
+                        <h3 className="text-xl font-bold mb-2">تعهد حرفه‌ای</h3>
+                        <p className="text-xs text-slate-300 leading-6">
+                            در بارمان، اخلاق حرفه‌ای مقدم بر تخصص فنی است. ما معتقدیم فناوری بدون اخلاق، خطرناک است.
+                        </p>
+                    </div>
+                </div>
 
-                <ul className="space-y-2 text-sm text-slate-700">
-                    <li>
-                        <span className="font-semibold">
-                            تقدم جان و ایمنی انسان بر هر منفعت اقتصادی:
-                        </span>{ " " }
-                        در تصمیم‌گیری‌های فنی، تجاری و زمانی، ایمنی و سلامت استفاده‌کنندگان
-                        از سامانه‌های ما، معیار اول است.
-                    </li>
-                    <li>
-                        <span className="font-semibold">
-                            صداقت و شفافیت در تعاملات:
-                        </span>{ " " }
-                        در بیان توانمندی‌ها، محدودیت‌ها و نتایج پروژه‌ها صادقانه عمل
-                        می‌کنیم و از هرگونه ارائه‌ی غیرواقعی یا مبالغه‌آمیز پرهیز داریم.
-                    </li>
-                    <li>
-                        <span className="font-semibold">
-                            حفظ محرمانگی و حریم خصوصی:
-                        </span>{ " " }
-                        داده‌های مربوط به شهروندان، کلینیک‌ها و زیرساخت‌ها امانتی در دست
-                        ماست و صرفاً در چارچوب‌های قانونی و حرفه‌ای مورد استفاده قرار
-                        می‌گیرد.
-                    </li>
-                    <li>
-                        <span className="font-semibold">
-                            پرهیز از تضاد منافع و تعارض نقش‌ها:
-                        </span>{ " " }
-                        در همکاری با ذی‌نفعان مختلف، سازوکارهایی برای مدیریت و کاهش تضاد
-                        منافع در نظر گرفته می‌شود تا اعتماد طرفین خدشه‌دار نشود.
-                    </li>
-                    <li>
-                        <span className="font-semibold">
-                            احترام به دانش، زمان و سرمایه‌ی دیگران:
-                        </span>{ " " }
-                        چه در تعامل با همکاران داخلی و چه با مشتریان، شرکا و
-                        سرمایه‌گذاران، خود را ملزم به رفتار حرفه‌ای، احترام متقابل و رعایت
-                        حقوق طرف مقابل می‌دانیم.
-                    </li>
-                </ul>
+                {/* Content */ }
+                <div className="lg:col-span-8 space-y-6 order-1 lg:order-2">
+                    <div className="space-y-3">
+                        <h2 id="ethics-heading" className="text-2xl font-bold text-slate-900">
+                            منشور اخلاقی ما
+                        </h2>
+                        <p className="text-sm font-medium text-emerald-700">
+                            تعهد در حوزه‌هایی که با جان و اعتماد مردم گره خورده‌اند
+                        </p>
+                    </div>
 
-                <p className="text-xs sm:text-sm leading-relaxed text-slate-700">
-                    این منشور در قراردادها، همکاری‌ها و فرهنگ سازمانی بارمان بازتاب می‌یابد
-                    و نقض آن، صرفاً تخطی از یک متن، بلکه خدشه به هویت حرفه‌ای شرکت تلقی
-                    می‌شود.
-                </p>
+                    <p className="text-sm leading-8 text-slate-600 text-justify">
+                        فعالیت در صنعت انرژی و سلامت، یک تجارت معمولی نیست. ما چارچوبی سخت‌گیرانه برای رفتار سازمانی خود تعریف کرده‌ایم که شامل اصول زیر است:
+                    </p>
+
+                    <ul className="grid gap-3 sm:grid-cols-2">
+                        { points.map( ( text, idx ) => (
+                            <li key={ idx } className="flex items-center gap-3 rounded-lg border border-slate-100 bg-white p-3 shadow-sm">
+                                <LuCheckCheck className="h-5 w-5 shrink-0 text-emerald-500" />
+                                <span className="text-xs font-medium text-slate-700">{ text }</span>
+                            </li>
+                        ) ) }
+                    </ul>
+                </div>
             </div>
         </section>
     );

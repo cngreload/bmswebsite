@@ -1,61 +1,72 @@
-const values = [
-    {
-        title: "واقعیت‌محوری و مسئولیت در میدان",
-        body: "ما خود را در برابر نتیجه‌ی واقعی سامانه‌هایمان در میدان مسئول می‌دانیم؛ از ایمنی در جایگاه سوخت گرفته تا نظم و دقت در کلینیک.",
-    },
-    {
-        title: "بومی‌سازی عمیق، نه صرفاً جایگزینی ظاهری",
-        body: "هدف ما صرفاً ترجمه‌ی یک محصول خارجی یا تقلید از آن نیست؛ راهکارها از ابتدا با درک واقعی از شرایط کشور و زیرساخت‌ها طراحی می‌شوند.",
-    },
-    {
-        title: "شفافیت و پاسخ‌گویی",
-        body: "در تعامل با نهادهای حاکمیتی، مشتریان و شرکا، شفافیت در داده، فرآیند و تعهدات را اصل می‌دانیم و سامانه‌هایمان نیز همین فلسفه را منعکس می‌کنند.",
-    },
-    {
-        title: "ایمنی و اعتماد، مقدم بر هر شاخص دیگر",
-        body: "در حوزه‌هایی که ما فعالیت می‌کنیم، از سوخت تا سلامت، هیچ شاخصی بالاتر از ایمنی و اعتماد نیست.",
-    },
-    {
-        title: "یادگیری مستمر و به‌روزرسانی فناوری",
-        body: "ما خود را متعهد می‌دانیم که از نظر دانش فنی، معماری سامانه‌ها و استانداردهای امنیتی در مسیر یادگیری و به‌روزرسانی مستمر باقی بمانیم.",
-    },
-    {
-        title: "همکاری و هم‌افزایی به‌جای کار جزیره‌ای",
-        body: "باور داریم آینده‌ی هوشمندسازی زیرساخت‌ها تنها با همکاری میان دولت، بخش خصوصی، دانشگاه و سرمایه‌گذاران شکل می‌گیرد.",
-    },
-];
+// app/about/values/page.tsx
+import type { Metadata } from "next";
+import Script from "next/script";
+import
+{
+    LuShieldCheck,
+    LuSearchCode,
+    LuUsers,
+    LuLightbulb,
+    LuGlobe,
+    LuHammer
+} from "react-icons/lu";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "ارزش‌های محوری بارمان",
+    description: "اصولی که تصمیمات و رفتار حرفه‌ای ما را هدایت می‌کنند.",
 };
+
+const values = [
+    { title: "مسئولیت در میدان", icon: LuHammer, color: "text-amber-600", bg: "bg-amber-50", body: "ما مسئولیت نتیجه واقعی سامانه‌هایمان را می‌پذیریم، نه فقط کد نرم‌افزاری." },
+    { title: "بومی‌سازی عمیق", icon: LuSearchCode, color: "text-blue-600", bg: "bg-blue-50", body: "طراحی از صفر بر اساس نیاز بومی، نه ترجمه محصولات خارجی." },
+    { title: "شفافیت رادیکال", icon: LuGlobe, color: "text-cyan-600", bg: "bg-cyan-50", body: "دسترسی شفاف به داده‌ها و گزارش‌ها برای همه ذی‌نفعان." },
+    { title: "ایمنی مقدم بر همه چیز", icon: LuShieldCheck, color: "text-red-600", bg: "bg-red-50", body: "در تضاد منافع، همیشه ایمنی انسان بر سرعت و سود اولویت دارد." },
+    { title: "یادگیری مستمر", icon: LuLightbulb, color: "text-yellow-600", bg: "bg-yellow-50", body: "تکنولوژی متوقف نمی‌شود، ما هم متوقف نمی‌شویم." },
+    { title: "هم‌افزایی", icon: LuUsers, color: "text-emerald-600", bg: "bg-emerald-50", body: "پرهیز از کار جزیره‌ای و باور به قدرت اکوسیستم." },
+];
 
 export default function ValuesPage ()
 {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
+            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://barman-mes.ir/about" },
+            { "@type": "ListItem", "position": 3, "name": "ارزش‌های محوری", "item": "https://barman-mes.ir/about/values" }
+        ]
+    };
+
     return (
-        <div className="max-w-5xl mx-auto space-y-4">
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
-                ارزش‌های محوری بارمان
-            </h1>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">
-                ارزش‌هایی که بارمان بر آن‌ها بنا شده، صرفاً جملات روی دیوار نیستند؛
-                معیارهایی هستند که پروژه‌ها، همکاری‌ها و تصمیم‌های روزمره‌ی ما با آن
-                سنجیده می‌شود.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-                { values.map( ( v ) => (
-                    <div
-                        key={ v.title }
-                        className="h-full rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm"
-                    >
-                        <h2 className="text-sm font-semibold text-slate-900 mb-1.5">
-                            { v.title }
-                        </h2>
-                        <p className="text-xs sm:text-[13px] text-slate-700 leading-relaxed">
-                            { v.body }
-                        </p>
-                    </div>
-                ) ) }
+        <section className="space-y-12">
+            <Script id="json-ld-values" type="application/ld+json" dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } } />
+
+            <div className="max-w-3xl space-y-4 text-right">
+                <h1 className="text-3xl font-bold text-bms-dark md:text-4xl">
+                    ارزش‌های <span className="text-bms-primary">محوری</span>
+                </h1>
+                <p className="text-sm leading-8 text-slate-600 md:text-base">
+                    این‌ها جملات روی دیوار نیستند؛ معیارهایی هستند که در دوراهی‌های سخت، مسیر ما را روشن می‌کنند.
+                </p>
             </div>
-        </div>
+
+            <div className="grid gap-6 sm:grid-cols-2">
+                { values.map( ( v, idx ) =>
+                {
+                    const Icon = v.icon;
+                    return (
+                        <div key={ idx } className="flex gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-200">
+                            <div className={ `flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${ v.bg } ${ v.color }` }>
+                                <Icon className="h-6 w-6" />
+                            </div>
+                            <div className="space-y-1 text-right">
+                                <h3 className="font-bold text-slate-900">{ v.title }</h3>
+                                <p className="text-xs leading-6 text-slate-600 text-pretty">{ v.body }</p>
+                            </div>
+                        </div>
+                    );
+                } ) }
+            </div>
+        </section>
     );
 }

@@ -1,27 +1,26 @@
-// components/cng/LocalAdvantageSection.tsx
 import { LuMapPin, LuShieldCheck, LuGem } from "react-icons/lu";
 
 const advantages = [
     {
         id: "native",
-        title: "طراحی بومی برای میدان واقعی",
+        title: "طراحی بومی مبتنی بر واقعیت میدان",
         icon: LuMapPin,
         description:
-            "ICTS ترجمه‌ی یک محصول وارداتی نیست؛ بلکه از ابتدا بر اساس چالش‌ها، زیرساخت‌ها و فشارهای عملیاتی جایگاه‌های گاز ایران مهندسی شده است.",
+            "سامانه ICTS بازتولید یا بومی‌سازی یک راهکار خارجی نیست؛ بلکه از مرحله طراحی اولیه، بر اساس شرایط واقعی بهره‌برداری، محدودیت‌های زیرساختی، الگوهای مصرف و الزامات ایمنی جایگاه‌های CNG کشور مهندسی شده است. این رویکرد، کارایی عملیاتی و پایداری سیستم را در مقیاس ملی تضمین می‌کند.",
     },
     {
         id: "support",
-        title: "پشتیبانی و امنیت پایدار",
+        title: "امنیت راهبردی و پشتیبانی پایدار داخلی",
         icon: LuShieldCheck,
         description:
-            "توسعه و نگه‌داری در داخل کشور انجام می‌شود. این یعنی انطباق کامل با الزامات پدافند غیرعامل و عدم وابستگی به لایسنس‌های خارجی تحریم‌پذیر.",
+            "چرخه کامل توسعه، نگه‌داری، پشتیبانی و ارتقاء ICTS به‌صورت کامل در داخل کشور انجام می‌شود. این موضوع نه‌تنها انطباق با الزامات پدافند غیرعامل را ممکن می‌سازد، بلکه وابستگی به فناوری‌های تحریم‌پذیر، سرویس‌های خارجی و ریسک قطع پشتیبانی را به‌طور بنیادین حذف می‌کند.",
     },
     {
         id: "asset",
-        title: "سرمایه زیرساختی، نه هزینه",
+        title: "دارایی زیرساختی بلندمدت، نه هزینه مقطعی",
         icon: LuGem,
         description:
-            "یک تکنولوژی زودگذر نیست؛ بلکه دارایی ماندگاری است که با زبان و فرآیندهای بومی هم‌خوانی دارد و برای سال‌های آینده صنعت CNG قابل اتکا است.",
+            "ICTS یک پروژه کوتاه‌مدت یا هزینه مصرفی نیست؛ بلکه دارایی زیرساختی قابل توسعه‌ای است که با فرآیندها، زبان عملیاتی و نیازهای راهبردی صنعت گاز کشور هم‌راستا طراحی شده و قابلیت انطباق با سیاست‌ها، فناوری‌ها و الزامات آینده را دارد.",
     },
 ];
 
@@ -35,17 +34,26 @@ export default function LocalAdvantageSection ()
         >
             <div className="mx-auto max-w-6xl px-4">
                 {/* Header */ }
-                <div className="mb-10 text-right space-y-3">
+                <div className="mb-10 space-y-3 text-right">
                     <span className="inline-block rounded-lg bg-bms-primary/10 px-3 py-1 text-xs font-bold text-bms-primary">
-                        مزیت رقابتی
+                        مزیت رقابتی بومی
                     </span>
-                    <h2 id="local-heading" className="text-2xl font-bold text-bms-dark md:text-3xl">
-                        چرا <span className="text-bms-primary">توانایی بومی</span> یک ضرورت است؟
+
+                    <h2
+                        id="local-heading"
+                        className="text-2xl font-bold text-bms-dark md:text-3xl"
+                    >
+                        چرا <span className="text-bms-primary">توانمندی بومی</span> یک الزام راهبردی است؟
                     </h2>
-                    <p className="max-w-3xl ml-auto text-sm leading-7 text-slate-600 md:text-base">
-                        در زیرساخت‌های حیاتی،{ " " }
-                        <strong className="font-bold text-bms-primary">بومی بودن</strong>{ " " }
-                        شعار نیست؛ بلکه تضمین‌کننده تداوم سرویس و امنیت داده‌ها در شرایط بحرانی است.
+
+                    <p className="ml-auto max-w-3xl text-sm leading-7 text-slate-600 md:text-base">
+                        در زیرساخت‌های حیاتی انرژی،
+                        <strong className="mx-1 text-bms-primary font-bold">
+                            بومی‌بودن
+                        </strong>
+                        یک انتخاب اختیاری یا مزیت تبلیغاتی نیست؛
+                        بلکه پیش‌شرط تداوم سرویس، امنیت داده،
+                        تاب‌آوری سامانه و امکان حکمرانی فناورانه در شرایط عادی و بحرانی است.
                     </p>
                 </div>
 
@@ -57,22 +65,24 @@ export default function LocalAdvantageSection ()
                         return (
                             <article
                                 key={ item.id }
-                                className="group relative flex flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-bms-primary/20"
+                                className="group relative flex flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-bms-primary/20"
                             >
-                                {/* Icon Container */ }
-                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-600 transition-colors group-hover:bg-bms-primary group-hover:text-white">
+                                {/* Icon */ }
+                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-600 transition-colors duration-300 group-hover:bg-bms-primary group-hover:text-white">
                                     <Icon className="h-6 w-6" />
                                 </div>
 
                                 {/* Content */ }
                                 <div className="space-y-2 text-right">
-                                    <h3 className="text-lg font-bold text-slate-900">{ item.title }</h3>
+                                    <h3 className="text-lg font-bold text-slate-900">
+                                        { item.title }
+                                    </h3>
                                     <p className="text-sm leading-7 text-slate-600 text-pretty">
                                         { item.description }
                                     </p>
                                 </div>
 
-                                {/* Bottom Border Accent */ }
+                                {/* Bottom Accent */ }
                                 <div className="absolute inset-x-6 bottom-0 h-1 scale-x-0 rounded-t-full bg-bms-primary transition-transform duration-300 group-hover:scale-x-100" />
                             </article>
                         );

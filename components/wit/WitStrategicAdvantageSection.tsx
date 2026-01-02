@@ -1,71 +1,99 @@
-// components/wit/WitStrategicAdvantageSection.tsx
+import
+{
+    LuRocket,
+    LuShieldCheck,
+    LuChartLine,
+    LuLayers,
+} from "react-icons/lu";
+
+const advantages = [
+    {
+        title: "کاهش چشمگیر Time-to-Market",
+        desc: "در WIT، مؤلفه‌های حیاتی مانند امنیت، مدیریت هویت، زیرساخت داده، ارتباطات صنعتی و پایش از پیش طراحی شده‌اند. این رویکرد باعث می‌شود تیم‌ها مستقیماً روی منطق کسب‌وکار و نیاز واقعی پروژه تمرکز کنند، نه ساخت زیرساخت‌های تکراری از صفر.",
+        icon: LuRocket,
+        color: "text-blue-600",
+        border: "border-blue-200",
+    },
+    {
+        title: "حاکمیت فناوری و امنیت بومی",
+        desc: "مالکیت کامل معماری، کد و لایه‌های سخت‌افزاری و نرم‌افزاری. WIT وابسته به سرویس‌های خارجی یا Cloud عمومی نیست و در برابر تحریم، قطع سرویس، تغییر سیاست تأمین‌کنندگان و ریسک‌های ژئوپلیتیکی مقاوم طراحی شده است.",
+        icon: LuShieldCheck,
+        color: "text-emerald-600",
+        border: "border-emerald-200",
+    },
+    {
+        title: "داده به‌عنوان دارایی راهبردی",
+        desc: "تمام سامانه‌های مبتنی بر WIT داده‌ها را با یک استاندارد مشترک تولید، ذخیره و تحلیل می‌کنند. این انسجام داده‌ای، بستر لازم برای تحلیل کلان، هوش مصنوعی، پیش‌بینی، پایش ملی و تصمیم‌سازی مدیریتی مبتنی بر داده را فراهم می‌کند.",
+        icon: LuChartLine,
+        color: "text-amber-600",
+        border: "border-amber-200",
+    },
+];
 
 export default function WitStrategicAdvantageSection ()
 {
     return (
-        <section className="text-right space-y-6">
-            <div className="space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                    مزیت رقابتی و دارایی راهبردی
+        <section
+            aria-labelledby="strategy-heading"
+            role="region"
+            className="relative"
+        >
+            {/* Header */ }
+            <div className="mb-10 text-right max-w-3xl">
+                <div className="inline-flex items-center gap-2 text-indigo-600 mb-3">
+                    <LuLayers className="h-5 w-5" />
+                    <span className="text-sm font-bold tracking-wider">
+                        ارزش راهبردی پلتفرم
+                    </span>
+                </div>
+
+                <h2
+                    id="strategy-heading"
+                    className="text-2xl font-bold text-slate-900 md:text-3xl lg:text-4xl leading-tight"
+                >
+                    چرا WIT یک
+                    <span className="text-indigo-600"> دارایی استراتژیک </span>
+                    برای سازمان‌هاست؟
                 </h2>
-                <p className="text-sm font-medium text-emerald-700">
-                    WIT به‌عنوان سرمایه نامشهود ولی حیاتی برای سازمان
+
+                <p className="mt-4 text-sm md:text-base leading-8 text-slate-600">
+                    WIT صرفاً یک محصول نرم‌افزاری یا پلتفرم IoT نیست؛
+                    یک زیرساخت فناورانه‌ی بلندمدت است که امکان توسعه امن،
+                    مقیاس‌پذیر و پایدار سامانه‌های حیاتی را فراهم می‌کند
+                    و ارزش آن هم‌زمان با رشد داده‌ها، محصولات و دامنه کاربرد،
+                    به‌صورت تصاعدی افزایش می‌یابد.
                 </p>
             </div>
 
+            {/* Advantage Cards */ }
             <div className="grid gap-6 md:grid-cols-3">
-                {/* ستون ۱ – دید سرمایه‌گذاری و توسعه کسب‌وکار */ }
-                <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-3">
-                    <h3 className="text-sm font-semibold text-slate-900">
-                        زیرساخت مشترک برای چندین محصول و بازار
-                    </h3>
-                    <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
-                        WIT هزینه توسعه و زمان ورود به بازار را برای محصولات جدید به‌شدت
-                        کاهش می‌دهد؛ زیرا بسیاری از اجزای حیاتی – از جمع‌آوری داده تا
-                        احراز هویت و گزارش‌دهی – یک‌بار در سطح پلتفرم پیاده‌سازی شده‌اند و
-                        در پروژه‌های بعدی صرفاً بازپیکربندی می‌شوند.
-                    </p>
-                    <ul className="mt-1 space-y-1 text-xs sm:text-sm text-slate-600">
-                        <li>امکان توسعه سریع راهکارهای جدید بر بستر یک هسته پایدار</li>
-                        <li>کاهش ریسک فنی در محصولات بعدی</li>
-                        <li>تسهیل هم‌افزایی بین تیم‌ها و پروژه‌ها</li>
-                    </ul>
-                </div>
+                { advantages.map( ( adv, i ) =>
+                {
+                    const Icon = adv.icon;
+                    return (
+                        <article
+                            key={ i }
+                            className={ `group relative overflow-hidden rounded-3xl border-t-4 ${ adv.border }
+              bg-slate-50 p-6 transition-all duration-300
+              hover:bg-white hover:shadow-xl`}
+                        >
+                            <div
+                                className={ `mb-4 inline-flex rounded-xl bg-white p-3 shadow-sm ${ adv.color }
+                transition-transform group-hover:scale-110`}
+                            >
+                                <Icon className="h-6 w-6" />
+                            </div>
 
-                {/* ستون ۲ – دید راهبرد ملی و حاکمیتی */ }
-                <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-3">
-                    <h3 className="text-sm font-semibold text-slate-900">
-                        استقلال فناوری و پشتیبانی بومی
-                    </h3>
-                    <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
-                        WIT بر پایه‌ی طراحی و پیاده‌سازی بومی شکل گرفته است؛ به‌گونه‌ای که
-                        توسعه، پشتیبانی و ارتقاء آن در داخل کشور قابل انجام است و وابستگی
-                        به تأمین‌کنندگان خارجی در لایه‌های حیاتی به حداقل می‌رسد.
-                    </p>
-                    <ul className="mt-1 space-y-1 text-xs sm:text-sm text-slate-600">
-                        <li>هم‌خوانی با الزامات پدافند غیرعامل و زیرساخت‌های حیاتی</li>
-                        <li>امکان تطبیق سریع با مقررات و سیاست‌های داخلی</li>
-                        <li>کاهش ریسک تحریم و اختلال در زنجیره تأمین فناوری</li>
-                    </ul>
-                </div>
+                            <h3 className="mb-3 text-base md:text-lg font-bold text-slate-900">
+                                { adv.title }
+                            </h3>
 
-                {/* ستون ۳ – دید عملیاتی و داده‌محور */ }
-                <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-3">
-                    <h3 className="text-sm font-semibold text-slate-900">
-                        داده به‌عنوان دارایی راهبردی
-                    </h3>
-                    <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
-                        WIT داده‌های تولیدشده در میدان را به‌صورت ساخت‌یافته و طولانی‌مدت
-                        ذخیره و قابل تحلیل می‌کند؛ داده‌ای که می‌تواند پایه‌ی تصمیم‌گیری
-                        مدیریتی، بهینه‌سازی سیاست‌ها و توسعه‌ی سرویس‌های تحلیلی و هوش
-                        مصنوعی در آینده باشد.
-                    </p>
-                    <ul className="mt-1 space-y-1 text-xs sm:text-sm text-slate-600">
-                        <li>امکان تحلیل روندها در سطح سازمان و شبکه</li>
-                        <li>پشتیبانی از طراحی سیاست‌های جدید مبتنی بر شواهد</li>
-                        <li>آمادگی برای توسعه ماژول‌های تحلیلی پیشرفته و AI</li>
-                    </ul>
-                </div>
+                            <p className="text-sm leading-7 text-slate-600 text-pretty">
+                                { adv.desc }
+                            </p>
+                        </article>
+                    );
+                } ) }
             </div>
         </section>
     );

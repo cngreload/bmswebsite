@@ -1,103 +1,137 @@
-// components/wit/WitArchitectureSection.tsx
+import { LuLayers, LuCpu, LuNetwork, LuDatabase } from "react-icons/lu";
+
+const layers = [
+    {
+        title: "لایه تحلیل و تصمیم‌سازی",
+        subtitle: "Analytics & Decision Intelligence",
+        desc: "تجمیع و تحلیل داده‌ها برای تولید بینش عملیاتی، پایش شاخص‌های کلیدی و پشتیبانی از تصمیم‌گیری مدیریتی در سطح سازمان و حاکمیتی.",
+        bg: "bg-indigo-600",
+        text: "text-white",
+    },
+    {
+        title: "لایه کاربردی و محصولات",
+        subtitle: "Applications & Product Platforms",
+        desc: "راهکارها و سامانه‌های نهایی مانند انرژی، سلامت و مدیریت عملیات که مستقیماً در میدان عمل مورد استفاده قرار می‌گیرند.",
+        bg: "bg-indigo-500",
+        text: "text-white",
+    },
+    {
+        title: "لایه یکپارچه‌سازی و API",
+        subtitle: "Integration & Secure APIs",
+        desc: "ایجاد ارتباط کنترل‌شده با سامانه‌های بیرونی، ERP، BI و سرویس‌های سازمانی با حفظ امنیت و استقلال داده.",
+        bg: "bg-indigo-400",
+        text: "text-white",
+    },
+    {
+        title: "سرویس‌های مرکزی و داده",
+        subtitle: "Core Services & Data Platform",
+        desc: "مدیریت هویت، امنیت، ثبت رخدادها، پردازش رویداد و نگهداری داده به‌عنوان ستون فقرات پلتفرم.",
+        bg: "bg-indigo-300",
+        text: "text-slate-900",
+    },
+    {
+        title: "لایه کنترل و لبه (Edge)",
+        subtitle: "Edge Computing & Control Layer",
+        desc: "پردازش نزدیک به میدان برای کاهش تأخیر، افزایش پایداری و تضمین عملکرد حتی در شرایط قطع ارتباط.",
+        bg: "bg-indigo-200",
+        text: "text-slate-900",
+    },
+    {
+        title: "لایه میدان و تجهیزات",
+        subtitle: "PLC, Embedded & Field Devices",
+        desc: "تجهیزات صنعتی، PLCها، سنسورها و کنترلرهای تعبیه‌شده که داده‌های واقعی عملیات را تولید می‌کنند.",
+        bg: "bg-indigo-100",
+        text: "text-slate-900",
+    },
+];
 
 export default function WitArchitectureSection ()
 {
-    const layers = [
-        {
-            title: "لایه میدان و تجهیزات (Field Layer)",
-            desc: "سنسورها، عملگرها، کنترلرهای صنعتی و تجهیزات متصل در زیرساخت‌های واقعی مانند جایگاه‌های CNG، کلینیک‌ها و سایر سایت‌های عملیاتی.",
-            bullets: [
-                "پشتیبانی از انواع سیگنال‌ها و پروتکل‌های صنعتی متداول",
-                "طراحی سخت‌افزار اختصاصی برای شرایط محیطی و ایمنی خاص",
-                "امکان به‌روزرسانی و پیکربندی از راه دور در صورت نیاز",
-            ],
-        },
-        {
-            title: "لایه کنترل و لبه (Edge & Control Layer)",
-            desc: "کنترلرهای میدانی و نرم‌افزارهای سطح لبه که داده را جمع‌آوری، اعتبارسنجی اولیه را انجام و منطق‌های کنترلی حیاتی را در محل اجرا می‌کنند.",
-            bullets: [
-                "اجرای قوانین کنترلی تعریف‌شده بدون وابستگی لحظه‌ای به مرکز",
-                "مدیریت بافر داده در زمان اختلال‌های موقت ارتباطی",
-                "تعامل امن با تجهیزات و انتقال داده‌ی ساخت‌یافته به لایه بالاتر",
-            ],
-        },
-        {
-            title: "لایه تجمیع داده و سرویس‌های مرکزی (Core Services)",
-            desc: "خدمات مرکزی برای دریافت، ذخیره و پردازش داده از سایت‌های مختلف و ارائه آن‌ها به لایه‌های کاربردی و تحلیلی.",
-            bullets: [
-                "پایگاه داده ساخت‌یافته برای نگه‌داری بلندمدت اطلاعات",
-                "سرویس‌های مدیریت هویت، دسترسی و لاگ فعالیت‌ها",
-                "ماژول‌های استاندارد برای گزارش‌دهی، پایش و اعلان‌ها",
-            ],
-        },
-        {
-            title: "لایه یکپارچه‌سازی و API",
-            desc: "رابط‌های برنامه‌نویسی و سرویس‌های یکپارچه‌سازی برای اتصال WIT به سامانه‌های ملی، مالی و سامانه‌های مکمل سازمان‌ها.",
-            bullets: [
-                "اتصال امن به سامانه‌های ملی (مانند سیمفا، سامانه‌های سلامت و...)",
-                "امکان برقراری ارتباط با سامانه‌های پرداخت و مالی",
-                "طراحی APIهای مستند برای توسعه‌دهندگان و شرکای فناور",
-            ],
-        },
-        {
-            title: "لایه کاربردی و محصولات (Solution Layer)",
-            desc: "جایی که پلتفرم هسته‌ای WIT به محصولات مشخص برای صنایع مختلف تبدیل می‌شود؛ مانند ICTS و Clinicans.",
-            bullets: [
-                "سامانه ICTS برای هوشمندسازی جایگاه‌های سوخت CNG",
-                "پلتفرم Clinicans برای مدیریت هوشمند کلینیک‌ها",
-                "امکان توسعه محصولات جدید بر اساس نیازهای بازار و سیاست‌گذار",
-            ],
-        },
-        {
-            title: "لایه تحلیل و تصمیم‌سازی (Analytics & Insights)",
-            desc: "ابزارها و سرویس‌هایی برای تبدیل داده‌های انباشته‌شده به بینش مدیریتی و شاخص‌های کلیدی عملکرد.",
-            bullets: [
-                "داشبوردهای مدیریتی برای سطوح مختلف سازمانی",
-                "گزارش‌های تحلیلی برای رصد روندها و رفتار مصرف",
-                "زیرساخت آماده برای توسعه الگوریتم‌ها و سرویس‌های هوش مصنوعی",
-            ],
-        },
-    ];
-
     return (
-        <section className="text-right space-y-6">
-            <div className="space-y-2">
-                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                    معماری و اجزای پلتفرم هسته‌ای بارمان
-                </h2>
-                <p className="text-sm font-medium text-emerald-700">
-                    از تجهیزات میدان تا لایه تصمیم‌سازی؛ یک معماری لایه‌ای و ماژولار
-                </p>
-                <p className="max-w-4xl text-sm sm:text-base leading-relaxed text-slate-700">
-                    معماری WIT به‌صورت لایه‌ای طراحی شده است تا بتواند هم نیازهای
-                    زیرساختی و ایمنی در سطح میدان را پاسخ دهد و هم الزامات مدیریتی و
-                    تحلیلی در سطح سازمان و حاکمیت را. هر لایه مستقل از نظر مسئولیت، اما
-                    یکپارچه از نظر طراحی و امنیت عمل می‌کند.
-                </p>
-            </div>
-
-            <div className="grid gap-4 md:gap-6 md:grid-cols-2">
-                { layers.map( ( layer ) => (
-                    <div
-                        key={ layer.title }
-                        className="h-full rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-3"
-                    >
-                        <h3 className="text-sm font-semibold text-slate-900">
-                            { layer.title }
-                        </h3>
-                        <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
-                            { layer.desc }
-                        </p>
-                        <ul className="mt-1 space-y-1 text-xs sm:text-sm text-slate-600">
-                            { layer.bullets.map( ( item ) => (
-                                <li key={ item } className="flex gap-2">
-                                    <span className="mt-1 h-[6px] w-[6px] rounded-full bg-emerald-500" />
-                                    <span>{ item }</span>
-                                </li>
-                            ) ) }
-                        </ul>
+        <section
+            aria-labelledby="arch-heading"
+            role="region"
+            className="relative"
+        >
+            <div className="grid gap-12 lg:grid-cols-2 items-center">
+                {/* Textual Explanation – SEO Anchor */ }
+                <div className="space-y-6 text-right max-w-xl">
+                    <div className="inline-flex items-center gap-2 text-indigo-600">
+                        <LuLayers className="h-5 w-5" />
+                        <span className="text-sm font-bold tracking-wider">
+                            معماری هسته‌ای WIT
+                        </span>
                     </div>
-                ) ) }
+
+                    <h2
+                        id="arch-heading"
+                        className="text-2xl font-bold text-slate-900 md:text-3xl lg:text-4xl leading-tight"
+                    >
+                        معماری لایه‌ای، آماده برای
+                        <br />
+                        <span className="text-indigo-600">
+                            پروژه‌های صنعتی، حساس و مقیاس‌ملی
+                        </span>
+                    </h2>
+
+                    <p className="text-sm md:text-base leading-8 text-slate-600">
+                        پلتفرم WIT بر اساس یک معماری لایه‌ای صنعتی طراحی شده است که
+                        مسیر داده را از
+                        <strong className="text-slate-900 mx-1">تجهیزات میدانی</strong>
+                        تا
+                        <strong className="text-slate-900 mx-1">
+                            تحلیل و تصمیم‌سازی مدیریتی
+                        </strong>
+                        به‌صورت یکپارچه پوشش می‌دهد.
+                        این رویکرد امکان توسعه، نگهداری و ارتقای هر لایه را
+                        بدون ایجاد اختلال در سایر بخش‌ها فراهم می‌کند.
+                    </p>
+
+                    {/* Key Signals */ }
+                    <ul
+                        className="grid gap-3 sm:grid-cols-2 text-xs md:text-sm text-slate-600"
+                        role="list"
+                        aria-label="WIT architecture key technologies"
+                    >
+                        <li className="flex items-center gap-2">
+                            <LuCpu className="h-4 w-4 text-indigo-500" />
+                            PLC & Embedded Controllers
+                        </li>
+                        <li className="flex items-center gap-2">
+                            <LuNetwork className="h-4 w-4 text-indigo-500" />
+                            Edge & Industrial Networks
+                        </li>
+                        <li className="flex items-center gap-2">
+                            <LuDatabase className="h-4 w-4 text-indigo-500" />
+                            Secure Data & Core Services
+                        </li>
+                        <li className="flex items-center gap-2">
+                            <LuLayers className="h-4 w-4 text-indigo-500" />
+                            Modular · Scalable · Fault-Tolerant
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Visual Stack – Industrial Reference Diagram */ }
+                <div className="flex flex-col gap-2 p-4 rounded-3xl border border-slate-200 bg-white shadow-xl max-w-md mx-auto w-full">
+                    { layers.map( ( layer, i ) => (
+                        <div
+                            key={ i }
+                            className={ `group flex flex-col items-center justify-center gap-1 py-4 rounded-xl text-center transition-all
+              hover:scale-[1.02] hover:shadow-md ${ layer.bg } ${ layer.text }` }
+                        >
+                            <span className="font-bold text-sm md:text-base">
+                                { layer.title }
+                            </span>
+                            <span className="text-[10px] opacity-80 font-mono uppercase tracking-widest">
+                                { layer.subtitle }
+                            </span>
+                            <span className="mt-1 text-[11px] max-w-xs opacity-90 px-4">
+                                { layer.desc }
+                            </span>
+                        </div>
+                    ) ) }
+                </div>
             </div>
         </section>
     );
