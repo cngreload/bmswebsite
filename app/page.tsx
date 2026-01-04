@@ -27,29 +27,27 @@ export default function HomePage ()
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             {/* LEFT CONTENT */ }
             <div className="lg:col-span-7 space-y-8 text-right order-1">
+
+              {/* 1. Updated Main Headline */ }
               <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-semibold text-bms-primary border border-blue-100">
-                راهکارهای بومی برای زیرساخت‌های ملی
+                راهکارهای بومی دیجیتال برای کسب و کار و زیرساخت‌های ملی              </div>
+              {/* 2. Sub-headline + 3. Stylish Tagline */ }
+              <div className="space-y-2">
+                <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-bold text-slate-900 leading-[1.15] tracking-tight">
+                  هوشمندسازی <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-l from-bms-primary to-bms-accent">
+                    دارایی‌های حیاتی
+                  </span>
+                </h1>       <p className="text-sm md:text-base font-light text-slate-500 tracking-wider opacity-80">
+                  (دریچه شما به انقلاب صنعتی چهارم)
+                </p>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-bold text-slate-900 leading-[1.15] tracking-tight">
-                هوشمندسازی <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-l from-bms-primary to-bms-accent">
-                  دارایی‌های حیاتی
-                </span>
-              </h1>
-
-              <h2 className="sr-only">
-                سامانه‌های پایش، کنترل و تصمیم‌سازی برای صنایع انرژی و سلامت
-              </h2>
-
+              {/* 4. Updated Description Paragraph */ }
               <p className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed font-light">
-                ما با طراحی سامانه‌های بومی و امن، فاصله میان
-                <span className="font-medium text-slate-900"> عملیات میدانی </span>
-                و
-                <span className="font-medium text-slate-900">
-                  { " " }
-                  تصمیم‌سازی مدیریتی{ " " }
-                </span>
+                ما با ادغام فناوری‌های نوین در عرصه سخت‌افزار و نرم‌افزار و رشد راهکارهای همه‌جانبه،
+                فاصله میان <span className="font-medium text-slate-900">عملیات میدانی</span> و
+                <span className="font-medium text-slate-900"> تصمیم‌سازی مدیریتی </span>
                 را از بین می‌بریم.
               </p>
 
@@ -86,12 +84,12 @@ export default function HomePage ()
                     </span>
                   </div>
 
-                  {/* TITLE */ }
+                  {/* 5. TITLE UPDATE */ }
                   <h3 className="text-xl md:text-2xl font-bold tracking-tight">
-                    پلتفرم یکپارچه هوشمندسازی جهانی
+                    تکنولوژی هوشمندسازی جهانی
                   </h3>
 
-                  {/* 🔥 CORE VISION STATEMENT (REPLACED HERE) */ }
+                  {/* CORE VISION STATEMENT */ }
                   <p className="text-slate-200 text-sm md:text-[15px] leading-relaxed">
                     ما در <strong className="text-white">بارمان محور اسپادانا</strong>،
                     طلایه‌دار تحقق رؤیای انسان مدرن هستیم — رؤیایی که در آن،
@@ -107,7 +105,7 @@ export default function HomePage ()
                     .
                   </p>
 
-                  {/* 🔎 GOOGLE-FRIENDLY CAPABILITY SIGNALS */ }
+                  {/* SIGNALS */ }
                   <div className="flex flex-wrap gap-2 pt-2">
                     <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-emerald-300 font-mono">
                       Real-Time Control
@@ -132,8 +130,11 @@ export default function HomePage ()
       </section>
 
       {/* TRUST + CONTENT */ }
+      {/* 5. Refactored Component */ }
       <TechStrip />
+
       <div className="container mx-auto px-4 max-w-6xl space-y-24 pb-20">
+        {/* 6. Refactored Component */ }
         <WorldsGrid />
         <ProductBands />
       </div>
