@@ -3,6 +3,7 @@ import
 {
     LuBriefcase,
     LuStethoscope,
+    LuVenetianMask,
     LuCalendarCheck,
     LuHeartHandshake,
     LuCheck,
@@ -169,16 +170,48 @@ export default function ClinicansForWhomSection ()
                         );
                     } ) }
                 </div>
+                {/* 
+    🧠 SYSTEM SUMMARY BLOCK (Refined)
+    Strategic conclusion to the ecosystem narrative
+*/}
+                <div className="mt-20 lg:mt-28 flex justify-center">
+                    <aside className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-1 shadow-md border border-slate-200 max-w-4xl w-full mx-4">
 
-                {/* Transition Line */ }
-                <div className="mt-16 text-right">
-                    <p className="max-w-3xl ml-auto text-sm md:text-base text-slate-600">
-                        Clinicans با درک دقیق نقش‌ها، یک چرخه هماهنگ میان مدیریت،
-                        تیم درمان و مراجعان ایجاد می‌کند؛ چرخه‌ای که
-                        تجربه بهتر، بهره‌وری بالاتر و رشد پایدار را هم‌زمان ممکن می‌سازد.
-                    </p>
+                        {/* Inner Container */ }
+                        <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-10 rounded-[2rem] bg-white px-8 py-8 md:px-10">
+
+                            {/* Visual Anchor */ }
+                            <div className="flex-shrink-0 relative">
+                                <div className="absolute inset-0 bg-indigo-500/20 rounded-2xl blur-lg" />
+                                <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shadow-sm border border-indigo-100">
+                                    <LuVenetianMask className="h-10 w-10" />
+                                </div>
+                            </div>
+
+                            {/* Content */ }
+                            <div className="flex-1 text-center md:text-right space-y-3">
+                                <h4 className="text-lg font-bold text-slate-900">
+                                    هماهنگی نقش‌ها، نه صرفاً ابزارها
+                                </h4>
+                                <p className="text-sm md:text-base text-slate-600 leading-8 text-justify">
+                                    Clinicans با درک دقیق نقش‌ها، یک چرخه هماهنگ میان
+                                    <strong className="text-slate-900 font-bold"> مدیریت</strong>،
+                                    <strong className="text-slate-900 font-bold"> تیم درمان</strong>
+                                    و
+                                    <strong className="text-slate-900 font-bold"> مراجعان</strong>
+                                    ایجاد می‌کند؛ چرخه‌ای که
+                                    <span className="text-indigo-700 font-medium"> تجربه بهتر</span>،
+                                    <span className="text-indigo-700 font-medium"> بهره‌وری بالاتر</span>
+                                    و
+                                    <span className="text-indigo-700 font-medium"> رشد پایدار</span>
+                                    را به‌صورت هم‌زمان ممکن می‌سازد.
+                                </p>
+                            </div>
+
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
     );
-}
+};

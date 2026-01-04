@@ -9,6 +9,7 @@ import
     LuTrendingUp,
     LuBrainCircuit,
     LuArrowLeft,
+    LuNetwork,
     LuZap
 } from 'react-icons/lu';
 
@@ -204,6 +205,43 @@ export const ClinicansFeaturesGrid = () =>
                         );
                     } ) }
                 </div>
+                {/* 
+                  🧠 SYSTEM SUMMARY BLOCK (Beautified)
+                  This acts as the conclusion to the grid.
+                */}
+                <div className="mt-20 lg:mt-28 flex justify-center">
+                    <aside className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-1 shadow-md border border-slate-200 max-w-4xl w-full mx-4">
+
+                        {/* Inner Container */ }
+                        <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-10 rounded-[2rem] bg-white px-8 py-8 md:px-10">
+
+                            {/* Visual Anchor: Network Icon */ }
+                            <div className="flex-shrink-0 relative">
+                                <div className="absolute inset-0 bg-indigo-500/20 rounded-2xl blur-lg" />
+                                <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shadow-sm border border-indigo-100">
+                                    <LuNetwork className="h-10 w-10" />
+                                </div>
+                            </div>
+
+                            {/* Content */ }
+                            <div className="flex-1 text-center md:text-right space-y-3">
+                                <h4 className="text-lg font-bold text-slate-900">
+                                    فراتر از مجموع اجزا (System Synergy)
+                                </h4>
+                                <p className="text-sm md:text-base text-slate-600 leading-8 text-justify">
+                                    ارزش واقعی Clinicans در اتصال این ستون‌ها به یکدیگر است؛
+                                    داده‌ها در این اکوسیستم <strong className="text-slate-900 font-bold bg-indigo-50 px-1 rounded mx-0.5">جریان دارند</strong>،
+                                    نه اینکه صرفاً ثبت شوند. نتیجه این اتصال،
+                                    <span className="text-indigo-700 font-medium"> تصمیم‌گیری دقیق‌تر</span>،
+                                    <span className="text-indigo-700 font-medium"> خطای کمتر </span>
+                                    و تجربه‌ای حرفه‌ای‌تر برای مراجعان است.
+                                </p>
+                            </div>
+
+                        </div>
+                    </aside>
+                </div>
+
             </div>
         </section>
     );

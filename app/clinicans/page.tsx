@@ -4,14 +4,11 @@ import Script from "next/script";
 import ClinicansNavbar from "@/components/clinicans/ClinicansNavbar"; // 👈 Import the new navbar
 
 import ClinicansHeroSection from "@/components/clinicans/ClinicansHeroSection";
-import ClinicansProblemsSection from "@/components/clinicans/ClinicansProblemsSection";
-import ClinicansOverviewSection from "@/components/clinicans/ClinicansOverviewSection";
 import ClinicansForWhomSection from "@/components/clinicans/ClinicansForWhomSection";
-import ClinicansFeaturesSection from "@/components/clinicans/ClinicansFeaturesSection";
 import ClinicansSecuritySection from "@/components/clinicans/ClinicansSecuritySection";
 import ClinicansTechSection from "@/components/clinicans/ClinicansTechSection";
 import ClinicansGetStartedSection from "@/components/clinicans/ClinicansGetStartedSection";
-
+import { ClinicansFeaturesGrid } from "@/components/clinicans/ColumnGrid";
 // 🧠 PRODUCT METADATA — SaaS + Healthcare aligned
 export const metadata: Metadata = {
     title: "کلینیکانز (Clinicans) | پلتفرم مدیریت هوشمند کلینیک",
@@ -117,37 +114,39 @@ export default function ClinicansPage ()
                     {/* Chapter 1: Hero */ }
                     <div id="overview">
                         <ClinicansHeroSection />
-                    </div>
-
-                    {/* Chapter 2: Problem & Overview */ }
-                    <div className="space-y-16">
-                        <ClinicansProblemsSection />
-                        <ClinicansOverviewSection />
-                    </div>
-
-                    {/* Chapter 3: Features & Audience */ }
-                    {/* Added IDs for Scroll Navigation */ }
-                    <div id="features" className="relative rounded-[3rem] bg-white p-8 shadow-sm border border-slate-100 md:p-12 overflow-hidden scroll-mt-24">
-                        <div className="absolute top-0 right-0 w-full h-2 bg-gradient-to-l from-emerald-400 to-blue-500" />
-                        <div className="space-y-20">
-                            <ClinicansFeaturesSection />
-
-                            <div id="audience" className="scroll-mt-24">
-                                <ClinicansForWhomSection />
-                            </div>
+                        <div id="audience" className="scroll-mt-24">
+                            <ClinicansFeaturesGrid />                            <ClinicansForWhomSection />
                         </div>
-                    </div>
+                        <div id="security" className="space-y-16 scroll-mt-24">
+                            <ClinicansSecuritySection />
+                            <ClinicansTechSection />
+                        </div>
 
-                    {/* Chapter 4: Trust & Technology */ }
-                    <div id="security" className="space-y-16 scroll-mt-24">
-                        <ClinicansSecuritySection />
-                        <ClinicansTechSection />
+                        {/* Chapter 5: Conversion */ }
+                        <ClinicansGetStartedSection />
                     </div>
-
-                    {/* Chapter 5: Conversion */ }
-                    <ClinicansGetStartedSection />
                 </div>
+
+
+                {/* Chapter 2: Problem & Overview */ }
+                <div className="space-y-16">
+                    {/* <ClinicansOverviewSection /> */ }
+                </div>
+
+                {/* Chapter 4: Trust & Technology */ }
             </main>
         </>
     );
 }
+
+
+// {/* Chapter 3: Features & Audience */ }
+// {/* Added IDs for Scroll Navigation */ }
+// <div id="features" className="relative rounded-[3rem] bg-white p-8 shadow-sm border border-slate-100 md:p-12 overflow-hidden scroll-mt-24">
+//     <div className="absolute top-0 right-0 w-full h-2 bg-gradient-to-l from-emerald-400 to-blue-500" />
+//     <div className="space-y-20">
+//         <ClinicansFeaturesSection />
+
+//
+//     </div>
+// </div>;

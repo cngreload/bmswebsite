@@ -3,10 +3,11 @@ import
 {
     LuCloud,
     LuCpu,
+    LuInfinity,
     LuDatabase,
     LuWebhook,
     LuServer,
-    LuGitMerge,
+
 } from "react-icons/lu";
 
 const techBlocks = [
@@ -129,20 +130,43 @@ export default function ClinicansTechSection ()
                         );
                     } ) }
                 </div>
+                {/* 
+    🧠 SYSTEM SUMMARY BLOCK (Scalable Architecture)
+    Architecture → Stability → Growth
+*/}
+                <div className="mt-20 lg:mt-28 flex justify-center">
+                    <aside className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-1 shadow-md border border-slate-200 max-w-4xl w-full mx-4">
 
-                {/* Architecture Summary */ }
-                <div className="mt-14 text-right">
-                    <div className="inline-flex items-start gap-4 rounded-2xl bg-white p-4 border border-slate-200 shadow-sm">
-                        <div className="mt-1 text-bms-primary">
-                            <LuGitMerge className="h-5 w-5" />
+                        {/* Inner Container */ }
+                        <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-10 rounded-[2rem] bg-white px-8 py-8 md:px-10">
+
+                            {/* Visual Anchor */ }
+                            <div className="flex-shrink-0 relative">
+                                <div className="absolute inset-0 bg-indigo-500/20 rounded-2xl blur-lg" />
+                                <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shadow-sm border border-indigo-100">
+                                    <LuInfinity className="h-10 w-10" />
+                                </div>
+                            </div>
+
+                            {/* Content */ }
+                            <div className="flex-1 text-center md:text-right space-y-3">
+                                <h4 className="text-lg font-bold text-slate-900">
+                                    معماری مقیاس‌پذیر و پایدار
+                                </h4>
+                                <p className="text-sm md:text-base text-slate-600 leading-8 text-justify">
+                                    نتیجه این معماری، سیستمی است که
+                                    <span className="text-indigo-700 font-medium"> هم‌زمان با رشد کلینیک شما بزرگ می‌شود</span>،
+                                    در
+                                    <span className="text-indigo-700 font-medium"> ساعات شلوغ پایدار می‌ماند</span>
+                                    و
+                                    <span className="text-indigo-700 font-medium"> به‌سادگی با سرویس‌های جدید یکپارچه می‌شود</span>
+                                    — بدون نیاز به بازطراحی‌های اساسی یا
+                                    <strong className="text-slate-900 font-bold"> مهاجرت‌های پرهزینه</strong>.
+                                </p>
+                            </div>
+
                         </div>
-                        <p className="max-w-3xl text-sm md:text-base text-slate-600 leading-7">
-                            نتیجه این معماری، سیستمی است که با رشد کلینیک شما
-                            بزرگ می‌شود، در ساعات شلوغ پایدار می‌ماند و
-                            به‌راحتی با سرویس‌های جدید یکپارچه می‌شود —
-                            بدون نیاز به بازطراحی یا مهاجرت‌های پرهزینه.
-                        </p>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </section>
