@@ -14,7 +14,7 @@ const config: Config = {
       },
     },
     extend: {
-      // Bootstrap-like breakpoints (additive, doesn't change Tailwind defaults)
+      // Bootstrap-like breakpoints (Preserved)
       screens: {
         "bs-sm": "576px",
         "bs-md": "768px",
@@ -24,12 +24,12 @@ const config: Config = {
       },
 
       colors: {
-        "bms-primary": "#145C98",
-        "bms-primary-soft": "#E6F1FB",
-        "bms-accent": "#10B981",
-        "bms-dark": "#0F172A",
+        "bms-primary": "#145C98", // Corporate Blue
+        "bms-primary-soft": "#E6F1FB", // Light Blue Background
+        "bms-accent": "#10B981", // Success Green
+        "bms-dark": "#0F172A", // Slate 900 equivalent
 
-        // Odoo neutral scale (nested = reliable for theme() + classes)
+        // Odoo neutral scale (Preserved)
         odoo: {
           100: "#F9FAFB",
           200: "#F3F4F6",
@@ -43,9 +43,7 @@ const config: Config = {
         },
       },
 
-      // IMPORTANT:
-      // In layout.tsx we set variable: "--font-bms-sans" via next/font
-      // This makes `font-sans` use it first, then your exact system stack.
+      // Font Mapping (Preserved - Matches your Layout.tsx)
       fontFamily: {
         sans: [
           "var(--font-bms-sans)",
@@ -75,7 +73,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  // ✅ ADDED: Typography plugin for News Article HTML rendering
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default config;

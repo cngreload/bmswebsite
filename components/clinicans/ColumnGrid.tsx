@@ -88,7 +88,7 @@ const CentralHub = ( { className = "" }: { className?: string; } ) => (
             <div className="absolute inset-6 rounded-full bg-gradient-to-b from-white to-slate-50 shadow-inner flex items-center justify-center border border-white">
                 <div className="relative w-20 h-20 filter drop-shadow-sm transform transition-transform hover:scale-110 duration-500">
                     <Image
-                        src="/clogo.svg"
+                        src="/Clogo.svg"
                         alt="Clinicans Core"
                         fill
                         className="object-contain p-2"
@@ -120,7 +120,7 @@ export const ClinicansFeaturesGrid = () =>
                     <span>هسته مرکزی پلتفرم</span>
                 </div>
                 <h2 id="features-grid-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900">
-                    چهار ستون <span className="text-bms-primary underline decoration-bms-primary/20 underline-offset-8 decoration-4">تحول دیجیتال</span> کلینیک‌های سلامت
+                    چهار رکن <span className="text-bms-primary underline decoration-bms-primary/20 underline-offset-8 decoration-4">تحول دیجیتال</span> کلینیک‌های سلامت
                 </h2>
                 <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed px-4">
                     کلینیکانز یک زیست‌بوم دیجیتال یکپارچه برای هوشمندسازی کلینیک‌های سلامت و درمان است.
@@ -229,7 +229,7 @@ export const ClinicansFeaturesGrid = () =>
                                     فراتر از مجموع اجزا (System Synergy)
                                 </h4>
                                 <p className="text-sm md:text-base text-slate-600 leading-8 text-justify">
-                                    ارزش واقعی Clinicans در اتصال این ستون‌ها به یکدیگر است؛
+                                    ارزش واقعی Clinicans در اتصال این ارکان به یکدیگر است؛
                                     داده‌ها در این اکوسیستم <strong className="text-slate-900 font-bold bg-indigo-50 px-1 rounded mx-0.5">جریان دارند</strong>،
                                     نه اینکه صرفاً ثبت شوند. نتیجه این اتصال،
                                     <span className="text-indigo-700 font-medium"> تصمیم‌گیری دقیق‌تر</span>،
