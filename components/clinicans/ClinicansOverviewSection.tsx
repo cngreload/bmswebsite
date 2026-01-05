@@ -76,11 +76,11 @@ export default function ClinicansOverviewSection ()
                         id="overview-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
                     >
-                        Clinicans در <span className="text-bms-primary">یک نگاه</span>
+                        کلینیکانز  در <span className="text-bms-primary">یک نگاه</span>
                     </h2>
 
                     <p className="max-w-3xl ml-auto text-sm leading-8 text-slate-600 md:text-base text-justify">
-                        Clinicans یک ابزار منفرد نیست؛
+                        کلینیکانز  یک ابزار منفرد نیست؛
                         <strong className="text-slate-900">
                             { " " }
                             یک اکوسیستم یکپارچه مدیریت کلینیک{ " " }
@@ -142,7 +142,7 @@ export default function ClinicansOverviewSection ()
                             <LuGitMerge className="h-5 w-5" />
                         </div>
                         <p className="max-w-3xl text-sm md:text-base text-slate-600 leading-7">
-                            ارزش واقعی Clinicans در اتصال این ستون‌ها به یکدیگر است؛
+                            ارزش واقعی کلینیکانز  در اتصال این ستون‌ها به یکدیگر است؛
                             داده‌ها در این اکوسیستم جریان دارند، نه اینکه صرفاً ثبت شوند.
                             نتیجه این اتصال، تصمیم‌گیری دقیق‌تر، خطای کمتر
                             و تجربه‌ای حرفه‌ای‌تر برای مراجعان است.

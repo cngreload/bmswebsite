@@ -176,7 +176,7 @@ export default function ClinicansProblemsSection ()
                         یک کلینیک مدرن طراحی نشده‌اند.
                         <strong className="text-slate-900">
                             { " " }
-                            Clinicans برای پر کردن همین شکاف ساختاری شکل گرفته است.
+                            کلینیکانز  برای پر کردن همین شکاف ساختاری شکل گرفته است.
                         </strong>
                     </p>
                 </div>

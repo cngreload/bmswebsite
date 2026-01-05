@@ -110,13 +110,16 @@ export default function ClinicansNavbar ()
                     {/* LEFT: CTAs */ }
                     <div className="flex items-center gap-3">
                         <Link
-                            href="https://app.clinicans.ir/login"
+                            href="https://clinicans.ir/"
+                            target="_blank"
+
                             className="hidden sm:inline-flex text-sm font-bold text-slate-600 hover:text-emerald-600 transition-colors"
                         >
-                            ورود به پنل
+                            ورود پلتفرم
                         </Link>
                         <Link
                             href="/contact-us"
+
                             className="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-600 px-5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-transform hover:-translate-y-0.5 hover:bg-emerald-700"
                         >
                             <span>درخواست دمو</span>

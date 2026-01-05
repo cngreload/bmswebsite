@@ -13,11 +13,11 @@ import
 const personas = [
     {
         id: "managers",
-        role: "Clinic Governance",
+        role: "Management Enablement",
         title: "مدیران و مالکان کلینیک",
-        subtitle: "کنترل شفاف، رشد قابل پیش‌بینی",
+        subtitle: "توانمندسازی در تصمیم‌گیری و توسعه",
         summary:
-            "برای مدیرانی که کلینیک را به‌عنوان یک سیستم زنده و در حال رشد می‌بینند، نه مجموعه‌ای از فرآیندهای جدا از هم.",
+            "برای مدیرانی که به دنبال ابزارهای دقیق برای پایش عملکرد، بهینه‌سازی درآمد و توسعه کسب‌وکار خود بر پایه داده‌های واقعی هستند.",
         icon: LuBriefcase,
         color: "text-slate-700",
         bg: "bg-slate-100",
@@ -30,11 +30,11 @@ const personas = [
     },
     {
         id: "doctors",
-        role: "Clinical Practice",
+        role: "Clinical Enablement",
         title: "پزشکان و کادر درمان",
-        subtitle: "تمرکز بر درمان، نه حاشیه",
+        subtitle: "تمرکز بر کیفیت درمان و مراقبت",
         summary:
-            "برای درمانگرانی که می‌خواهند زمان و تمرکز خود را صرف کیفیت درمان کنند، نه هماهنگی‌های اجرایی.",
+            "برای درمانگرانی که می‌خواهند با اتکا به ابزارهای دیجیتال، دغدغه‌های اجرایی را حذف کرده و کیفیت مراقبت از بیمار را ارتقا دهند.",
         icon: LuStethoscope,
         color: "text-emerald-600",
         bg: "bg-emerald-50",
@@ -47,11 +47,11 @@ const personas = [
     },
     {
         id: "reception",
-        role: "Front Desk Operations",
-        title: "تیم پذیرش و هماهنگی",
-        subtitle: "نظم عملیاتی، آرامش کاری",
+        role: "Operational Automation",
+        title: "تیم پذیرش و عملیات",
+        subtitle: "اتوماسیون فرآیندها و کاهش خطا",
         summary:
-            "برای تیم‌هایی که نقش کلیدی در جریان مراجعه و تجربه مراجعان دارند.",
+            "برای تیم‌های اجرایی که با حجم بالای هماهنگی روبرو هستند و به ابزارهای هوشمند برای مدیریت جریان مراجعین نیاز دارند.",
         icon: LuCalendarCheck,
         color: "text-amber-600",
         bg: "bg-amber-50",
@@ -66,9 +66,9 @@ const personas = [
         id: "patients",
         role: "Patient Experience",
         title: "مراجعان و بیماران",
-        subtitle: "تجربه‌ای منظم و قابل اعتماد",
+        subtitle: "تجربه دریافت خدمات در کلاس جهانی",
         summary:
-            "برای مراجعانی که انتظار نظم، احترام و شفافیت از یک کلینیک حرفه‌ای دارند.",
+            "برای مراجعانی که انتظار دارند خدمات سلامت را با نظم، شفافیت و احترام دریافت کنند.",
         icon: LuHeartHandshake,
         color: "text-rose-600",
         bg: "bg-rose-50",
@@ -93,21 +93,20 @@ export default function ClinicansForWhomSection ()
                 {/* Header */ }
                 <div className="mb-14 text-right space-y-4">
                     <span className="inline-block rounded-lg bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 border border-slate-200">
-                        اجزای اکوسیستم Clinicans
+                        ذی‌نفعان پلتفرم
                     </span>
 
                     <h2
                         id="audience-heading"
                         className="text-2xl font-bold text-bms-dark md:text-3xl lg:text-4xl"
                     >
-                        این اکوسیستم برای چه{ " " }
-                        <span className="text-bms-primary">نقش‌هایی</span> طراحی شده است؟
+                        این پلتفرم چه کسانی را <br />
+                        <span className="text-bms-primary">توانمند </span> می‌کند؟
                     </h2>
 
                     <p className="max-w-3xl ml-auto text-sm leading-relaxed text-slate-600 md:text-base">
-                        Clinicans یک ابزار یکسان برای همه نیست.
-                        هر نقش در کلینیک، جایگاه مشخصی در اکوسیستم دارد و
-                        تجربه کاربری و قابلیت‌ها دقیقاً متناسب با همان نقش طراحی شده‌اند.
+                        «پلتفرم توانمندسازی دیجیتال ارائه‌دهندگان خدمات سلامت» یک ابزار یکسان برای همه نیست.
+                        هر نقش در کلینیک، جایگاه مشخصی در این پلتفرم دارد و تجربه کاربری دقیقاً متناسب با نیازهای توانمندسازی همان نقش طراحی شده است.
                     </p>
                 </div>
 
@@ -171,9 +170,9 @@ export default function ClinicansForWhomSection ()
                     } ) }
                 </div>
                 {/* 
-    🧠 SYSTEM SUMMARY BLOCK (Refined)
-    Strategic conclusion to the ecosystem narrative
-*/}
+                    🧠 SYSTEM SUMMARY BLOCK (Refined)
+                    Strategic conclusion to the enablement narrative
+                */}
                 <div className="mt-20 lg:mt-28 flex justify-center">
                     <aside className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 p-1 shadow-md border border-slate-200 max-w-4xl w-full mx-4">
 
@@ -191,10 +190,10 @@ export default function ClinicansForWhomSection ()
                             {/* Content */ }
                             <div className="flex-1 text-center md:text-right space-y-3">
                                 <h4 className="text-lg font-bold text-slate-900">
-                                    هماهنگی نقش‌ها، نه صرفاً ابزارها
+                                    توانمندسازی هم‌زمان تمام ارکان کلینیک
                                 </h4>
                                 <p className="text-sm md:text-base text-slate-600 leading-8 text-justify">
-                                    Clinicans با درک دقیق نقش‌ها، یک چرخه هماهنگ میان
+                                    کلینیکانز  با درک دقیق نیازهای هر نقش، یک چرخه هماهنگ میان
                                     <strong className="text-slate-900 font-bold"> مدیریت</strong>،
                                     <strong className="text-slate-900 font-bold"> تیم درمان</strong>
                                     و
@@ -204,7 +203,7 @@ export default function ClinicansForWhomSection ()
                                     <span className="text-indigo-700 font-medium"> بهره‌وری بالاتر</span>
                                     و
                                     <span className="text-indigo-700 font-medium"> رشد پایدار</span>
-                                    را به‌صورت هم‌زمان ممکن می‌سازد.
+                                    را از طریق توانمندسازی دیجیتال محقق می‌سازد.
                                 </p>
                             </div>
 

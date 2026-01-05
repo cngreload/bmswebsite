@@ -1,7 +1,7 @@
 // app/clinicans/page.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
-import ClinicansNavbar from "@/components/clinicans/ClinicansNavbar"; // 👈 Import the new navbar
+import ClinicansNavbar from "@/components/clinicans/ClinicansNavbar";
 
 import ClinicansHeroSection from "@/components/clinicans/ClinicansHeroSection";
 import ClinicansForWhomSection from "@/components/clinicans/ClinicansForWhomSection";
@@ -9,18 +9,19 @@ import ClinicansSecuritySection from "@/components/clinicans/ClinicansSecuritySe
 import ClinicansTechSection from "@/components/clinicans/ClinicansTechSection";
 import ClinicansGetStartedSection from "@/components/clinicans/ClinicansGetStartedSection";
 import { ClinicansFeaturesGrid } from "@/components/clinicans/ColumnGrid";
-// 🧠 PRODUCT METADATA — SaaS + Healthcare aligned
+
+// 🧠 PRODUCT METADATA — Updated for Canonical Platform Positioning
 export const metadata: Metadata = {
-    title: "کلینیکانز (Clinicans) | پلتفرم مدیریت هوشمند کلینیک",
+    title: "کلینیکانز (Clinicans) | پلتفرم توانمندسازی دیجیتال ارائه‌دهندگان خدمات سلامت",
     description:
-        "Clinicans یک پلتفرم ابری و یکپارچه برای مدیریت کلینیک‌های سلامت و زیبایی است؛ شامل نوبت‌دهی آنلاین، پرونده الکترونیک سلامت (EHR)، مدیریت مالی و ارتباط با بیمار.",
+        "پلتفرمی یکپارچه برای توانمندسازی دیجیتال، اتوماسیون و هوشمندسازی ارائه‌دهندگان خدمات سلامت — از مطب‌های کوچک تا مراکز درمانی بزرگ.",
     keywords: [
-        "نرم‌افزار مدیریت کلینیک",
-        "مدیریت مطب",
+        "پلتفرم توانمندسازی دیجیتال سلامت",
+        "Digital Health Enablement Platform",
+        "اتوماسیون مراکز درمانی",
+        "هوشمندسازی خدمات سلامت",
         "پرونده الکترونیک سلامت",
-        "EHR",
-        "نوبت‌دهی آنلاین پزشکی",
-        "نرم‌افزار کلینیک زیبایی",
+        "مدیریت مطب و کلینیک",
         "CRM پزشکی",
     ],
     alternates: {
@@ -46,7 +47,7 @@ export default function ClinicansPage ()
                 "softwareVersion": "1.0",
                 "isAccessibleForFree": true,
                 "description":
-                    "Clinicans یک پلتفرم نرم‌افزاری ابری برای مدیریت یکپارچه کلینیک‌های سلامت و زیبایی است که فرآیندهای بالینی، مالی و ارتباط با بیمار را در یک سیستم امن و مقیاس‌پذیر تجمیع می‌کند.",
+                    "پلتفرمی یکپارچه برای توانمندسازی دیجیتال، اتوماسیون و هوشمندسازی ارائه‌دهندگان خدمات سلامت که فرآیندهای بالینی، مالی و ارتباط با مراجعین را در یک سیستم امن و مقیاس‌پذیر تجمیع می‌کند.",
                 "featureList": [
                     "نوبت‌دهی آنلاین پزشکی",
                     "پرونده الکترونیک سلامت (EHR)",
@@ -68,9 +69,9 @@ export default function ClinicansPage ()
                 "audience": {
                     "@type": "Audience",
                     "audienceType": [
-                        "کلینیک‌های درمانی",
-                        "کلینیک‌های زیبایی",
-                        "پزشکان",
+                        "ارائه‌دهندگان خدمات سلامت",
+                        "کلینیک‌های درمانی و زیبایی",
+                        "پزشکان و متخصصان",
                         "مدیران مراکز درمانی"
                     ]
                 }
@@ -87,7 +88,7 @@ export default function ClinicansPage ()
                     {
                         "@type": "ListItem",
                         "position": 2,
-                        "name": "پلتفرم Clinicans",
+                        "name": "پلتفرم توانمندسازی دیجیتال سلامت (Clinicans)",
                         "item": "https://barman-mes.ir/clinicans"
                     }
                 ]
@@ -111,12 +112,16 @@ export default function ClinicansPage ()
                 {/* 📘 CONTENT FLOW */ }
                 <div className="container mx-auto max-w-6xl px-4 py-8 md:py-16 space-y-24 md:space-y-32">
 
-                    {/* Chapter 1: Hero */ }
+                    {/* Chapter 1: Hero & Enablement Vision */ }
                     <div id="overview">
                         <ClinicansHeroSection />
+
                         <div id="audience" className="scroll-mt-24">
-                            <ClinicansFeaturesGrid />                            <ClinicansForWhomSection />
+                            <ClinicansFeaturesGrid />
+
+                            <ClinicansForWhomSection />
                         </div>
+
                         <div id="security" className="space-y-16 scroll-mt-24">
                             <ClinicansSecuritySection />
                             <ClinicansTechSection />
@@ -127,26 +132,7 @@ export default function ClinicansPage ()
                     </div>
                 </div>
 
-
-                {/* Chapter 2: Problem & Overview */ }
-                <div className="space-y-16">
-                    {/* <ClinicansOverviewSection /> */ }
-                </div>
-
-                {/* Chapter 4: Trust & Technology */ }
             </main>
         </>
     );
 }
-
-
-// {/* Chapter 3: Features & Audience */ }
-// {/* Added IDs for Scroll Navigation */ }
-// <div id="features" className="relative rounded-[3rem] bg-white p-8 shadow-sm border border-slate-100 md:p-12 overflow-hidden scroll-mt-24">
-//     <div className="absolute top-0 right-0 w-full h-2 bg-gradient-to-l from-emerald-400 to-blue-500" />
-//     <div className="space-y-20">
-//         <ClinicansFeaturesSection />
-
-//
-//     </div>
-// </div>;
