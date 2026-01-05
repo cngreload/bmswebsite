@@ -1,5 +1,4 @@
 import Link from "next/link";
-import CngPilotVideo from "../home/CngPilotVideo";
 import
 {
     LuDownload,
@@ -47,7 +46,7 @@ export default function CngHeroSection ()
                     {/* Definition-style paragraph */ }
                     <p className="text-sm md:text-base text-slate-700 leading-8 max-w-2xl text-justify">
                         <strong className="font-semibold text-slate-900">
-                            ICTS (Intelligent CNG Tracking System)
+                            ICTS (Intelligent Control & Tag System)
                         </strong>{ " " }
                         یک سامانه صنعتی یکپارچه و بومی برای پایش لحظه‌ای،
                         افزایش ایمنی عملیات و مدیریت داده‌محور جایگاه‌های CNG است.
@@ -92,32 +91,6 @@ export default function CngHeroSection ()
                             دریافت معرفی‌نامه فنی (PDF)
                         </Link>
                     </div>
-                </div>
-
-                {/* VIDEO / VISUAL */ }
-                <div className="md:col-span-5 relative mt-8 md:mt-0">
-                    <div className="relative rounded-2xl bg-slate-900 p-1.5 ring-1 ring-slate-900/5 shadow-2xl">
-                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-20" />
-
-                        <div className="relative overflow-hidden rounded-xl bg-slate-950 aspect-video">
-                            <CngPilotVideo
-                                src="/CNG_Station_Automation.mp4"
-                                ariaLabel="ویدیو مستند اجرای پایلوت سامانه هوشمند ICTS در جایگاه‌های CNG"
-                                poster="/images/cng-poster.jpg"
-                            />
-                        </div>
-
-                        <div className="absolute -bottom-12 right-4 left-4 text-center">
-                            <p className="text-[10px] text-slate-500 leading-relaxed">
-                                <span className="block font-semibold text-slate-700 mb-1">
-                                    گزارش اجرایی پایلوت
-                                </span>
-                                استقرار سامانه ICTS در جایگاه‌های منتخب شبکه توزیع سوخت کشور
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="absolute -inset-4 bg-gradient-to-tr from-bms-primary/20 to-emerald-500/20 blur-2xl -z-10 rounded-[3rem] opacity-70" />
                 </div>
             </div>
         </section>

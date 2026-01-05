@@ -16,6 +16,9 @@ import NationalImportanceSection from "@/components/cng/NationalImportanceSectio
 import DeploymentSection from "@/components/cng/DeploymentSection";
 import CollaborationSection from "@/components/cng/CollaborationSection";
 import FinalCtaSection from "@/components/cng/FinalCtaSection";
+import CngStorySection from "@/components/cng/CngStorySection";
+import IndustrialVideoTerminal from "@/components/cng/IndustrialVideoTerminal";
+import TwoBranchProducts from "@/components/cng/TwoBranchProducts";
 
 export default function CngAutomationPage ()
 {
@@ -114,6 +117,18 @@ export default function CngAutomationPage ()
                 {/* Content */ }
                 <div className="bms-page space-y-20 md:space-y-32 pb-24">
                     <CngHeroSection />
+                    <TwoBranchProducts />
+                    <CngStorySection />
+                    <div className="md:col-span-5 relative mt-8 md:mt-0">
+                        <IndustrialVideoTerminal
+                            src="/CNG_Station_Automation.mp4"
+                            poster="/images/cng-poster.jpg"
+                            title="گزارش اجرایی پایلوت ملی"
+                            description="استقرار سامانه ICTS در جایگاه‌های منتخب شبکه توزیع سوخت کشور با موفقیت ۱۰۰٪ تراکنش."
+                            uploadDate="2025-12-15"
+                            duration="PT3M45S" // 3 Minutes 45 Seconds
+                        />
+                    </div>
 
                     {/* WHY */ }
                     <div className="space-y-16">

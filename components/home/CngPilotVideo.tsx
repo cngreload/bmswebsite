@@ -42,13 +42,17 @@ export default function CngPilotVideo ( {
             await v.play();
         } catch
         {
-            // If autoplay policies or something blocks it, user can still use native controls.
+            // Prevent crash if browser autoplay policies block programmatic play
         }
     };
 
+    // 🧠 FIX: Appending #t=0.001 forces browsers (Safari/Chrome) to pre-render 
+    // the first frame as a thumbnail if no poster is active.
+    const videoSrc = src.includes( "#" ) ? src : `${ src }#t=0.001`;
+
     return (
         <div
-            className="relative overflow-hidden rounded-2xl bg-slate-900 text-white aspect-video shadow-soft-lg"
+            className="relative overflow-hidden rounded-2xl bg-slate-200 aspect-video shadow-soft-lg group"
             aria-label={ ariaLabel }
         >
             <video
@@ -57,26 +61,32 @@ export default function CngPilotVideo ( {
                 playsInline
                 preload="metadata"
                 poster={ poster }
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover bg-slate-900"
             >
-                <source src={ src } type="video/mp4" />
+                <source src={ videoSrc } type="video/mp4" />
                 مرورگر شما امکان پخش فیلم را ندارد
             </video>
 
-            {/* overlay should NOT block clicks on video controls */ }
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-bms-primary/30 via-bms-accent/20 to-slate-900/35" />
-
+            {/* Overlay Gradient - Improves text readability over the thumbnail */ }
             { !isPlaying && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-slate-900/10 z-10 transition-opacity duration-300"
+                />
+            ) }
+
+            {/* Custom Play Button Overlay */ }
+            { !isPlaying && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-20">
                     <button
                         type="button"
                         onClick={ handlePlay }
-                        className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-bms-primary shadow-lg"
+                        className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-bms-primary shadow-xl backdrop-blur-sm transition-transform duration-300 group-hover:scale-110"
+                        aria-label="پخش ویدیو"
                     >
-                        <span className="mr-0.5 translate-x-[1px] text-lg">▶</span>
+                        <span className="mr-1 translate-x-[2px] text-2xl">▶</span>
                     </button>
-                    <span className="text-[10px] md:text-xs text-white/85">
-                        مشاهده ویدیوی پایلوت
+                    <span className="text-xs font-bold text-white/90 drop-shadow-md bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                        مشاهده ویدیو
                     </span>
                 </div>
             ) }
