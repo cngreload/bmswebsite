@@ -5,6 +5,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+
   theme: {
     container: {
       center: true,
@@ -13,8 +14,11 @@ const config: Config = {
         "2xl": "1200px",
       },
     },
+
     extend: {
-      // Bootstrap-like breakpoints (Preserved)
+      /* ------------------------------------------------------------------
+       * Breakpoints (Preserved)
+       * ---------------------------------------------------------------- */
       screens: {
         "bs-sm": "576px",
         "bs-md": "768px",
@@ -23,13 +27,15 @@ const config: Config = {
         "bs-xxl": "1400px",
       },
 
+      /* ------------------------------------------------------------------
+       * Colors (Preserved)
+       * ---------------------------------------------------------------- */
       colors: {
-        "bms-primary": "#145C98", // Corporate Blue
-        "bms-primary-soft": "#E6F1FB", // Light Blue Background
-        "bms-accent": "#10B981", // Success Green
-        "bms-dark": "#0F172A", // Slate 900 equivalent
+        "bms-primary": "#145C98",
+        "bms-primary-soft": "#E6F1FB",
+        "bms-accent": "#10B981",
+        "bms-dark": "#0F172A",
 
-        // Odoo neutral scale (Preserved)
         odoo: {
           100: "#F9FAFB",
           200: "#F3F4F6",
@@ -43,7 +49,9 @@ const config: Config = {
         },
       },
 
-      // Font Mapping (Preserved - Matches your Layout.tsx)
+      /* ------------------------------------------------------------------
+       * Fonts (Preserved)
+       * ---------------------------------------------------------------- */
       fontFamily: {
         sans: [
           "var(--font-bms-sans)",
@@ -71,11 +79,22 @@ const config: Config = {
         "soft-lg": "0 18px 45px rgba(15, 23, 42, 0.12)",
         "odoo-sm": "0 6px 18px rgba(15, 23, 42, 0.08)",
       },
+
+      /* ------------------------------------------------------------------
+       * ✅ NEW ADDITIONS (SAFE EXTENSION)
+       * ---------------------------------------------------------------- */
+      gap: {
+        "24": "6rem", // enables: gap-24
+      },
+
+      gridAutoRows: {
+        fr: "minmax(0, 1fr)", // enables: auto-rows-fr
+      },
     },
   },
-  // ✅ ADDED: Typography plugin for News Article HTML rendering
+
   plugins: [
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography"),
   ],
 };
 

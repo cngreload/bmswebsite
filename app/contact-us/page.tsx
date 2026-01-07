@@ -1,4 +1,3 @@
-// app/contact-us/page.tsx
 import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
@@ -7,6 +6,9 @@ import { LuHouse, LuChevronLeft } from "react-icons/lu";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactInfoPanel from "@/components/contact/ContactInfoPanel";
 
+/* ---------------------------------------------
+ * SEO METADATA
+ * -------------------------------------------*/
 export const metadata: Metadata = {
     title: "تماس با ما | مشاوره تخصصی و استقرار راهکارهای هوشمند",
     description:
@@ -18,7 +20,9 @@ export const metadata: Metadata = {
 
 export default function ContactUsPage ()
 {
-    // 🧠 CRAWLER EMPATHY: ContactPage + Organization Schema
+    /* ---------------------------------------------
+     * STRUCTURED DATA — ContactPage
+     * -------------------------------------------*/
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "ContactPage",
@@ -51,9 +55,11 @@ export default function ContactUsPage ()
             />
 
             <main id="main-content" className="min-h-screen bg-slate-50">
-                {/* Breadcrumb */ }
-                <div className="border-b border-slate-200 bg-white py-3">
-                    <div className="container mx-auto flex max-w-6xl items-center gap-2 px-4 text-xs text-slate-500">
+                {/* =========================
+         * STICKY BREADCRUMB (ONLY NAV ELEMENT)
+         * ========================= */}
+                <div className="sticky top-0 z-40 border-b border-slate-200 bg-white">
+                    <div className="container mx-auto flex max-w-6xl items-center gap-2 px-4 py-3 text-xs text-slate-500">
                         <Link
                             href="/"
                             className="flex items-center gap-1 transition-colors hover:text-bms-primary"
@@ -66,8 +72,11 @@ export default function ContactUsPage ()
                     </div>
                 </div>
 
+                {/* =========================
+         * PAGE CONTENT
+         * ========================= */}
                 <div className="container mx-auto max-w-6xl px-4 py-10 md:py-16">
-                    {/* Hero */ }
+                    {/* HERO */ }
                     <section className="mb-12 space-y-4 text-right">
                         <span className="inline-block rounded-lg border border-bms-primary/20 bg-bms-primary/10 px-3 py-1 text-xs font-bold text-bms-primary">
                             ارتباط مستقیم با تیم تخصصی
@@ -87,9 +96,9 @@ export default function ContactUsPage ()
                         </p>
                     </section>
 
-                    {/* Grid */ }
+                    {/* GRID */ }
                     <div className="grid items-start gap-8 lg:grid-cols-12">
-                        {/* Form */ }
+                        {/* FORM */ }
                         <div className="lg:col-span-7 xl:col-span-8">
                             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
                                 <h2 className="mb-6 border-b border-slate-100 pb-4 text-lg font-bold text-slate-800">
@@ -99,7 +108,7 @@ export default function ContactUsPage ()
                             </div>
                         </div>
 
-                        {/* Info */ }
+                        {/* INFO */ }
                         <div className="space-y-6 lg:col-span-5 xl:col-span-4">
                             <ContactInfoPanel />
                         </div>

@@ -1,109 +1,103 @@
-import
-{
-    LuLayers,
-    LuCircuitBoard,
-    LuDatabase,
-    LuArrowDownToLine,
-} from "react-icons/lu";
+// components/wit/WitHeroSection.tsx
+import { LuCpu, LuLayers, LuNetwork, LuGlobe, LuZap, LuShield } from "react-icons/lu";
+import Link from "next/link";
 
-const features = [
-    {
-        title: "پلتفرم هسته‌ای (Core Platform)",
-        desc: "WIT یک محصول تک‌منظوره یا پروژه‌محور نیست؛ یک هسته فناورانه‌ی پایدار و قابل توسعه است که می‌تواند هم‌زمان بار پروژه‌های صنعتی، انرژی و سلامت را بدون بازطراحی زیرساخت پشتیبانی کند.",
-        icon: LuLayers,
-        color: "text-indigo-600",
-        bg: "bg-indigo-50",
-    },
-    {
-        title: "هم‌طراحی سخت‌افزار و نرم‌افزار",
-        desc: "بردهای الکترونیکی، فریم‌ور، پروتکل‌های ارتباطی و لایه نرم‌افزار به‌صورت یکپارچه طراحی شده‌اند تا پایداری صنعتی، تأخیر پایین، کنترل دقیق و قابلیت اطمینان بلندمدت تضمین شود.",
-        icon: LuCircuitBoard,
-        color: "text-violet-600",
-        bg: "bg-violet-50",
-    },
-    {
-        title: "جریان داده End-to-End",
-        desc: "داده از سطح میدان (سنسورها، PLC و کنترلرها) تا لایه تحلیل و داشبورد مدیریتی بدون شکست، تبدیل یا گسست منتقل می‌شود؛ آماده تحلیل پیشرفته، تصمیم‌سازی مدیریتی و هوش مصنوعی.",
-        icon: LuDatabase,
-        color: "text-fuchsia-600",
-        bg: "bg-fuchsia-50",
-    },
-];
-
-export default function WitWhatIsSection ()
+export default function WitHeroSection ()
 {
     return (
         <section
-            aria-labelledby="whatis-heading"
-            role="region"
-            className="relative"
+            className="relative text-right overflow-hidden"
+            aria-labelledby="wit-hero-heading"
+            role="banner"
         >
-            <div className="grid gap-10 lg:grid-cols-12 items-start">
+            {/* Gradient Background */ }
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50 -z-20" />
+            <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-20 blur-3xl -z-10" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tr from-cyan-200 to-blue-200 rounded-full translate-x-1/3 translate-y-1/3 opacity-20 blur-3xl -z-10" />
 
-                {/* Definition Text */ }
-                <div className="lg:col-span-5 space-y-6 text-right">
-                    <div className="inline-flex items-center gap-2 text-indigo-600">
-                        <LuArrowDownToLine className="h-4 w-4" />
-                        <span className="text-xs font-bold tracking-wider">
-                            Platform Definition
-                        </span>
-                    </div>
-
-                    <h2
-                        id="whatis-heading"
-                        className="text-2xl font-bold text-slate-900 md:text-3xl leading-tight"
-                    >
-                        WIT دقیقاً <span className="text-indigo-600">چیست؟</span>
-                    </h2>
-
-                    <p className="text-sm md:text-base leading-7 text-slate-600 text-justify">
-                        WIT یک زیرساخت فناورانه‌ی هسته‌ای است که محصولات کلیدی بارمان —
-                        از سامانه‌های
-                        <strong className="text-slate-900 mx-1">
-                            پایش و کنترل صنعتی (ICTS)
-                        </strong>
-                        تا پلتفرم
-                        <strong className="text-slate-900 mx-1">
-                            سلامت دیجیتال Clinicans
-                        </strong>
-                        — بر پایه آن توسعه یافته‌اند.
-                        <br />
-                        <br />
-                        به‌جای توسعه مجزا و تکراری برای هر پروژه، WIT یک هسته مرکزی
-                        پایدار ایجاد می‌کند که امکان انطباق با حوزه‌های مختلف،
-                        مقیاس‌پذیری در سطح سازمانی و توسعه تدریجی بدون اختلال
-                        در سامانه‌های فعال را فراهم می‌سازد.
-                    </p>
+            <div className="space-y-8 max-w-6xl">
+                {/* Badge – Positioning & Entity Signal */ }
+                <div
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700"
+                    aria-label="World Intelligent Technology Platform"
+                >
+                    <LuGlobe className="h-4 w-4" />
+                    <span>فناوری هوشمند جهانی (World Intelligent Technology)</span>
+                    <span className="text-xs font-normal text-indigo-500">از BMS Co.</span>
                 </div>
 
-                {/* Feature Cards */ }
-                <div className="lg:col-span-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    { features.map( ( f, i ) =>
-                    {
-                        const Icon = f.icon;
-                        return (
-                            <article
-                                key={ i }
-                                className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm
-                transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-indigo-200"
+                {/* H1 – Primary SEO Anchor */ }
+                <div className="space-y-4">
+                    <h1
+                        id="wit-hero-heading"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 tracking-tight"
+                    >
+                        هسته‌ی تصمیم‌ساز
+                        <br className="hidden md:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-indigo-600 via-purple-600 to-pink-600">
+                            زیرساخت‌های هوشمند
+                        </span>
+                    </h1>
+
+                    <div className="inline-flex items-center gap-2 text-sm text-slate-600">
+                        <LuZap className="h-4 w-4 text-amber-500" />
+                        <span>ادغام انقلابی سیستم‌های کنترل، IoT و هوش مصنوعی در انقلاب صنعتی چهارم</span>
+                    </div>
+                </div>
+
+                {/* Supporting Description – Context for Google & Humans */ }
+                <div className="space-y-6">
+                    <p className="text-base md:text-lg leading-8 text-slate-700 max-w-4xl font-light">
+                        <strong className="font-semibold text-slate-900">WIT</strong> پاسخی است به
+                        <em className="text-slate-900"> محدودیت‌های سیستم‌های اتوماسیون موجود</em> —
+                        یک پلتفرم هسته‌ای که داده‌های خام میدانی را به{ ' ' }
+                        <strong className="font-semibold text-slate-900">
+                            بینش عملیاتی، کنترلی و مدیریتی
+                        </strong>{ ' ' }
+                        تبدیل می‌کند و رویای{ ' ' }
+                        <span className="text-slate-800 font-medium">
+                            کنترل تمام جنبه‌های دارایی‌ها در هر زمان و مکان
+                        </span>{ ' ' }
+                        را محقق می‌سازد.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                        <Link
+                            href="#story"
+                            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-3 text-white font-semibold hover:shadow-lg transition-all"
+                        >
+                            <LuShield className="h-4 w-4" />
+                            کشف داستان BMS
+                        </Link>
+                        <div className="text-xs text-slate-500 max-w-md">
+                            <span className="font-semibold">نکته:</span> WIT همان فناوری هوشمند کنترل و تگ (ICTS) است که اکنون با نام جهانی ارائه می‌شود
+                        </div>
+                    </div>
+                </div>
+
+                {/* Technical Proof Points – Scannable Signals */ }
+                <div className="mt-8">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-4">توانمندی‌های کلیدی پلتفرم:</h3>
+                    <ul
+                        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm"
+                        role="list"
+                        aria-label="WIT platform capabilities"
+                    >
+                        { [
+                            { icon: LuNetwork, text: "سنسورها · PLC · سیستم‌های تعبیه‌شده", color: "text-indigo-500" },
+                            { icon: LuLayers, text: "IIoT · پردازش لبه‌ای · هسته داده", color: "text-purple-500" },
+                            { icon: LuCpu, text: "صنعتی‌گرا · امن · مقیاس‌پذیر", color: "text-cyan-500" },
+                            { icon: LuShield, text: "حاکمیت داده · امنیت بومی · مقاوم در برابر تحریم", color: "text-emerald-500" },
+                        ].map( ( item, idx ) => (
+                            <li
+                                key={ idx }
+                                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/80 backdrop-blur px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
                             >
-                                <div
-                                    className={ `mb-4 flex h-12 w-12 items-center justify-center rounded-xl
-                  ${ f.bg } ${ f.color } transition-transform group-hover:scale-110` }
-                                >
-                                    <Icon className="h-6 w-6" />
-                                </div>
-
-                                <h3 className="mb-2 text-sm font-bold text-slate-900">
-                                    { f.title }
-                                </h3>
-
-                                <p className="text-xs md:text-sm leading-6 text-slate-600 text-pretty">
-                                    { f.desc }
-                                </p>
-                            </article>
-                        );
-                    } ) }
+                                <item.icon className={ `h-5 w-5 ${ item.color }` } />
+                                <span className="text-slate-700">{ item.text }</span>
+                            </li>
+                        ) ) }
+                    </ul>
                 </div>
             </div>
         </section>
