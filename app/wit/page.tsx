@@ -196,7 +196,7 @@ export default function IntelligentAutomationPage ()
             {/* =========================
        * MAIN CONTENT
        * ========================= */}
-            <main
+            <div
                 id="main-content"
                 className="min-h-screen bg-gradient-to-b from-white to-slate-50"
             >
@@ -253,7 +253,7 @@ export default function IntelligentAutomationPage ()
                         </div>
                     </section>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

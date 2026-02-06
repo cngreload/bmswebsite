@@ -54,7 +54,7 @@ export default function ContactUsPage ()
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
 
-            <main id="main-content" className="min-h-screen bg-slate-50">
+            <div id="main-content" className="min-h-screen bg-slate-50">
                 {/* =========================
          * STICKY BREADCRUMB (ONLY NAV ELEMENT)
          * ========================= */}
@@ -114,7 +114,7 @@ export default function ContactUsPage ()
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

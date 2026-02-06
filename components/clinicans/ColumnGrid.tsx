@@ -35,7 +35,7 @@ interface FeatureCard
     color: string;
     bg: string;
     border: string;
-    gridPosition: string;
+    textAlign: "right" | "left";
     connectorGradient: string;
     /** Google crawl priority (1.0 highest) */
     crawlPriority: number;
@@ -61,7 +61,7 @@ const FEATURES: FeatureCard[] = [
         color: "text-blue-600",
         bg: "bg-blue-50",
         border: "hover:border-blue-300",
-        gridPosition: "lg:col-start-1 lg:row-start-1",
+        textAlign: "right",
         connectorGradient: "bg-gradient-to-bl from-blue-100/50 to-blue-500/20",
         crawlPriority: 1.0,
         entityType: "SoftwareApplication",
@@ -80,7 +80,7 @@ const FEATURES: FeatureCard[] = [
         color: "text-emerald-600",
         bg: "bg-emerald-50",
         border: "hover:border-emerald-300",
-        gridPosition: "lg:col-start-3 lg:row-start-1",
+        textAlign: "left",
         connectorGradient: "bg-gradient-to-br from-emerald-100/50 to-emerald-500/20",
         crawlPriority: 1.0,
         entityType: "SoftwareApplication",
@@ -99,7 +99,7 @@ const FEATURES: FeatureCard[] = [
         color: "text-rose-600",
         bg: "bg-rose-50",
         border: "hover:border-rose-300",
-        gridPosition: "lg:col-start-1 lg:row-start-2",
+        textAlign: "right",
         connectorGradient: "bg-gradient-to-tl from-rose-100/50 to-rose-500/20",
         crawlPriority: 0.9,
         entityType: "Service",
@@ -118,7 +118,7 @@ const FEATURES: FeatureCard[] = [
         color: "text-violet-600",
         bg: "bg-violet-50",
         border: "hover:border-violet-300",
-        gridPosition: "lg:col-start-3 lg:row-start-2",
+        textAlign: "left",
         connectorGradient: "bg-gradient-to-tr from-violet-100/50 to-violet-500/20",
         crawlPriority: 0.9,
         entityType: "SoftwareApplication",
@@ -210,18 +210,16 @@ interface FeatureCardProps
     index: number;
 }
 
-const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature, index } ) =>
+const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature } ) =>
 {
     const Icon = feature.icon;
-    const isOddIndex = index % 2 !== 0;
 
     return (
         <article
             className={ `
         group relative flex flex-col gap-5 rounded-[2.5rem] bg-white p-8 lg:p-10 
         shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 hover:z-20
-        border border-slate-100 ${ feature.border }
-        ${ feature.gridPosition }
+        border border-slate-100 ${ feature.border } h-full
       `}
             role="article"
             aria-labelledby={ `feature-title-${ feature.id }` }
@@ -238,7 +236,7 @@ const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature, index } ) 
 
             {/* Header with Semantic Structure */ }
             <header className="flex flex-col gap-4 relative z-10 w-full">
-                <div className={ `flex items-center gap-4 ${ isOddIndex ? 'lg:flex-row-reverse lg:justify-end' : '' }` }>
+                <div className={ `flex items-center gap-4 ${ feature.textAlign === "left" ? 'lg:flex-row' : 'lg:flex-row-reverse' }` }>
                     {/* Icon with E-E-A-T Signals */ }
                     <div
                         className={ `
@@ -253,7 +251,7 @@ const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature, index } ) 
                     </div>
 
                     {/* Title with Proper Hierarchy */ }
-                    <div className={ `${ isOddIndex ? 'lg:text-right' : 'lg:text-left' } flex-1` }>
+                    <div className={ `flex-1 ${ feature.textAlign === "left" ? 'lg:text-left' : 'lg:text-right' }` }>
                         <h3
                             id={ `feature-title-${ feature.id }` }
                             className="font-bold text-slate-900 text-xl leading-snug group-hover:text-bms-primary transition-colors"
@@ -281,7 +279,7 @@ const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature, index } ) 
             </header>
 
             {/* Body Content - Structured for Google's NLP */ }
-            <div className="relative z-10">
+            <div className="relative z-10 flex-1">
                 <p
                     id={ `feature-desc-${ feature.id }` }
                     className="text-sm md:text-base leading-8 text-slate-600 text-justify border-t border-slate-50 pt-5"
@@ -309,7 +307,7 @@ const FeatureCardComponent: React.FC<FeatureCardProps> = ( { feature, index } ) 
             </div>
 
             {/* CTA - Accessible & Conversion Optimized */ }
-            <footer className={ `mt-auto pt-3 flex w-full relative z-10 ${ isOddIndex ? 'lg:justify-end' : 'lg:justify-start' } justify-end` }>
+            <footer className={ `mt-auto pt-3 flex w-full relative z-10 ${ feature.textAlign === "left" ? 'lg:justify-start' : 'lg:justify-end' } justify-end` }>
                 <Link
                     href={ feature.ctaLink }
                     className={ `
@@ -408,67 +406,77 @@ export const ClinicansFeaturesGrid: React.FC = () =>
             <div className="relative max-w-[90rem] mx-auto px-4 lg:px-8">
 
                 {/* 🎯 DESKTOP GRID (3x2) - Perfectly Centered Hub */ }
-                <div className="hidden lg:grid lg:grid-cols-3 lg:grid-rows-2 lg:auto-rows-fr lg:gap-8 lg:gap-x-24 lg:gap-y-16 lg:items-center lg:justify-center">
-                    {/* Grid Lines for Visual Reference */ }
-                    <div className="absolute inset-0 grid grid-cols-3 grid-rows-2 pointer-events-none">
-                        <div className="col-start-1 row-start-1 border-r border-slate-200/50" />
-                        <div className="col-start-2 row-start-1 border-r border-slate-200/50" />
-                        <div className="col-start-1 row-start-1 border-b border-slate-200/50" />
-                        <div className="col-start-1 row-start-2 border-r border-slate-200/50" />
-                        <div className="col-start-2 row-start-2 border-r border-slate-200/50" />
-                    </div>
+                <div className="hidden lg:block relative">
+                    {/* Grid Container with Equal Height Rows */ }
+                    <div className="grid grid-cols-3 grid-rows-2 gap-x-24 gap-y-16 min-h-[800px]">
+                        {/* Top Left Card */ }
+                        <div className="col-start-1 row-start-1 flex items-center justify-end">
+                            <div className="w-full max-w-lg">
+                                <FeatureCardComponent feature={ features[ 0 ] } index={ 0 } />
+                            </div>
+                        </div>
 
-                    {/* Card 1: Top Left */ }
-                    <div className="lg:col-start-1 lg:row-start-1 lg:justify-self-end">
-                        <FeatureCardComponent feature={ features[ 0 ] } index={ 0 } />
-                    </div>
+                        {/* Top Right Card */ }
+                        <div className="col-start-3 row-start-1 flex items-center justify-start">
+                            <div className="w-full max-w-lg">
+                                <FeatureCardComponent feature={ features[ 1 ] } index={ 1 } />
+                            </div>
+                        </div>
 
-                    {/* Card 2: Top Right */ }
-                    <div className="lg:col-start-3 lg:row-start-1 lg:justify-self-start">
-                        <FeatureCardComponent feature={ features[ 1 ] } index={ 1 } />
-                    </div>
+                        {/* Bottom Left Card */ }
+                        <div className="col-start-1 row-start-2 flex items-center justify-end">
+                            <div className="w-full max-w-lg">
+                                <FeatureCardComponent feature={ features[ 2 ] } index={ 2 } />
+                            </div>
+                        </div>
 
-                    {/* Card 3: Bottom Left */ }
-                    <div className="lg:col-start-1 lg:row-start-2 lg:justify-self-end">
-                        <FeatureCardComponent feature={ features[ 2 ] } index={ 2 } />
-                    </div>
+                        {/* Bottom Right Card */ }
+                        <div className="col-start-3 row-start-2 flex items-center justify-start">
+                            <div className="w-full max-w-lg">
+                                <FeatureCardComponent feature={ features[ 3 ] } index={ 3 } />
+                            </div>
+                        </div>
 
-                    {/* Card 4: Bottom Right */ }
-                    <div className="lg:col-start-3 lg:row-start-2 lg:justify-self-start">
-                        <FeatureCardComponent feature={ features[ 3 ] } index={ 3 } />
-                    </div>
+                        {/* 🎯 Central Hub - Perfectly Centered */ }
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div className="relative -top-6"> {/* Adjusted to move up */ }
+                                <CentralHub />
+                            </div>
+                        </div>
 
-                    {/* 🎯 Central Hub - Perfectly Centered */ }
-                    <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:flex lg:items-center lg:justify-center lg:self-center lg:h-full">
-                        <div className="lg:relative lg:transform-none lg:translate-x-0 lg:translate-y-0">
-                            <CentralHub />
+                        {/* Connecting Lines (Optional - for visual guidance) */ }
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
+                            {/* Horizontal Line */ }
+                            <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" />
+                            {/* Vertical Line */ }
+                            <div className="absolute left-1/2 top-0 w-px h-full bg-gradient-to-b from-transparent via-slate-200/50 to-transparent" />
                         </div>
                     </div>
                 </div>
 
                 {/* 📱 MOBILE LAYOUT - Stacked with Centered Hub */ }
-                <div className="lg:hidden flex flex-col gap-8">
-                    {/* Card 1 & 2 */ }
+                <div className="lg:hidden flex flex-col">
+                    {/* Top Cards */ }
                     <div className="flex flex-col gap-8">
                         <FeatureCardComponent feature={ features[ 0 ] } index={ 0 } />
                         <FeatureCardComponent feature={ features[ 1 ] } index={ 1 } />
                     </div>
 
-                    {/* Mobile Hub - Centered with Connector Lines */ }
-                    <div className="relative flex justify-center items-center py-8 my-4">
-                        {/* Vertical Connector Line */ }
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-px h-16 bg-gradient-to-b from-slate-300/0 via-bms-primary/40 to-slate-300/0" />
+                    {/* Mobile Hub - Centered */ }
+                    <div className="relative flex justify-center items-center my-8 py-8">
+                        {/* Vertical Connector Lines */ }
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-px h-12 bg-gradient-to-b from-transparent via-bms-primary/30 to-transparent" />
 
                         {/* Central Hub */ }
                         <div className="relative">
                             <CentralHub className="scale-90" />
                         </div>
 
-                        {/* Vertical Connector Line */ }
-                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-px h-16 bg-gradient-to-b from-slate-300/0 via-bms-primary/40 to-slate-300/0" />
+                        {/* Vertical Connector Lines */ }
+                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-px h-12 bg-gradient-to-b from-transparent via-bms-primary/30 to-transparent" />
                     </div>
 
-                    {/* Card 3 & 4 */ }
+                    {/* Bottom Cards */ }
                     <div className="flex flex-col gap-8">
                         <FeatureCardComponent feature={ features[ 2 ] } index={ 2 } />
                         <FeatureCardComponent feature={ features[ 3 ] } index={ 3 } />

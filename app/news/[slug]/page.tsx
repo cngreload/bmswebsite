@@ -112,7 +112,7 @@ export default async function NewsDetailPage ( { params }: Props )
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
 
-            <main id="main-content" className="min-h-screen bg-slate-50 pb-24">
+            <div id="main-content" className="min-h-screen bg-slate-50 pb-24">
 
                 {/* 🧭 STICKY NAV */ }
                 <div className="sticky top-[64px] z-20 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 py-3 transition-all">
@@ -207,7 +207,7 @@ export default async function NewsDetailPage ( { params }: Props )
                     </div>
 
                 </article>
-            </main>
+            </div>
         </>
     );
 }

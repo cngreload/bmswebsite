@@ -1,43 +1,24 @@
-import type { Metadata } from "next";
+import CngStickyRail from "@/components/cng/CngStickyRail";
+import CngSectionSwitcherMobile from "@/components/cng/CngSectionSwitcherMobile";
 
-export const metadata: Metadata = {
-    title: "سامانه هوشمند ICTS | پایش و اتوماسیون جایگاه‌های سوخت CNG",
-    description:
-        "ICTS سامانه بومی پایش و کنترل جایگاه‌های CNG مبتنی بر PLC، سیستم‌های امبدد و IIoT. راهکار یکپارچه سخت‌افزاری و نرم‌افزاری بارمان برای ایمنی، داده‌محوری و مدیریت زیرساخت‌های انرژی کشور.",
-    keywords: [
-        "سامانه ICTS",
-        "هوشمندسازی جایگاه CNG",
-        "پایش جایگاه سوخت",
-        "اتوماسیون صنعتی",
-        "PLC",
-        "سیستم‌های امبدد",
-        "IIoT",
-        "زیرساخت انرژی",
-        "کنترل صنعتی بومی",
-    ],
-    alternates: {
-        canonical: "https://barman-mes.ir/cng-automation",
-    },
-    openGraph: {
-        title: "سامانه هوشمند ICTS | اتوماسیون جایگاه‌های CNG",
-        description:
-            "پلتفرم صنعتی بارمان برای پایش، ایمنی و مدیریت داده‌محور جایگاه‌های سوخت CNG در مقیاس ملی.",
-        url: "https://barman-mes.ir/cng-automation",
-        siteName: "Barman Mehvar Spadana",
-        locale: "fa_IR",
-        type: "website",
-    },
-    robots: {
-        index: true,
-        follow: true,
-    },
-};
-
-export default function CngAutomationLayout ( {
+export default function CngProductLayout ( {
     children,
 }: {
     children: React.ReactNode;
 } )
 {
-    return <>{ children }</>;
+    return (
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+            {/* Mobile + Tablet Section Switcher */ }
+            <div className="lg:hidden sticky top-16 md:top-20 z-40">
+                <CngSectionSwitcherMobile />
+            </div>
+
+            {/* Desktop Layout */ }
+            <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12">
+                <CngStickyRail />
+                <article className="min-w-0">{ children }</article>
+            </div>
+        </div>
+    );
 }

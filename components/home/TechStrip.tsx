@@ -1,4 +1,5 @@
-// components/home/TechStrip.tsx
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { LuCpu, LuCode, LuServer } from "react-icons/lu";
@@ -7,87 +8,82 @@ export default function TechStrip ()
 {
     return (
         <section
-            className="border-y border-slate-200 bg-slate-50/50 py-16 lg:py-24 overflow-hidden"
             aria-labelledby="tech-stack-heading"
+            className="relative w-full h-full"
+            dir="rtl"
         >
-            <div className="container mx-auto px-4 max-w-6xl">
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+            <div className="relative h-full min-h-[520px] rounded-[2.75rem] overflow-hidden border border-slate-200 shadow-2xl">
 
-                    {/* 
-            📝 TEXT CONTENT (Right in RTL)
-          */}
-                    <div className="lg:w-5/12 space-y-8 text-right">
-                        <div className="inline-flex items-center gap-2 text-bms-primary font-bold text-sm tracking-wide uppercase bg-blue-50 px-3 py-1 rounded-lg border border-blue-100">
-                            <LuCpu className="w-5 h-5" />
-                            <span>زیرساخت فنی و معماری</span>
+                {/* ================= BACKGROUND IMAGE ================= */ }
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/techstack.png"
+                        alt="معماری فنی و زیرساخت نرم‌افزاری بارمان"
+                        fill
+                        priority
+                        className="object-cover object-center scale-105"
+                    />
+
+                    <div className="absolute inset-0 bg-slate-900/45" />
+                    <div className="absolute inset-0 bg-gradient-to-bl from-bms-primary/30 via-transparent to-indigo-600/25" />
+                    <div className="absolute inset-0 backdrop-blur-[1.5px]" />
+                </div>
+
+                {/* ================= CONTENT ================= */ }
+                <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-12 text-white">
+
+                    {/* -------- TEXT -------- */ }
+                    <div className="space-y-8 text-center max-w-xl">
+
+                        <div className="inline-flex items-center gap-2 bg-white/90 text-bms-primary text-xs font-bold px-3 py-1 rounded-lg border border-blue-100">
+                            <LuCpu className="w-4 h-4" />
+                            زیرساخت فنی و معماری
                         </div>
 
-                        <h2 id="tech-stack-heading" className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
-                            پلتفرم هسته‌ای و <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bms-primary to-indigo-600">
+                        <h2
+                            id="tech-stack-heading"
+                            className="text-3xl md:text-4xl font-extrabold leading-tight"
+                        >
+                            پلتفرم هسته‌ای و
+                            <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 to-emerald-500">
                                 تکنولوژی‌های بومی
                             </span>
                         </h2>
 
-                        <p className="text-base leading-8 text-slate-600 text-justify">
-                            معماری فنی بارمان بر پایه‌ی دریافت داده از میدان، پردازش در لبه (Edge) و انتقال امن به پلتفرم‌های ابری طراحی شده است.
-                            ما با بومی‌سازی کامل لایه‌های سخت‌افزار و نرم‌افزار، ریسک‌های وابستگی خارجی را حذف کرده‌ایم.
+                        <p className="text-base md:text-lg leading-8 text-slate-100">
+
+                            معماری فنی بارمان از دریافت داده در میدان آغاز می‌شود، در لبه پردازش می‌شود و به‌صورت امن به پلتفرم‌های دیجیتال منتقل می‌گردد. بومی‌سازی کامل سخت‌افزار و نرم‌افزار، وابستگی خارجی و ریسک‌های آن را حذف کرده است.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                            <Link
-                                href="/technologies"
-                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-slate-800 hover:-translate-y-0.5 transition-all"
-                            >
-                                <LuCode className="w-4 h-4" />
-                                <span>
-                                    بررسی کامل استک فنی ←
-                                </span>
-                            </Link>
-                        </div>
+                        <Link
+                            href="/technologies"
+                            className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-lg hover:bg-slate-100 transition"
+                        >
+                            بررسی کامل استک فنی
+                            <LuCode className="w-4 h-4" />
+                        </Link>
                     </div>
 
-                    {/* 
-            🖼️ VISUAL REPRESENTATION (Left in RTL)
-            Replaces the logo grid with a single authoritative image.
-          */}
-                    <div className="lg:w-7/12 w-full relative">
-                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 bg-white group">
+                    {/* -------- STABILITY / STATUS (BELOW TEXT) -------- */ }
+                    <div className="mt-10 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 text-white max-w-sm justify-center mx-auto">
 
-                            {/* Image Container */ }
-                            <div className="relative aspect-[16/10] w-full">
-                                <Image
-                                    src="/techstack.png"
-                                    alt="شماتیک معماری پلتفرم هوشمند بارمان"
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    sizes="(max-width: 768px) 100vw, 60vw"
-                                />
-
-                                {/* Overlay Gradient */ }
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent opacity-80" />
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500">
+                                <LuServer className="w-5 h-5" />
                             </div>
 
-                            {/* Floating Badge (Glassmorphism) */ }
-                            <div className="absolute bottom-6 right-6 left-6 flex items-center justify-between p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-lg">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-sm">
-                                        <LuServer className="w-5 h-5" />
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-sm font-bold">معماری میکروسرویس</div>
-                                        <div className="text-[10px] text-slate-200 font-mono opacity-80">High Availability • Secure</div>
-                                    </div>
-                                </div>
-                                <div className="hidden sm:block text-xs font-mono bg-black/20 px-3 py-1 rounded-lg">
-                                    v4.2.0 (Stable)
+                            <div className="text-center justify-center">
+                                <div className="text-base font-bold">پایداری و انسجام فناوری</div>
+                                <div className="text-[11px] font-mono text-slate-200">
+                                    High Availability • Secure
                                 </div>
                             </div>
-
                         </div>
 
-                        {/* Decorative Background Blur */ }
-                        <div className="absolute -inset-4 bg-gradient-to-tr from-bms-primary/20 to-indigo-500/20 blur-3xl -z-10 rounded-[3rem] opacity-60" />
+                        <div className="mt-3 text-xs font-mono bg-black/30 px-3 py-1 rounded-lg inline-block">
+                            v4.2.0 — Production Stable
+                        </div>
                     </div>
 
                 </div>

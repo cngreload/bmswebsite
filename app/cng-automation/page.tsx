@@ -2,9 +2,8 @@ import Script from "next/script";
 import Link from "next/link";
 import { LuChevronLeft, LuHouse } from "react-icons/lu";
 
-import CngNavbar from "@/components/cng/CngNavbar";
-
-import CngHeroSection from "@/components/cng/CngHeroSection";
+/* Sections */
+import CngHeroSectionV2 from "@/components/cng/CngHeroSectionV2";
 import TwoBranchProducts from "@/components/cng/TwoBranchProducts";
 import CngStorySection from "@/components/cng/CngStorySection";
 import IndustrialVideoTerminal from "@/components/cng/IndustrialVideoTerminal";
@@ -25,85 +24,119 @@ import FinalCtaSection from "@/components/cng/FinalCtaSection";
 
 export default function CngAutomationPage ()
 {
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "Product",
-                "name": "ICTS – Intelligent CNG Station System",
-                "description":
-                    "سامانه یکپارچه پایش و کنترل جایگاه‌های سوخت CNG مبتنی بر PLC، سیستم‌های امبدد و پردازش لبه.",
-                "brand": { "@type": "Brand", "name": "Barman Mehvar Spadana" },
-            },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "سامانه هوشمند ICTS",
-                        "item": "https://barman-mes.ir/cng-automation",
-                    },
-                ],
-            },
-        ],
-    };
-
     return (
         <>
+            {/* -------------------------------------------------
+       * PRODUCT STRUCTURED DATA (MINIMAL BUT COMPLETE)
+       * ------------------------------------------------*/}
             <Script
-                id="json-ld-cng"
+                id="json-ld-cng-product"
                 type="application/ld+json"
-                dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
+                dangerouslySetInnerHTML={ {
+                    __html: JSON.stringify( {
+                        "@context": "https://schema.org",
+                        "@type": "Product",
+                        name: "ICTS – Intelligent CNG Station System",
+                        description:
+                            "سامانه یکپارچه پایش و کنترل جایگاه‌های سوخت CNG مبتنی بر PLC، سیستم‌های امبدد و IIoT.",
+                        brand: {
+                            "@type": "Organization",
+                            name: "Baraman Mehvar Spadana",
+                        },
+                        url: "https://barman-mes.ir/cng-automation",
+                    } ),
+                } }
             />
 
-            <main id="main-content" className="min-h-screen bg-slate-50/50">
-                {/* NAVBAR */ }
-                <CngNavbar />
+            {/* -------------------------------------------------
+       * BREADCRUMB STRUCTURED DATA
+       * ------------------------------------------------*/}
+            <Script
+                id="json-ld-cng-breadcrumb"
+                type="application/ld+json"
+                dangerouslySetInnerHTML={ {
+                    __html: JSON.stringify( {
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        itemListElement: [
+                            {
+                                "@type": "ListItem",
+                                position: 1,
+                                name: "خانه",
+                                item: "https://barman-mes.ir",
+                            },
+                            {
+                                "@type": "ListItem",
+                                position: 2,
+                                name: "سامانه هوشمند ICTS",
+                                item: "https://barman-mes.ir/cng-automation",
+                            },
+                        ],
+                    } ),
+                } }
+            />
 
-                {/* STICKY BREADCRUMB */ }
-                <div
-                    className="
-            sticky top-14 z-40 border-b border-slate-200 bg-white
-            transition-opacity duration-200
-            [html[data-nav-open='true']_&]:opacity-0
-            [html[data-nav-open='true']_&]:pointer-events-none
-          "
+            {/* -------------------------------------------------
+       * PAGE CONTENT (INSIDE ROOT <main>)
+       * ------------------------------------------------*/}
+            <div className="bg-slate-50/50">
+                {/* Breadcrumb (visual) */ }
+                <nav
+                    aria-label="breadcrumb"
+                    className="border-b border-slate-200 bg-white"
                 >
-                    <div className="container mx-auto flex max-w-6xl items-center gap-2 px-4 py-3 text-xs text-slate-500">
-                        <Link
-                            href="/"
-                            className="flex items-center gap-1 transition-colors hover:text-bms-primary"
-                        >
-                            <LuHouse className="h-3 w-3" />
-                            <span>خانه</span>
-                        </Link>
-                        <LuChevronLeft className="h-3 w-3 opacity-50" />
-                        <span className="font-medium text-bms-primary">
-                            سامانه هوشمند ICTS
-                        </span>
+                    <div className="mx-auto max-w-7xl px-4 md:px-8">
+                        <div className="flex h-12 items-center gap-2 text-xs text-slate-500">
+                            <Link
+                                href="/"
+                                className="flex items-center gap-1 hover:text-bms-primary"
+                            >
+                                <LuHouse className="h-3 w-3" />
+                                خانه
+                            </Link>
+                            <LuChevronLeft className="h-3 w-3 opacity-40" />
+                            <span className="font-medium text-bms-primary">
+                                سامانه هوشمند ICTS
+                            </span>
+                        </div>
                     </div>
-                </div>
+                </nav>
 
-                {/* PAGE CONTENT */ }
-                <div className="bms-page space-y-20 pb-24 md:space-y-32">
-                    <section id="hero"><CngHeroSection /></section>
-                    <section id="products"><TwoBranchProducts /></section>
-
-                    <section id="story" className="space-y-12">
-                        <CngStorySection />
-                        <IndustrialVideoTerminal
-                            src="/CNG_Station_Automation.mp4"
-                            poster="/images/cng-poster.jpg"
-                            title="گزارش اجرایی پایلوت ملی"
-                            description="استقرار سامانه ICTS در جایگاه‌های منتخب با موفقیت کامل."
-                            uploadDate="2025-12-15"
-                            duration="PT3M45S"
-                        />
+                {/* Page sections */ }
+                <div className="space-y-24 pb-32">
+                    {/* HERO (must contain the only H1) */ }
+                    <section id="hero" className="scroll-mt-32">
+                        <CngHeroSectionV2 />
                     </section>
 
-                    <section id="why" className="space-y-16">
+                    <section id="products" className="scroll-mt-32">
+                        <TwoBranchProducts />
+                    </section>
+
+                    <section id="story" className="scroll-mt-32 space-y-12">
+                        <CngStorySection />
+
+                        {/* Video section — semantic */ }
+                        <section
+                            id="pilotvideo"
+                            aria-labelledby="pilotvideo-title"
+                        >
+                            <h2 id="pilotvideo-title" className="sr-only">
+                                ویدیوی پایلوت اجرایی سامانه ICTS
+                            </h2>
+
+                            <IndustrialVideoTerminal
+                                src="/CNG_Station_Automation.mp4"
+                                poster="/images/cng-poster.jpg"
+                                title="گزارش اجرایی پایلوت ملی"
+                                description="استقرار سامانه ICTS در جایگاه‌های منتخب با موفقیت کامل."
+                                uploadDate="2025-12-15"
+                                duration="PT3M45S"
+                            />
+                        </section>
+                    </section>
+
+                    <section id="why" className="scroll-mt-32 space-y-16">
                         <NationalPlanSection />
                         <NecessitySection />
                         <StakeholderBenefitsSection />
@@ -111,24 +144,24 @@ export default function CngAutomationPage ()
 
                     <section
                         id="how"
-                        className="space-y-16 rounded-[3rem] bg-white p-8 shadow-sm md:p-12"
+                        className="scroll-mt-32 space-y-16 rounded-[3rem] bg-white p-8 shadow-sm md:p-12"
                     >
                         <WhatSystemDoesSection />
                         <TechHighlightsSection />
                         <LocalAdvantageSection />
                     </section>
 
-                    <section id="future" className="space-y-16">
+                    <section id="future" className="scroll-mt-32 space-y-16">
                         <NationalImportanceSection />
                         <DeploymentSection />
                     </section>
 
-                    <section id="action" className="space-y-10">
+                    <section id="action" className="scroll-mt-32 space-y-10">
                         <CollaborationSection />
                         <FinalCtaSection />
                     </section>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

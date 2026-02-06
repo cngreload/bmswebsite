@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import ClinicansNavbar from "@/components/clinicans/ClinicansNavbar";
 
-import ClinicansHeroSection from "@/components/clinicans/ClinicansHeroSection";
+/* Rail */
+import ClinicansStickyRail from "@/components/clinicans/ClinicansStickyRail";
+import ClinicansMobileSectionSwitcher from "@/components/clinicans/ClinicansMobileSectionSwitcher";
+
+/* Sections */
+import ClinicansHeroSectionV2 from "@/components/clinicans/ClinicansHeroSectionV2";
 import ClinicansForWhomSection from "@/components/clinicans/ClinicansForWhomSection";
 import ClinicansSecuritySection from "@/components/clinicans/ClinicansSecuritySection";
 import ClinicansTechSection from "@/components/clinicans/ClinicansTechSection";
 import ClinicansGetStartedSection from "@/components/clinicans/ClinicansGetStartedSection";
-import { ClinicansFeaturesGrid } from "@/components/clinicans/ColumnGrid";
+import ClinicansSystemCarousel from "@/components/clinicans/ClinicansSystemCarousel";
+import ClinicansSystemTabs from "@/components/clinicans/ClinicansSystemTabs";
 
 /* ---------------------------------------------
  * SEO METADATA
@@ -22,9 +27,6 @@ export const metadata: Metadata = {
     },
 };
 
-/* ---------------------------------------------
- * PAGE
- * -------------------------------------------*/
 export default function ClinicansPage ()
 {
     const jsonLd = {
@@ -34,7 +36,7 @@ export default function ClinicansPage ()
         applicationCategory: [ "MedicalApplication", "BusinessApplication" ],
         operatingSystem: "Web",
         description:
-            "پلتفرمی یکپارچه برای مدیریت بالینی، مالی و ارتباط با بیمار برای ارائه‌دهندگان خدمات سلامت.",
+            "پلتفرمی یکپارچه برای مدیریت بالینی، مالی و ارتباط با بیمار.",
         publisher: {
             "@type": "Organization",
             name: "Barman Mehvar Spadana",
@@ -52,52 +54,50 @@ export default function ClinicansPage ()
 
             <main
                 id="main-content"
-                className="min-h-screen bg-slate-50 selection:bg-emerald-100 selection:text-emerald-800"
+                className="relative min-h-screen bg-slate-50 selection:bg-emerald-100 selection:text-emerald-800"
             >
-                {/* 🔗 PRODUCT NAVBAR */ }
-                <ClinicansNavbar />
+                {/* ---------------------------------------------
+         * PAGE GRID (RTL-AWARE)
+         * -------------------------------------------*/}
+                <div className="mx-auto max-w-7xl px-4 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-12">
+                        {/* MAIN CONTENT (RIGHT in RTL) */ }
+                        <div className="space-y-28 md:space-y-36">
+                            <section id="overview" className="scroll-mt-32">
+                                <ClinicansHeroSectionV2 />
+                            </section>
 
-                {/* 📘 CONTENT */ }
-                <div className="container mx-auto max-w-6xl px-4 py-10 md:py-16 space-y-28 md:space-y-36">
-                    {/* =====================
-           * OVERVIEW
-           * ===================== */}
-                    <section id="overview" className="scroll-mt-28 md:scroll-mt-32">
-                        <ClinicansHeroSection />
-                    </section>
+                            <section id="features" className="scroll-mt-32">
+                                <ClinicansSystemCarousel />
+                                <ClinicansSystemTabs />
+                            </section>
 
-                    {/* =====================
-           * FEATURES
-           * ===================== */}
-                    <section id="features" className="scroll-mt-28 md:scroll-mt-32">
-                        <ClinicansFeaturesGrid />
-                    </section>
+                            <section id="audience" className="scroll-mt-32">
+                                <ClinicansForWhomSection />
+                            </section>
 
-                    {/* =====================
-           * AUDIENCE
-           * ===================== */}
-                    <section id="audience" className="scroll-mt-28 md:scroll-mt-32">
-                        <ClinicansForWhomSection />
-                    </section>
+                            <section
+                                id="security-tech"
+                                className="scroll-mt-32 space-y-20"
+                            >
+                                <ClinicansSecuritySection />
+                                <ClinicansTechSection />
+                            </section>
 
-                    {/* =====================
-           * SECURITY & TECH
-           * ===================== */}
-                    <section
-                        id="security-tech"
-                        className="scroll-mt-28 md:scroll-mt-32 space-y-20"
-                    >
-                        <ClinicansSecuritySection />
-                        <ClinicansTechSection />
-                    </section>
+                            <section id="pricing" className="scroll-mt-32">
+                                <ClinicansGetStartedSection />
+                            </section>
+                        </div>
 
-                    {/* =====================
-           * PRICING / CTA
-           * ===================== */}
-                    <section id="pricing" className="scroll-mt-28 md:scroll-mt-32">
-                        <ClinicansGetStartedSection />
-                    </section>
+                        {/* STICKY RAIL (LEFT in RTL) */ }
+                        <div className="hidden lg:flex justify-end">
+                            <ClinicansStickyRail />
+                        </div>
+                    </div>
                 </div>
+
+                {/* MOBILE BOTTOM SWITCHER */ }
+                <ClinicansMobileSectionSwitcher />
             </main>
         </>
     );

@@ -88,7 +88,7 @@ export default function AboutOverviewPage ()
                 type="application/ld+json"
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
-            <main id="main-content" className="bg-slate-50 min-h-screen">
+            <div id="main-content" className="bg-slate-50 min-h-screen">
                 <div className="container mx-auto max-w-6xl px-4 py-12 md:py-20 space-y-16">
 
                     {/* Hero Section */ }
@@ -150,7 +150,7 @@ export default function AboutOverviewPage ()
                         </ul>
                     </section>
                 </div>
-            </main>
+            </div>
         </>
     );
 }

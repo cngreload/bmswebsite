@@ -74,21 +74,23 @@ export default function CngPilotVideo ( {
                 />
             ) }
 
+
+
             {/* Custom Play Button Overlay */ }
             { !isPlaying && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-20">
                     <button
                         type="button"
                         onClick={ handlePlay }
-                        className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-bms-primary shadow-xl backdrop-blur-sm transition-transform duration-300 group-hover:scale-110"
+                        className="flex h-16 w-16 items-center justify-center rounded-full bg-white/30 text-bms-primary shadow-xl  transition-transform duration-300 group-hover:scale-110"
                         aria-label="پخش ویدیو"
                     >
                         <span className="mr-1 translate-x-[2px] text-2xl">▶</span>
                     </button>
                     <span className="text-xs font-bold text-white/90 drop-shadow-md bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                        مشاهده ویدیو
+                        مشاهده گزارش پایلوت
                     </span>
-                </div>
+                </div>                
             ) }
         </div>
     );
