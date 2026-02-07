@@ -29,61 +29,77 @@ export default function LocalAdvantageSection ()
     return (
         <section
             id="local-advantage"
-            className="py-10 md:py-16 bg-slate-50/50"
             aria-labelledby="local-heading"
+            className="py-24 md:py-32 bg-white"
+            dir="rtl"
         >
             <div className="mx-auto max-w-6xl px-4">
-                {/* Header */ }
-                <div className="mb-10 space-y-3 text-right">
-                    <span className="inline-block rounded-lg bg-bms-primary/10 px-3 py-1 text-xs font-bold text-bms-primary">
+
+                {/* ================= HEADER ================= */ }
+                <header className="mb-20 max-w-3xl text-right space-y-6">
+                    <span className="inline-block rounded-md bg-bms-primary/10 px-4 py-1.5 text-xs font-bold text-bms-primary">
                         مزیت رقابتی بومی
                     </span>
 
                     <h2
                         id="local-heading"
-                        className="text-2xl font-bold text-bms-dark md:text-3xl"
+                        className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight"
                     >
-                        چرا <span className="text-bms-primary">توانمندی بومی</span> یک الزام راهبردی است؟
+                        چرا{ " " }
+                        <span className="text-bms-primary">
+                            توانمندی بومی
+                        </span>{ " " }
+                        یک الزام راهبردی است؟
                     </h2>
 
-                    <p className="ml-auto max-w-3xl text-sm leading-7 text-slate-600 md:text-base">
+                    <p className="text-sm md:text-base leading-relaxed text-slate-600">
                         در زیرساخت‌های حیاتی انرژی،
                         <strong className="mx-1 text-bms-primary font-bold">
                             بومی‌بودن
                         </strong>
-                        یک انتخاب اختیاری یا مزیت تبلیغاتی نیست؛
-                        بلکه پیش‌شرط تداوم سرویس، امنیت داده،
-                        تاب‌آوری سامانه و امکان حکمرانی فناورانه در شرایط عادی و بحرانی است.
+                        یک انتخاب تبلیغاتی نیست؛ بلکه پیش‌شرط تداوم سرویس،
+                        امنیت داده، تاب‌آوری سامانه و امکان حکمرانی فناورانه
+                        در شرایط عادی و بحرانی است.
                     </p>
-                </div>
+                </header>
 
-                {/* Advantages Grid */ }
-                <div className="grid gap-6 md:grid-cols-3">
-                    { advantages.map( ( item ) =>
+                {/* ================= PILLARS ================= */ }
+                <div className="grid gap-12 md:grid-cols-3">
+                    { advantages.map( ( item, index ) =>
                     {
                         const Icon = item.icon;
+
                         return (
                             <article
                                 key={ item.id }
-                                className="group relative flex flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-bms-primary/20"
+                                className="relative flex flex-col rounded-[2.75rem] bg-slate-50 p-8 md:p-10 border border-slate-200"
                             >
+                                {/* Pillar index */ }
+                                <div className="absolute -top-6 right-8 text-6xl font-black text-slate-200 select-none">
+                                    { index + 1 }
+                                </div>
+
                                 {/* Icon */ }
-                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-600 transition-colors duration-300 group-hover:bg-bms-primary group-hover:text-white">
-                                    <Icon className="h-6 w-6" />
+                                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white border border-slate-200 text-bms-primary shadow-sm">
+                                    <Icon className="h-7 w-7" />
                                 </div>
 
                                 {/* Content */ }
-                                <div className="space-y-2 text-right">
-                                    <h3 className="text-lg font-bold text-slate-900">
+                                <div className="space-y-4 text-right">
+                                    <h3 className="text-lg md:text-xl font-bold text-slate-900">
                                         { item.title }
                                     </h3>
-                                    <p className="text-sm leading-7 text-slate-600 text-pretty">
+
+                                    <p className="text-sm md:text-[15px] leading-7 text-slate-600 text-justify">
                                         { item.description }
                                     </p>
                                 </div>
 
-                                {/* Bottom Accent */ }
-                                <div className="absolute inset-x-6 bottom-0 h-1 scale-x-0 rounded-t-full bg-bms-primary transition-transform duration-300 group-hover:scale-x-100" />
+                                {/* Base line */ }
+                                <div
+                                    className="mt-8 h-1 w-16 rounded-full bg-bms-primary"
+                                    aria-hidden
+                                />
                             </article>
                         );
                     } ) }

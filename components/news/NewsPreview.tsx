@@ -1,7 +1,6 @@
-// components/home/NewsPreview.tsx
 'use client';
 
-import React, { useRef, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import gsap from 'gsap';
@@ -13,167 +12,189 @@ gsap.registerPlugin( useGSAP );
 
 export default function NewsPreview ()
 {
-    // 🧠 DATA: Fetch content (Client-side import of static data is fine here)
-    const featured = getFeaturedNews();
-    const latestUpdates = getAllNews().slice( 0, 3 );
-    const [ activeIndex, setActiveIndex ] = useState( 0 );
+    const featured = getFeaturedNews()[ 0 ];
+    const feed = getAllNews().slice( 0, 6 );
 
-    const slideContainerRef = useRef<HTMLDivElement>( null );
+    const rootRef = useRef<HTMLDivElement>( null );
+    const feedRef = useRef<HTMLDivElement>( null );
+    const tweenRef = useRef<gsap.core.Tween | null>( null );
 
-    // 1. HERO SLIDER LOGIC
+    /* ================= ENTRANCE ================= */
     useGSAP( () =>
     {
-        if ( !slideContainerRef.current || featured.length === 0 ) return;
+        gsap.from( '[data-news-block]', {
+            y: 24,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.8,
+            ease: 'power3.out',
+        } );
+    }, [] );
 
-        const slides = slideContainerRef.current.children;
+    /* ================= AUTO SCROLL FEED ================= */
+    useEffect( () =>
+    {
+        if ( !feedRef.current ) return;
 
-        // Initial State: Only show active index
-        gsap.set( slides, { opacity: 0, zIndex: 0 } );
-        gsap.set( slides[ activeIndex ], { opacity: 1, zIndex: 10 } );
+        // Disable auto-scroll on small screens
+        if ( window.innerWidth < 1024 ) return;
 
-        const timer = setInterval( () =>
+        const container = feedRef.current;
+        const items = Array.from( container.children ) as HTMLElement[];
+
+        if ( items.length < 2 ) return;
+
+        const itemHeight = items[ 0 ].offsetHeight + 24; // incl. gap
+        const totalHeight = itemHeight * items.length;
+
+        gsap.set( container, { y: 0 } );
+
+        tweenRef.current = gsap.to( container, {
+            y: `-=${ totalHeight }`,
+            duration: items.length * 7, // ~7s per item
+            ease: 'linear',
+            repeat: -1,
+            modifiers: {
+                y: ( y ) =>
+                {
+                    const current = parseFloat( y );
+                    return `${ current % totalHeight }px`;
+                },
+            },
+        } );
+
+        // Pause on hover
+        const pause = () => tweenRef.current?.pause();
+        const resume = () => tweenRef.current?.resume();
+
+        container.addEventListener( 'mouseenter', pause );
+        container.addEventListener( 'mouseleave', resume );
+        container.addEventListener( 'focusin', pause );
+        container.addEventListener( 'focusout', resume );
+
+        return () =>
         {
-            const nextIndex = ( activeIndex + 1 ) % featured.length;
+            tweenRef.current?.kill();
+            container.removeEventListener( 'mouseenter', pause );
+            container.removeEventListener( 'mouseleave', resume );
+            container.removeEventListener( 'focusin', pause );
+            container.removeEventListener( 'focusout', resume );
+        };
+    }, [] );
 
-            // Crossfade Animation
-            const tl = gsap.timeline();
-
-            tl.to( slides[ activeIndex ], {
-                opacity: 0,
-                zIndex: 0,
-                duration: 1.2,
-                ease: 'power2.inOut'
-            } )
-                .fromTo( slides[ nextIndex ],
-                    { opacity: 0, zIndex: 10 },
-                    { opacity: 1, duration: 1.2, ease: 'power2.inOut' },
-                    "<" // Start at same time
-                );
-
-            setActiveIndex( nextIndex );
-        }, 8000 ); // 8s dwell time
-
-        return () => clearInterval( timer );
-    }, [ activeIndex, featured.length ] );
-
-    if ( featured.length === 0 ) return null;
+    if ( !featured ) return null;
 
     return (
-        <section className="w-full bg-slate-50 border-t border-slate-200 py-16 font-sans relative overflow-hidden" dir="rtl">
-            {/* Background Texture */ }
-            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-50 pointer-events-none" />
+        <section
+            ref={ rootRef }
+            aria-labelledby="news-heading"
+            className="relative bg-white border-t border-slate-200 py-28"
+            dir="rtl"
+        >
+            <div className="mx-auto max-w-7xl px-4">
 
-            <div className="container mx-auto px-4 max-w-6xl relative z-10">
-
-                {/* 
-                   HEADER 
-                   Semantic structure for accessibility
-                */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 border-b border-slate-200 pb-6">
+                {/* ================= HEADER ================= */ }
+                <header
+                    data-news-block
+                    className="flex items-end justify-between mb-16"
+                >
                     <div>
-                        <span className="inline-flex items-center gap-2 text-bms-primary font-bold text-xs tracking-wider mb-3 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
-                            <LuNewspaper className="h-3 w-3" />
-                            رسانه و مطبوعات
+                        <span className="inline-flex items-center gap-2 text-bms-primary font-bold text-xs tracking-wider mb-4">
+                            <LuNewspaper className="h-4 w-4" />
+                            مرکز رسانه بارمان
                         </span>
-                        <h2 className="text-3xl md:text-4xl font-bold text-bms-dark leading-tight">
-                            آخرین <span className="text-bms-primary">اخبار بارمان</span>
+
+                        <h2
+                            id="news-heading"
+                            className="text-3xl md:text-4xl font-bold text-slate-900"
+                        >
+                            اخبار، تحلیل‌ها و اطلاعیه‌ها
                         </h2>
                     </div>
+
                     <Link
                         href="/news"
-                        className="hidden md:flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-bms-primary transition-colors group"
+                        className="hidden md:inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-bms-primary transition"
                     >
-                        <span>آرشیو کامل مطالب</span>
-                        <LuArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                        مشاهده آرشیو
+                        <LuArrowLeft className="h-4 w-4" />
                     </Link>
-                </div>
+                </header>
 
-                {/* 
-                   BENTO GRID LAYOUT 
-                   Left: List (Desktop) | Right: Slider
-                */}
-                <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 h-auto lg:h-[500px]">
+                {/* ================= GRID ================= */ }
+                <div className="grid lg:grid-cols-12 gap-12">
 
-                    {/* 1. HERO SLIDER (Dominant Visual) */ }
-                    <div className="lg:col-span-8 relative rounded-3xl overflow-hidden shadow-xl bg-slate-900 h-[400px] lg:h-full border border-slate-800 group">
-                        <div ref={ slideContainerRef } className="relative w-full h-full">
-                            { featured.map( ( item, index ) => (
-                                <article key={ item.slug } className="absolute inset-0 w-full h-full">
-
-                                    {/* ⚡ LCP: Priority Image */ }
-                                    <Image
-                                        src={ item.image }
-                                        alt={ item.title }
-                                        fill
-                                        priority={ index === 0 }
-                                        className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-[3s] ease-out"
-                                        sizes="(max-width: 1024px) 100vw, 66vw"
-                                    />
-
-                                    {/* Gradient Overlay */ }
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent" />
-
-                                    {/* Content Layer */ }
-                                    <div className="absolute bottom-0 right-0 w-full p-8 md:p-10 flex flex-col items-start">
-                                        <span className="inline-block px-3 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold rounded-lg mb-4 shadow-sm">
-                                            { item.category }
-                                        </span>
-                                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight drop-shadow-md text-balance">
-                                            <Link href={ `/news/${ item.slug }` } className="hover:underline decoration-emerald-400 underline-offset-8 decoration-2">
-                                                { item.title }
-                                            </Link>
-                                        </h3>
-                                        <p className="text-slate-200 text-sm md:text-base line-clamp-2 max-w-2xl hidden md:block leading-relaxed opacity-90">
-                                            { item.summary }
-                                        </p>
-                                    </div>
-                                </article>
-                            ) ) }
-                        </div>
-
-                        {/* Pagination Dots */ }
-                        <div className="absolute bottom-8 left-8 flex gap-2 z-20">
-                            { featured.map( ( _, idx ) => (
-                                <button
-                                    key={ idx }
-                                    onClick={ () => setActiveIndex( idx ) }
-                                    className={ `h-1.5 rounded-full transition-all duration-500 ${ idx === activeIndex ? 'w-8 bg-emerald-500' : 'w-2 bg-white/30 hover:bg-white/60'
-                                        }` }
-                                    aria-label={ `Go to slide ${ idx + 1 }` }
+                    {/* ================= FEATURED ================= */ }
+                    <article
+                        data-news-block
+                        className="lg:col-span-7 group"
+                    >
+                        <Link href={ `/news/${ featured.slug }` } className="block">
+                            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-slate-100 mb-8">
+                                <Image
+                                    src={ featured.image }
+                                    alt={ featured.title }
+                                    fill
+                                    priority
+                                    sizes="(max-width: 1024px) 100vw, 60vw"
+                                    className="object-cover transition-transform duration-[2500ms] ease-out group-hover:scale-105"
                                 />
+                            </div>
+
+                            <div className="space-y-4 max-w-xl">
+                                <span className="inline-block text-xs font-bold tracking-widest text-bms-primary">
+                                    { featured.category }
+                                </span>
+
+                                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-snug group-hover:text-bms-primary transition-colors">
+                                    { featured.title }
+                                </h3>
+
+                                <p className="text-slate-600 leading-relaxed line-clamp-3">
+                                    { featured.summary }
+                                </p>
+                            </div>
+                        </Link>
+                    </article>
+
+                    {/* ================= AUTO-SCROLL FEED ================= */ }
+                    <div
+                        data-news-block
+                        className="lg:col-span-5 border-r border-slate-200 pr-8 overflow-hidden"
+                    >
+                        <div ref={ feedRef } className="flex flex-col gap-6">
+                            { [ ...feed, ...feed ].map( ( item, idx ) => (
+                                <Link
+                                    key={ `${ item.slug }-${ idx }` }
+                                    href={ `/news/${ item.slug }` }
+                                    className="group flex gap-4 items-start"
+                                >
+                                    <div className="mt-1 h-2 w-2 rounded-full bg-bms-primary/40 group-hover:bg-bms-primary transition" />
+
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
+                                            <LuCalendar className="h-3 w-3" />
+                                            <span className="font-mono">
+                                                { new Intl.DateTimeFormat( 'fa-IR' ).format(
+                                                    new Date( item.publishedAt )
+                                                ) }
+                                            </span>
+                                        </div>
+
+                                        <h4 className="text-sm font-bold text-slate-800 leading-snug group-hover:text-bms-primary transition-colors line-clamp-2">
+                                            { item.title }
+                                        </h4>
+                                    </div>
+                                </Link>
                             ) ) }
                         </div>
-                    </div>
 
-                    {/* 2. SIDE LIST (Quick Updates) */ }
-                    <div className="lg:col-span-4 flex flex-col gap-4 h-full">
-                        { latestUpdates.map( ( item ) => (
-                            <Link
-                                key={ item.slug }
-                                href={ `/news/${ item.slug }` }
-                                className="flex-1 bg-white rounded-2xl p-6 border border-slate-200 hover:border-bms-primary/40 hover:shadow-lg transition-all group flex flex-col justify-center relative overflow-hidden"
-                            >
-                                <div className="absolute right-0 top-0 bottom-0 w-1 bg-bms-primary scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
-
-                                <div className="flex items-center gap-2 mb-3 text-slate-400">
-                                    <LuCalendar className="h-3.5 w-3.5" />
-                                    <span className="text-xs font-medium font-mono pt-0.5">
-                                        { new Intl.DateTimeFormat( 'fa-IR' ).format( new Date( item.publishedAt ) ) }
-                                    </span>
-                                </div>
-
-                                <h4 className="text-base font-bold text-slate-800 leading-snug group-hover:text-bms-primary transition-colors line-clamp-2">
-                                    { item.title }
-                                </h4>
-                            </Link>
-                        ) ) }
-
-                        {/* Mobile "View All" Button */ }
+                        {/* Mobile CTA */ }
                         <Link
                             href="/news"
-                            className="md:hidden w-full py-4 bg-slate-100 text-slate-700 font-bold rounded-2xl text-center text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
+                            className="md:hidden mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 py-4 text-sm font-bold text-slate-700 hover:bg-slate-200 transition"
                         >
-                            <span>مشاهده همه اخبار</span>
+                            مشاهده همه اخبار
                             <LuArrowLeft className="h-4 w-4" />
                         </Link>
                     </div>

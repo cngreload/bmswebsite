@@ -1,4 +1,3 @@
-// components/layout/Footer.tsx
 import Link from "next/link";
 import
 {
@@ -7,77 +6,92 @@ import
     LuMail,
     LuLinkedin,
     LuInstagram,
-    LuGlobe
+    LuArrowUpLeft,
 } from "react-icons/lu";
+import type { ComponentType } from "react";
+
+type IconType = ComponentType<{ className?: string; }>;
 
 export default function Footer ()
 {
     const year = new Date().getFullYear();
 
     const productLinks = [
-        { label: "سامانه هوشمند CNG", href: "/cng-automation" },
-        { label: "پلتفرم مدیریت کلینیک", href: "/clinicans" },
+        { label: "امنیت انرژی (ICTS)", href: "/cng-automation" },
+        { label: "سلامت دیجیتال (Clinicans)", href: "/clinicans" },
         { label: "هوشمندسازی صنعتی", href: "/intelligentautomation" },
     ];
 
     const companyLinks = [
-        { label: "درباره ما", href: "/about" },
-        { label: "تماس با ما", href: "/contact-us" },
-        { label: "اخبار و مقالات", href: "/news" },
+        { label: "داستان ما", href: "/about/story" },
+        { label: "تماس و گفتگو", href: "/contact-us" },
+        { label: "مجله خبری", href: "/news" },
         { label: "فرصت‌های شغلی", href: "/careers" },
     ];
 
     return (
-        <footer className="border-t border-slate-200 bg-slate-50 mt-auto text-right" role="contentinfo">
-            <div className="container py-12 md:py-16">
-                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <footer
+            className="bg-white border-t border-slate-200 mt-auto text-right"
+            role="contentinfo"
+        >
+            <div className="container mx-auto px-4 max-w-7xl pt-16 pb-8">
+                <div className="grid gap-12 lg:grid-cols-12">
 
-                    {/* 1. Brand & Mission */ }
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-end gap-2">
-                            <span className="text-lg font-bold text-bms-dark">بارمان محور اسپادانا</span>
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-bms-primary text-white font-bold shadow-sm">B</div>
-                        </div>
-                        <p className="text-xs leading-6 text-slate-500 text-justify pl-4">
-                            پیشگام در توسعه زیرساخت‌های بومی اینترنت اشیاء (IoT) و پلتفرم‌های نرم‌افزاری
-                            برای صنایع استراتژیک کشور. ما داده‌های خام میدان را به تصمیمات هوشمند مدیریتی تبدیل می‌کنیم.
+                    {/* BRAND */ }
+                    <div className="lg:col-span-4 space-y-6">
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-bms-primary flex items-center justify-center text-white font-bold text-xl shadow-md">
+                                B
+                            </div>
+                            <span className="text-xl font-black text-slate-900 tracking-tight">
+                                بارمان محور
+                            </span>
+                        </Link>
+
+                        <p className="text-sm leading-8 text-slate-600 text-justify pl-4">
+                            ما اینجا هستیم تا فاصله بین «داده‌های میدانی» و «آرامش مدیریتی» را پر کنیم.
+                            تکنولوژی برای ما ابزار است، نه هدف؛ هدف، ساختن زیرساخت‌هایی است که امن،
+                            پایدار و انسانی باشند.
                         </p>
 
-                        {/* Socials */ }
-                        <div className="flex items-center justify-end gap-3 pt-2">
-                            <a href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-200 transition-colors" aria-label="LinkedIn">
-                                <LuLinkedin className="h-4 w-4" />
-                            </a>
-                            <a href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-pink-600 hover:border-pink-200 transition-colors" aria-label="Instagram">
-                                <LuInstagram className="h-4 w-4" />
-                            </a>
-                            <a href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-500 hover:text-emerald-600 hover:border-emerald-200 transition-colors" aria-label="Website">
-                                <LuGlobe className="h-4 w-4" />
-                            </a>
+                        <div className="flex gap-3">
+                            <SocialLink href="#" icon={ LuLinkedin } label="لینکدین" />
+                            <SocialLink href="#" icon={ LuInstagram } label="اینستاگرام" />
                         </div>
                     </div>
 
-                    {/* 2. Solutions */ }
-                    <div>
-                        <h3 className="text-sm font-bold text-bms-dark mb-4">راهکارها</h3>
-                        <ul className="space-y-3 text-xs md:text-sm text-slate-600">
+                    {/* PRODUCTS */ }
+                    <div className="lg:col-span-2 lg:col-start-6">
+                        <h4 className="font-bold text-slate-900 mb-6 text-sm">
+                            محصولات
+                        </h4>
+                        <ul className="space-y-4">
                             { productLinks.map( ( link ) => (
                                 <li key={ link.href }>
-                                    <Link href={ link.href } className="hover:text-bms-primary transition-colors block py-1">
+                                    <Link
+                                        href={ link.href }
+                                        className="text-sm text-slate-600 hover:text-bms-primary transition-colors flex items-center gap-1 group"
+                                    >
                                         { link.label }
+                                        <LuArrowUpLeft className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                                     </Link>
                                 </li>
                             ) ) }
                         </ul>
                     </div>
 
-                    {/* 3. Company */ }
-                    <div>
-                        <h3 className="text-sm font-bold text-bms-dark mb-4">دسترسی سریع</h3>
-                        <ul className="space-y-3 text-xs md:text-sm text-slate-600">
+                    {/* COMPANY */ }
+                    <div className="lg:col-span-2">
+                        <h4 className="font-bold text-slate-900 mb-6 text-sm">
+                            گشت و گذار
+                        </h4>
+                        <ul className="space-y-4">
                             { companyLinks.map( ( link ) => (
                                 <li key={ link.href }>
-                                    <Link href={ link.href } className="hover:text-bms-primary transition-colors block py-1">
+                                    <Link
+                                        href={ link.href }
+                                        className="text-sm text-slate-600 hover:text-bms-primary transition-colors"
+                                    >
                                         { link.label }
                                     </Link>
                                 </li>
@@ -85,37 +99,95 @@ export default function Footer ()
                         </ul>
                     </div>
 
-                    {/* 4. Contact Info (Local SEO Signal) */ }
-                    <div>
-                        <h3 className="text-sm font-bold text-bms-dark mb-4">ارتباط با ما</h3>
-                        <ul className="space-y-4 text-xs md:text-sm text-slate-600">
-                            <li className="flex items-start justify-end gap-3">
-                                <span className="text-slate-700 leading-6">اصفهان، خیابان...، ساختمان بارمان، طبقه ۳</span>
-                                <LuMapPin className="h-5 w-5 shrink-0 text-bms-primary/60 mt-0.5" />
-                            </li>
-                            <li className="flex items-center justify-end gap-3">
-                                <a href="tel:0313XXXXXXX" className="hover:text-bms-primary dir-ltr">۰۳۱-۳XXXXXXX</a>
-                                <LuPhone className="h-5 w-5 shrink-0 text-bms-primary/60" />
-                            </li>
-                            <li className="flex items-center justify-end gap-3">
-                                <a href="mailto:info@barman-mes.ir" className="hover:text-bms-primary font-mono text-xs">info@barman-mes.ir</a>
-                                <LuMail className="h-5 w-5 shrink-0 text-bms-primary/60" />
-                            </li>
-                        </ul>
+                    {/* CONTACT */ }
+                    <div className="lg:col-span-4 lg:col-start-9 xl:col-span-3 xl:col-start-10">
+                        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 space-y-4">
+                            <h4 className="font-bold text-slate-900 text-sm">
+                                هم‌صحبت شویم
+                            </h4>
+
+                            <div className="space-y-3">
+                                <a
+                                    href="tel:021-66463924"
+                                    className="flex items-center justify-end gap-3 text-slate-600 hover:text-bms-primary transition-colors group"
+                                >
+                                    <span className="text-sm font-mono dir-ltr group-hover:font-bold">
+                                        021-66463924
+                                    </span>
+                                    <IconBox icon={ LuPhone } />
+                                </a>
+
+                                <a
+                                    href="mailto:info@co-bms.ir"
+                                    className="flex items-center justify-end gap-3 text-slate-600 hover:text-bms-primary transition-colors group"
+                                >
+                                    <span className="text-sm font-mono group-hover:font-bold">
+                                        info@co-bms.ir
+                                    </span>
+                                    <IconBox icon={ LuMail } />
+                                </a>
+                            </div>
+
+                            <div className="pt-2 border-t border-slate-200">
+                                <div className="flex items-start justify-end gap-3 text-right">
+                                    <p className="text-xs text-slate-500 leading-6">
+                                        تهران، بلوار کشاورز، وصال شیرازی، پلاک 57
+                                    </p>
+                                    <LuMapPin className="w-5 h-5 text-slate-400 mt-1" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                {/* Bottom Bar */ }
-                <div className="mt-12 border-t border-slate-200 pt-6 flex flex-col-reverse md:flex-row items-center justify-between gap-4 text-[10px] md:text-xs text-slate-500">
-                    <p className="font-medium">© { year } تمامی حقوق برای شرکت بارمان محور اسپادانا محفوظ است.</p>
-                    <div className="flex gap-6">
-                        <span className="cursor-pointer hover:text-bms-primary transition-colors">حریم خصوصی</span>
-                        <span className="cursor-pointer hover:text-bms-primary transition-colors">قوانین و مقررات</span>
-                        <span className="cursor-pointer hover:text-bms-primary transition-colors">نقشه سایت</span>
+                {/* BOTTOM */ }
+                <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p className="text-[11px] text-slate-400 font-medium">
+                        © { year } بارمان محور اسپادانا. تمامی حقوق محفوظ است.
+                    </p>
+                    <div className="flex gap-6 text-[11px] text-slate-500">
+                        <Link href="#" className="hover:text-bms-primary">
+                            حریم خصوصی
+                        </Link>
+                        <Link href="#" className="hover:text-bms-primary">
+                            شرایط استفاده
+                        </Link>
                     </div>
                 </div>
             </div>
         </footer>
+    );
+}
+
+/* ---------- HELPERS ---------- */
+
+function SocialLink ( {
+    href,
+    icon: Icon,
+    label,
+}: {
+    href: string;
+    icon: IconType;
+    label: string;
+} )
+{
+    return (
+        <a
+            href={ href }
+            aria-label={ label }
+            className="h-10 w-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-900 hover:border-slate-900 hover:text-white transition-all duration-300"
+        >
+            <Icon className="w-5 h-5" />
+        </a>
+    );
+}
+
+function IconBox ( { icon: Icon }: { icon: IconType; } )
+{
+    return (
+        <div className="h-8 w-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-bms-primary group-hover:text-bms-primary transition-colors">
+            <Icon className="w-4 h-4" />
+        </div>
     );
 }

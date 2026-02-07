@@ -15,7 +15,7 @@ import
 } from "react-icons/lu";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
-import { ImageProps } from "next/image";
+import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
 /* ---------------------------------------------
@@ -284,7 +284,7 @@ export const BlurImage = ( {
     const [ isLoading, setLoading ] = useState( true );
 
     return (
-        <img
+        <Image
             className={ cn(
                 "h-full w-full transition duration-300",
                 isLoading ? "blur-sm scale-105" : "blur-0 scale-100",

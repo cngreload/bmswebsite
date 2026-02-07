@@ -24,12 +24,10 @@ export default function RootChrome ( {
     return (
         <div className="min-h-screen flex flex-col">
             <Header />
-
-            {/* ✅ Single main, NO padding offset */ }
-            <main id="main-content" className="flex-1">
+            {/* Main content wrapper */ }
+            <div className="flex-1 w-full">
                 { children }
-            </main>
-
+            </div>
             <Footer />
         </div>
     );

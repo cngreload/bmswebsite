@@ -1,92 +1,134 @@
+"use client";
+
 import Link from "next/link";
-import { LuCalendarCheck, LuDownload, LuArrowLeft } from "react-icons/lu";
+import
+{
+    LuCalendarCheck,
+    LuDownload,
+    LuArrowLeft,
+    LuShieldCheck,
+} from "react-icons/lu";
 
 export default function FinalCtaSection ()
 {
     return (
         <section
             id="final-cta"
-            className="py-12 md:py-20"
             aria-labelledby="cta-heading"
+            className="relative py-16 md:py-24"
+            dir="rtl"
         >
-            <div className="mx-auto max-w-6xl px-4">
-                <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-bms-primary to-[#0F172A] p-8 md:p-12 shadow-2xl text-right text-white">
+            <div className="mx-auto max-w-7xl px-4">
+                <div className="relative overflow-hidden rounded-[3rem] bg-slate-950 text-white shadow-[0_40px_120px_-40px_rgba(15,23,42,0.9)]">
 
-                    {/* Ambient Light Blobs */ }
-                    <div className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-white/5 blur-3xl" />
-                    <div className="pointer-events-none absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
+                    {/* ===== Background Layers ===== */ }
+                    <div className="pointer-events-none absolute inset-0">
+                        {/* Gradient Core */ }
+                        <div className="absolute inset-0 bg-gradient-to-br from-bms-primary via-[#0B1220] to-[#020617]" />
 
-                    {/* Subtle Grid Overlay */ }
-                    <div className="pointer-events-none absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
+                        {/* Radial Focus */ }
+                        <div className="absolute -top-32 right-1/3 h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-[140px]" />
+                        <div className="absolute -bottom-40 left-1/4 h-[520px] w-[520px] rounded-full bg-blue-500/10 blur-[160px]" />
 
-                    <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+                        {/* Grid Texture */ }
+                        <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:28px_28px] opacity-30" />
+                    </div>
 
-                        {/* Content */ }
-                        <div className="space-y-6 lg:max-w-2xl">
+                    {/* ===== Content ===== */ }
+                    <div className="relative z-10 grid gap-14 p-8 md:p-14 lg:grid-cols-12 lg:gap-10">
+
+                        {/* ---------- LEFT: MESSAGE ---------- */ }
+                        <div className="lg:col-span-7 space-y-8 text-right">
+                            {/* Trust Badge */ }
+                            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-bold tracking-wide text-emerald-300 backdrop-blur">
+                                <LuShieldCheck className="h-4 w-4" />
+                                دعوت رسمی به مشارکت زیرساختی
+                            </div>
+
                             <h2
                                 id="cta-heading"
-                                className="text-2xl font-bold md:text-3xl lg:text-4xl leading-tight text-balance"
+                                className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight text-balance"
                             >
-                                دعوت به مشارکت راهبردی برای آینده‌ای <br />
-                                <span className="text-emerald-400">
-                                    ایمن‌تر، شفاف‌تر و هوشمندتر
-                                </span>{ " " }
-                                در صنعت سوخت
+                                مشارکت راهبردی برای
+                                <br />
+                                <span className="bg-gradient-to-l from-emerald-400 to-sky-400 bg-clip-text text-transparent">
+                                    آینده‌ای ایمن، شفاف و داده‌محور
+                                </span>
+                                <br />
+                                در صنعت سوخت کشور
                             </h2>
 
-                            <div className="space-y-4 text-sm leading-8 text-slate-200/90 md:text-base">
+                            <div className="space-y-5 text-sm md:text-base leading-8 text-slate-300">
                                 <p>
                                     شرکت{ " " }
-                                    <strong className="text-white font-medium">
+                                    <strong className="font-medium text-white">
                                         بارمان‌محور اسپادانا
                                     </strong>{ " " }
-                                    آمادگی خود را برای همکاری رسمی با نهادهای حاکمیتی، شرکت‌های
-                                    گاز استانی، اپراتورهای جایگاه و بازیگران مالی کشور
-                                    در مسیر استقرار ملی سامانه{ " " }
-                                    <strong className="text-white font-medium">ICTS</strong>{ " " }
-                                    اعلام می‌کند.
+                                    آمادگی دارد در قالب همکاری رسمی، طراحی و
+                                    استقرار ملی سامانه{ " " }
+                                    <strong className="font-medium text-white">
+                                        ICTS
+                                    </strong>{ " " }
+                                    را با نهادهای حاکمیتی، شرکت‌های گاز استانی،
+                                    اپراتورهای جایگاه و بازیگران مالی کشور
+                                    پیش ببرد.
                                 </p>
 
                                 <p>
-                                    این طرح صرفاً یک پروژه فناورانه نیست؛
-                                    بلکه یک اقدام زیرساختی و بلندمدت برای
-                                    <strong className="mx-1 text-white font-medium">
-                                        ارتقای ایمنی شهروندان
+                                    این مسیر، یک پروژه کوتاه‌مدت نیست؛ بلکه
+                                    سرمایه‌گذاری بلندمدت برای{ " " }
+                                    <strong className="text-white font-medium">
+                                        ایمنی شهروندان
                                     </strong>
-                                    ،
-                                    <strong className="mx-1 text-white font-medium">
-                                        افزایش شفافیت و حکمرانی داده
-                                    </strong>
-                                    و
-                                    <strong className="mx-1 text-white font-medium">
-                                        بهینه‌سازی بهره‌وری اقتصادی
-                                    </strong>
-                                    در یکی از حیاتی‌ترین شبکه‌های انرژی کشور است.
+                                    ،{ " " }
+                                    <strong className="text-white font-medium">
+                                        حکمرانی داده
+                                    </strong>{ " " }
+                                    و{ " " }
+                                    <strong className="text-white font-medium">
+                                        بهره‌وری ملی
+                                    </strong>{ " " }
+                                    در یکی از حیاتی‌ترین زیرساخت‌های انرژی کشور
+                                    است.
                                 </p>
                             </div>
                         </div>
 
-                        {/* Actions */ }
-                        <div className="flex w-full flex-col gap-4 sm:w-auto lg:min-w-[320px]">
+                        {/* ---------- RIGHT: ACTIONS ---------- */ }
+                        <div className="lg:col-span-5 flex flex-col justify-center gap-5">
+
+                            {/* Primary CTA */ }
                             <Link
                                 href="/contact-us"
-                                className="group inline-flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-4 text-sm font-bold text-bms-primary shadow-lg transition-all hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bms-primary"
+                                className="group relative inline-flex items-center justify-between gap-4 rounded-2xl bg-white px-7 py-5 text-sm md:text-base font-bold text-bms-primary shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white"
                             >
-                                <LuCalendarCheck className="h-5 w-5" />
-                                <span>هماهنگی جلسه فنی و استقرار</span>
-                                <LuArrowLeft className="mr-auto h-4 w-4 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                                <div className="flex items-center gap-3">
+                                    <LuCalendarCheck className="h-5 w-5" />
+                                    <span>درخواست جلسه فنی و مذاکره استقرار</span>
+                                </div>
+                                <LuArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                             </Link>
 
+                            {/* Secondary CTA */ }
                             <Link
                                 href="/downloads/icts-intro.pdf"
                                 target="_blank"
-                                className="group inline-flex items-center justify-center gap-3 rounded-xl border border-white/30 bg-white/5 px-6 py-4 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bms-primary"
+                                className="group inline-flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/5 px-7 py-4 text-sm font-medium text-slate-200 backdrop-blur transition-all hover:bg-white/10 hover:text-white"
                             >
-                                <LuDownload className="h-5 w-5 text-slate-300 transition-colors group-hover:text-white" />
-                                <span>دانلود مستندات فنی و حاکمیتی (PDF)</span>
+                                <div className="flex items-center gap-3">
+                                    <LuDownload className="h-5 w-5 text-slate-400 group-hover:text-white transition-colors" />
+                                    <span>
+                                        دانلود مستند فنی و حاکمیتی (PDF)
+                                    </span>
+                                </div>
+                                <LuArrowLeft className="h-4 w-4 opacity-40" />
                             </Link>
-                        </div>
 
+                            {/* Hint */ }
+                            <div className="pt-2 text-xs text-slate-400 text-center">
+                                پاسخ‌گویی رسمی • مستندات کامل • مسیر شفاف استقرار
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

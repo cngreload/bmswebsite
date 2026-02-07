@@ -74,69 +74,78 @@ export default function DeploymentSection ()
     return (
         <section
             id="deployment"
-            className="py-10 md:py-16"
             aria-labelledby="deployment-heading"
+            className="py-24 md:py-32 bg-slate-50"
+            dir="rtl"
         >
-            <div className="mx-auto max-w-5xl px-4">
-                {/* Header */ }
-                <div className="mb-12 space-y-4 text-right">
-                    <span className="inline-block rounded-lg bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600">
+            <div className="mx-auto max-w-6xl px-4">
+
+                {/* ================= HEADER ================= */ }
+                <header className="mb-24 max-w-3xl text-right space-y-6">
+                    <span className="inline-block rounded-md bg-emerald-500/10 px-4 py-1.5 text-xs font-bold text-emerald-600">
                         نقشه راه اجرایی
                     </span>
 
                     <h2
                         id="deployment-heading"
-                        className="text-2xl font-bold text-bms-dark md:text-3xl"
+                        className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900"
                     >
-                        مسیر استقرار <span className="text-bms-primary">ICTS</span>
+                        مسیر استقرار{ " " }
+                        <span className="text-bms-primary">ICTS</span>
                     </h2>
 
-                    <p className="ml-auto max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+                    <p className="text-sm md:text-base leading-relaxed text-slate-600">
                         استقرار ICTS یک پروژه صرفاً فنی نیست؛
                         یک فرآیند مدیریتی، اجرایی و حاکمیتی است.
                         این نقشه راه، مسیر تبدیل پیچیدگی هوشمندسازی
                         جایگاه‌های CNG را به گام‌های شفاف، قابل‌سنجش
                         و قابل‌حسابرسی ترسیم می‌کند.
                     </p>
-                </div>
+                </header>
 
-                {/* Timeline */ }
+                {/* ================= EXECUTION SPINE ================= */ }
                 <div className="relative">
-                    {/* Vertical Line */ }
-                    <div className="absolute right-6 top-4 bottom-4 w-0.5 bg-gradient-to-b from-bms-primary/30 via-slate-200 to-transparent md:right-8" />
 
-                    <ol className="relative space-y-8">
+                    {/* Central spine */ }
+                    <div
+                        className="absolute right-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent"
+                        aria-hidden
+                    />
+
+                    <ol className="space-y-14">
                         { deploymentPhases.map( ( phase ) =>
                         {
                             const Icon = phase.icon;
+
                             return (
-                                <li key={ phase.id } className="group relative flex gap-6 md:gap-10">
-                                    {/* Marker */ }
-                                    <div className="flex flex-col items-center">
-                                        <div className="z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-4 border-white bg-slate-50 text-slate-500 shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-bms-primary group-hover:text-white md:h-16 md:w-16">
-                                            <Icon className="h-5 w-5 md:h-7 md:w-7" />
-                                        </div>
+                                <li key={ phase.id } className="relative flex gap-8">
+
+                                    {/* Node */ }
+                                    <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white border border-slate-200 shadow-sm text-bms-primary">
+                                        <Icon className="h-7 w-7" />
                                     </div>
 
-                                    {/* Content */ }
-                                    <article className="flex-1 rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-300 hover:border-bms-primary/30 hover:shadow-lg md:p-7">
-                                        <div className="mb-3 flex items-center gap-3">
-                                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 group-hover:bg-bms-primary/10 group-hover:text-bms-primary">
+                                    {/* Module */ }
+                                    <article className="flex-1 rounded-[2.5rem] bg-white border border-slate-200 p-6 md:p-8">
+                                        <div className="mb-4 flex items-center gap-3">
+                                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">
                                                 { phase.id }
                                             </span>
-                                            <h3 className="text-base font-bold text-slate-900 md:text-lg">
+                                            <h3 className="text-lg md:text-xl font-bold text-slate-900">
                                                 { phase.title }
                                             </h3>
                                         </div>
 
-                                        <p className="text-sm leading-7 text-slate-600 text-pretty">
+                                        <p className="text-sm md:text-base leading-7 text-slate-600 text-justify">
                                             { phase.description }
                                         </p>
 
                                         {/* Deliverable */ }
-                                        <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-500 transition-colors group-hover:border-emerald-100 group-hover:bg-emerald-50/50 group-hover:text-emerald-700">
-                                            <LuCheck className="h-3.5 w-3.5 text-emerald-500" />
-                                            <span className="font-medium">خروجی:</span>
+                                        <div className="mt-6 inline-flex items-start gap-2 rounded-xl bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
+                                            <LuCheck className="h-4 w-4 mt-0.5 shrink-0" />
+                                            <span className="font-medium">
+                                                خروجی مرحله:
+                                            </span>
                                             <span>{ phase.deliverable }</span>
                                         </div>
                                     </article>
