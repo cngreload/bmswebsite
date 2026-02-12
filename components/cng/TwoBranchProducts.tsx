@@ -2,24 +2,14 @@
 
 import React from "react";
 import Script from "next/script";
+import { motion } from "framer-motion";
 import
 {
-    LuCpu,
-    LuVideo,
-    LuScan,
-    LuWifi,
-    LuToggleRight,
-    LuShieldCheck,
-    LuLayoutDashboard,
-    LuDatabase,
-    LuRefreshCw,
-    LuCreditCard,
-    LuBrainCircuit,
-    LuFileChartLine,
-    LuLayers,
-    LuBox,
-    LuZap,
+    LuCpu, LuVideo, LuScan, LuWifi, LuToggleRight, LuShieldCheck,
+    LuLayoutDashboard, LuDatabase, LuRefreshCw, LuCreditCard,
+    LuBrainCircuit, LuFileChartLine, LuLayers, LuBox, LuZap
 } from "react-icons/lu";
+import { cn } from "@/lib/utils";
 
 /* ================= DATA ================= */
 const hardwareProducts = [
@@ -47,134 +37,93 @@ export default function TwoBranchProducts ()
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        name: "اجزای سامانه ICTS",
-        description: "معماری یکپارچه سخت‌افزار و نرم‌افزار",
-        itemListElement: [ ...hardwareProducts, ...softwareProducts ].map(
-            ( item, index ) => ( {
-                "@type": "ListItem",
-                position: index + 1,
-                name: item.name,
-            } )
-        ),
+        "name": "اجزای سامانه ICTS",
+        "description": "معماری یکپارچه سخت‌افزار و نرم‌افزار هوشمند در مقیاس صنعتی",
+        "itemListElement": [ ...hardwareProducts, ...softwareProducts ].map( ( item, index ) => ( {
+            "@type": "ListItem",
+            "position": index + 1,
+            "name": item.name,
+        } ) ),
     };
 
     return (
-        <section
-            aria-labelledby="products-heading"
-            className="relative py-28 md:py-36 bg-slate-50 overflow-hidden"
-        >
+        <section className="relative py-24 lg:py-32 bg-white overflow-hidden" dir="rtl">
             <Script
                 id="products-schema"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
 
-            {/* Background grid – ultra subtle */ }
-            <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:48px_48px]"
-            />
+            {/* Architectural Grid Underlay */ }
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none [background-image:radial-gradient(#145C98_1px,transparent_1px)] [background-size:32px_32px]" />
 
-            <div className="relative z-10 mx-auto max-w-7xl px-4">
+            <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
 
                 {/* ================= HEADER ================= */ }
                 <header className="mb-24 text-center space-y-6">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-5 py-2 text-xs font-bold text-slate-500 tracking-wider shadow-sm">
-                        <LuZap className="w-4 h-4 text-amber-500" />
-                        معماری Full-Stack بومی
+                    <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-5 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 shadow-sm">
+                        <LuZap className="w-3.5 h-3.5 text-[#F4C430]" />
+                        <span>Integrated Ecosystem</span>
                     </div>
 
-                    <h2
-                        id="products-heading"
-                        className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900"
-                    >
-                        یکپارچگی <span className="text-bms-primary">آهن و کد</span>
+                    <h2 className="text-4xl md:text-5xl font-black tracking-tightest text-slate-950">
+                        همگرایی <span className="text-bms-primary">سخت‌افزار و هوش</span>
                     </h2>
 
-                    <p className="max-w-2xl mx-auto text-base md:text-lg leading-relaxed text-slate-600">
-                        ما سخت‌افزار را برای نرم‌افزار خودمان می‌سازیم و نرم‌افزار را روی
-                        سخت‌افزار خودمان اجرا می‌کنیم. نتیجه؟ پایداری و امنیتی که با
-                        سیستم‌های تکه‌تکه غیرممکن است.
+                    <p className="max-w-3xl mx-auto text-lg leading-relaxed text-slate-500 font-light">
+                        ما راهکارهای خود را در دو جبهه سخت‌افزار صنعتی و نرم‌افزار ابری به‌صورت همزمان مهندسی می‌کنیم.
+                        این رویکرد، پایداری، امنیت و انطباق کامل سامانه را در زیرساخت‌های حساس تضمین می‌کند.
                     </p>
                 </header>
 
-                {/* ================= SYSTEM DIAGRAM ================= */ }
-                <div className="relative rounded-[3rem] bg-white border border-slate-200 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.25)] px-6 py-16 md:px-12 md:py-24">
+                {/* ================= SYSTEM BLUEPRINT ================= */ }
+                <div className="relative">
 
-                    {/* Central BUS */ }
-                    <div
-                        aria-hidden="true"
-                        className="hidden lg:flex absolute left-1/2 top-0 h-full -translate-x-1/2 flex-col items-center"
-                    >
-                        <div className="h-full w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent" />
-                        <span className="mt-4 text-[10px] font-bold tracking-widest text-slate-400">
-                            SYSTEM BUS
-                        </span>
+                    {/* Central Data Trunk (The Spine) */ }
+                    <div className="absolute left-1/2 top-0 bottom-0 w-px hidden lg:block bg-gradient-to-b from-transparent via-slate-200 to-transparent -translate-x-1/2">
+                        <div className="sticky top-1/2 -translate-y-1/2 flex flex-col items-center">
+                            <div className="w-3 h-3 rounded-full bg-white border-2 border-bms-primary shadow-[0_0_10px_rgba(20,92,152,0.3)]" />
+                            <span className="mt-4 text-[8px] font-mono font-bold text-slate-400 uppercase tracking-[0.5em] [writing-mode:vertical-lr] rotate-180">
+                                SYSTEM_CORE_BUS
+                            </span>
+                        </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
 
-                        {/* ================= HARDWARE ================= */ }
-                        <div className="space-y-8 lg:pr-20">
-                            <SectionLabel title="لایه سخت‌افزار" code="PHYSICAL" tone="amber" />
+                        {/* ---------------- HARDWARE COLUMN (RIGHT BRANCH) ---------------- */ }
+                        <motion.div
+                            initial={ { opacity: 0, x: 30 } }
+                            whileInView={ { opacity: 1, x: 0 } }
+                            viewport={ { once: true } }
+                            transition={ { duration: 0.8 } }
+                            className="space-y-10 lg:pl-10"
+                        >
+                            <SectionLabel title="لایه فیزیکی و فیلد" code="HARDWARE" tone="yellow" />
 
-                            <ul className="space-y-4">
-                                { hardwareProducts.map( ( item ) =>
-                                {
-                                    const Icon = item.icon;
-                                    return (
-                                        <li
-                                            key={ item.id }
-                                            className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 transition-all hover:-translate-x-1 hover:shadow-md"
-                                        >
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white border border-slate-200 text-amber-600">
-                                                <Icon className="h-6 w-6" />
-                                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                { hardwareProducts.map( ( item, idx ) => (
+                                    <ProductItem key={ item.id } item={ item } tone="yellow" index={ idx } />
+                                ) ) }
+                            </div>
+                        </motion.div>
 
-                                            <div className="flex-1 text-right">
-                                                <div className="text-sm font-bold font-mono text-slate-800">
-                                                    { item.name }
-                                                </div>
-                                                <div className="text-xs text-slate-500 mt-0.5">
-                                                    { item.desc }
-                                                </div>
-                                            </div>
-                                        </li>
-                                    );
-                                } ) }
-                            </ul>
-                        </div>
+                        {/* ---------------- SOFTWARE COLUMN (LEFT BRANCH) ---------------- */ }
+                        <motion.div
+                            initial={ { opacity: 0, x: -30 } }
+                            whileInView={ { opacity: 1, x: 0 } }
+                            viewport={ { once: true } }
+                            transition={ { duration: 0.8 } }
+                            className="space-y-10 lg:pr-10"
+                        >
+                            <SectionLabel title="لایه منطقی و پردازش" code="SOFTWARE" tone="blue" />
 
-                        {/* ================= SOFTWARE ================= */ }
-                        <div className="space-y-8 lg:pl-20">
-                            <SectionLabel title="لایه نرم‌افزار" code="LOGICAL" tone="indigo" />
-
-                            <ul className="space-y-4">
-                                { softwareProducts.map( ( item ) =>
-                                {
-                                    const Icon = item.icon;
-                                    return (
-                                        <li
-                                            key={ item.id }
-                                            className="group flex flex-row-reverse items-center gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 transition-all hover:translate-x-1 hover:shadow-md"
-                                        >
-                                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600">
-                                                <Icon className="h-6 w-6" />
-                                            </div>
-
-                                            <div className="flex-1 text-left">
-                                                <div className="text-sm font-bold font-mono text-slate-800">
-                                                    { item.name }
-                                                </div>
-                                                <div className="text-xs text-slate-500 mt-0.5">
-                                                    { item.desc }
-                                                </div>
-                                            </div>
-                                        </li>
-                                    );
-                                } ) }
-                            </ul>
-                        </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                { softwareProducts.map( ( item, idx ) => (
+                                    <ProductItem key={ item.id } item={ item } tone="blue" index={ idx } />
+                                ) ) }
+                            </div>
+                        </motion.div>
 
                     </div>
                 </div>
@@ -183,7 +132,65 @@ export default function TwoBranchProducts ()
     );
 }
 
-/* ================= LABEL COMPONENT ================= */
+/* ================= COMPONENT: PRODUCT ITEM ================= */
+function ProductItem ( {
+    item,
+    tone,
+    index
+}: {
+    item: typeof hardwareProducts[ 0 ],
+    tone: "yellow" | "blue",
+    index: number;
+} )
+{
+    const Icon = item.icon;
+    const isYellow = tone === "yellow";
+
+    return (
+        <motion.div
+            initial={ { opacity: 0, y: 10 } }
+            whileInView={ { opacity: 1, y: 0 } }
+            viewport={ { once: true } }
+            transition={ { delay: index * 0.05 } }
+            className={ cn(
+                "group relative flex items-center gap-4 p-5 rounded-3xl border transition-all duration-500 hover:shadow-xl",
+                isYellow
+                    ? "bg-white border-slate-100 hover:border-[#F4C430]/30"
+                    : "bg-slate-50 border-slate-200 hover:bg-white hover:border-bms-primary/30"
+            ) }
+        >
+            {/* Icon Box */ }
+            <div className={ cn(
+                "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:scale-110 shadow-sm",
+                isYellow ? "bg-amber-50 text-[#F4C430] border border-amber-100" : "bg-white text-bms-primary border border-slate-100"
+            ) }>
+                <Icon className="h-6 w-6" />
+            </div>
+
+            <div className="flex-1 text-right">
+                <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-xs font-black text-slate-900 tracking-tight">
+                        { item.name }
+                    </span>
+                    <span className="text-[8px] font-mono font-bold text-slate-400">
+                        MOD_{ item.id }
+                    </span>
+                </div>
+                <div className="text-[11px] text-slate-500 font-medium leading-relaxed">
+                    { item.desc }
+                </div>
+            </div>
+
+            {/* Interaction Glow */ }
+            <div className={ cn(
+                "absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none",
+                isYellow ? "bg-gradient-to-br from-amber-50/50 to-transparent" : "bg-gradient-to-br from-blue-50/50 to-transparent"
+            ) } />
+        </motion.div>
+    );
+}
+
+/* ================= COMPONENT: SECTION LABEL ================= */
 function SectionLabel ( {
     title,
     code,
@@ -191,20 +198,24 @@ function SectionLabel ( {
 }: {
     title: string;
     code: string;
-    tone: "amber" | "indigo";
+    tone: "yellow" | "blue";
 } )
 {
-    const tones = {
-        amber: "bg-amber-100 text-amber-700 border-amber-200",
-        indigo: "bg-indigo-100 text-indigo-700 border-indigo-200",
-    };
+    const isYellow = tone === "yellow";
 
     return (
-        <div className="flex items-center gap-3">
-            <h3 className="text-xl font-bold text-slate-900">{ title }</h3>
-            <span
-                className={ `px-2 py-1 rounded border text-[10px] font-mono font-bold ${ tones[ tone ] }` }
-            >
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-4">
+                <div className={ cn(
+                    "h-2 w-2 rounded-full",
+                    isYellow ? "bg-[#F4C430] shadow-[0_0_10px_#F4C430]" : "bg-bms-primary shadow-[0_0_10px_#145C98]"
+                ) } />
+                <h3 className="text-xl font-black text-slate-900">{ title }</h3>
+            </div>
+            <span className={ cn(
+                "px-3 py-1 rounded-lg text-[9px] font-mono font-black border tracking-widest",
+                isYellow ? "bg-amber-50 text-amber-700 border-amber-100" : "bg-blue-50 text-bms-primary border-blue-100"
+            ) }>
                 { code }
             </span>
         </div>

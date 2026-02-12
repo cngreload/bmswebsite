@@ -1,206 +1,221 @@
-'use client';
+"use client";
 
-import { useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { getFeaturedNews, getAllNews } from './data';
-import { LuArrowLeft, LuCalendar, LuNewspaper } from "react-icons/lu";
+import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getFeaturedNews, getAllNews } from "./data";
+import { Section } from "@/components/layout/Section";
+import { LuArrowLeft, LuZap, LuActivity } from "react-icons/lu";
 
-gsap.registerPlugin( useGSAP );
+gsap.registerPlugin( ScrollTrigger );
 
 export default function NewsPreview ()
 {
     const featured = getFeaturedNews()[ 0 ];
-    const feed = getAllNews().slice( 0, 6 );
+    const feed = getAllNews().slice( 1, 5 );
 
-    const rootRef = useRef<HTMLDivElement>( null );
-    const feedRef = useRef<HTMLDivElement>( null );
-    const tweenRef = useRef<gsap.core.Tween | null>( null );
+    const containerRef = useRef<HTMLDivElement>( null );
+    const featuredRef = useRef<HTMLDivElement>( null );
 
-    /* ================= ENTRANCE ================= */
     useGSAP( () =>
     {
-        gsap.from( '[data-news-block]', {
-            y: 24,
+        gsap.from( ".news-eyebrow", {
             opacity: 0,
-            stagger: 0.08,
-            duration: 0.8,
-            ease: 'power3.out',
-        } );
-    }, [] );
-
-    /* ================= AUTO SCROLL FEED ================= */
-    useEffect( () =>
-    {
-        if ( !feedRef.current ) return;
-
-        // Disable auto-scroll on small screens
-        if ( window.innerWidth < 1024 ) return;
-
-        const container = feedRef.current;
-        const items = Array.from( container.children ) as HTMLElement[];
-
-        if ( items.length < 2 ) return;
-
-        const itemHeight = items[ 0 ].offsetHeight + 24; // incl. gap
-        const totalHeight = itemHeight * items.length;
-
-        gsap.set( container, { y: 0 } );
-
-        tweenRef.current = gsap.to( container, {
-            y: `-=${ totalHeight }`,
-            duration: items.length * 7, // ~7s per item
-            ease: 'linear',
-            repeat: -1,
-            modifiers: {
-                y: ( y ) =>
-                {
-                    const current = parseFloat( y );
-                    return `${ current % totalHeight }px`;
-                },
-            },
+            x: -30,
+            duration: 1,
+            scrollTrigger: {
+                trigger: ".news-eyebrow",
+                start: "top 90%"
+            }
         } );
 
-        // Pause on hover
-        const pause = () => tweenRef.current?.pause();
-        const resume = () => tweenRef.current?.resume();
+        gsap.to( ".parallax-img", {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-img",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        } );
 
-        container.addEventListener( 'mouseenter', pause );
-        container.addEventListener( 'mouseleave', resume );
-        container.addEventListener( 'focusin', pause );
-        container.addEventListener( 'focusout', resume );
+        gsap.from( ".feed-item", {
+            opacity: 0,
+            x: 50,
+            scale: 0.95,
+            stagger: 0.2,
+            duration: 1.2,
+            ease: "expo.out",
+            scrollTrigger: {
+                trigger: ".feed-container",
+                start: "top 80%"
+            }
+        } );
 
-        return () =>
-        {
-            tweenRef.current?.kill();
-            container.removeEventListener( 'mouseenter', pause );
-            container.removeEventListener( 'mouseleave', resume );
-            container.removeEventListener( 'focusin', pause );
-            container.removeEventListener( 'focusout', resume );
-        };
-    }, [] );
+        gsap.to( ".floating-hud", {
+            y: -100,
+            ease: "none",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                scrub: 1
+            }
+        } );
+    }, { scope: containerRef } );
 
     if ( !featured ) return null;
 
     return (
-        <section
-            ref={ rootRef }
-            aria-labelledby="news-heading"
-            className="relative bg-white border-t border-slate-200 py-28"
-            dir="rtl"
+        <Section
+            variant="white"
+            spacing="large"
+            id="news"
+            className="overflow-visible"
         >
-            <div className="mx-auto max-w-7xl px-4">
+            {/* 🧩 BACKGROUND IMMERSION LAYER */ }
+            <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+                <div className="floating-hud absolute top-20 left-10 text-[100px] font-black text-slate-50 leading-none">
+                    INSIGHT
+                </div>
+                <div className="absolute top-1/2 left-0 w-full h-px bg-slate-100" />
+                <div className="absolute inset-0 opacity-[0.03] [background-image:linear-gradient(to_right,#145C98_1px,transparent_1px),linear-gradient(to_bottom,#145C98_1px,transparent_1px)] [background-size:100px_100px]" />
+            </div>
+
+            <div ref={ containerRef } className="relative z-10">
 
                 {/* ================= HEADER ================= */ }
-                <header
-                    data-news-block
-                    className="flex items-end justify-between mb-16"
-                >
-                    <div>
-                        <span className="inline-flex items-center gap-2 text-bms-primary font-bold text-xs tracking-wider mb-4">
-                            <LuNewspaper className="h-4 w-4" />
-                            مرکز رسانه بارمان
-                        </span>
+                <header className="flex flex-col md:flex-row items-end justify-between gap-8 mb-24 pr-4">
+                    <div className="space-y-6 text-right">
+                        <div className="news-eyebrow flex items-center gap-3">
+                            <div className="h-2 w-2 rounded-full bg-[#D72638] shadow-[0_0_10px_#D72638]" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
+                                Data Stream / 042-BMS
+                            </span>
+                        </div>
 
-                        <h2
-                            id="news-heading"
-                            className="text-3xl md:text-4xl font-bold text-slate-900"
-                        >
-                            اخبار، تحلیل‌ها و اطلاعیه‌ها
+                        <h2 className="text-5xl md:text-7xl font-black text-slate-950 tracking-tightest leading-none">
+                            مرکز رسانه و <br />
+                            <span className="text-[#145C98]">
+                                تحولات استراتژیک
+                            </span>
                         </h2>
                     </div>
 
-                    <Link
-                        href="/news"
-                        className="hidden md:inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-bms-primary transition"
-                    >
-                        مشاهده آرشیو
-                        <LuArrowLeft className="h-4 w-4" />
+                    <Link href="/news" className="group flex flex-col items-end gap-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                            Archive
+                        </span>
+                        <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 pl-4 pr-6 py-3 rounded-full transition-all group-hover:bg-[#145C98] group-hover:text-white group-hover:border-[#145C98]">
+                            <span className="text-sm font-black">
+                                مشاهده تمام اخبار
+                            </span>
+                            <LuArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-2" />
+                        </div>
                     </Link>
                 </header>
 
-                {/* ================= GRID ================= */ }
-                <div className="grid lg:grid-cols-12 gap-12">
+                <div className="grid lg:grid-cols-12 gap-16 xl:gap-24">
 
                     {/* ================= FEATURED ================= */ }
-                    <article
-                        data-news-block
-                        className="lg:col-span-7 group"
-                    >
-                        <Link href={ `/news/${ featured.slug }` } className="block">
-                            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-slate-100 mb-8">
+                    <div className="lg:col-span-7" ref={ featuredRef }>
+                        <Link
+                            href={ `/news/${ featured.slug }` }
+                            className="group relative block"
+                        >
+                            <div className="relative aspect-[16/10] overflow-hidden rounded-[3rem] bg-slate-900 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] ring-1 ring-slate-200">
                                 <Image
                                     src={ featured.image }
                                     alt={ featured.title }
                                     fill
-                                    priority
-                                    sizes="(max-width: 1024px) 100vw, 60vw"
-                                    className="object-cover transition-transform duration-[2500ms] ease-out group-hover:scale-105"
+                                    className="parallax-img object-cover opacity-80 transition-transform duration-[2s] group-hover:scale-110"
                                 />
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
+
+                                <div className="absolute top-10 right-10 flex flex-col items-end gap-2 text-white/40 font-mono text-[9px] uppercase tracking-widest">
+                                    <span>Status: Verified</span>
+                                    <span>Latency: 14ms</span>
+                                </div>
+
+                                <div className="absolute top-0 right-0 h-32 w-1 bg-[#F4C430]" />
                             </div>
 
-                            <div className="space-y-4 max-w-xl">
-                                <span className="inline-block text-xs font-bold tracking-widest text-bms-primary">
-                                    { featured.category }
-                                </span>
+                            <div className="mt-10 space-y-6 pr-4">
+                                <div className="flex items-center gap-4">
+                                    <span className="bg-[#D72638] text-white text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-tighter">
+                                        { featured.category }
+                                    </span>
+                                    <time className="text-xs font-bold text-slate-400 font-mono">
+                                        { new Intl.DateTimeFormat( "fa-IR" )
+                                            .format( new Date( featured.publishedAt ) ) }
+                                    </time>
+                                </div>
 
-                                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-snug group-hover:text-bms-primary transition-colors">
+                                <h3 className="text-3xl md:text-5xl font-black text-slate-900 leading-[1.1] transition-colors group-hover:text-[#145C98]">
                                     { featured.title }
                                 </h3>
 
-                                <p className="text-slate-600 leading-relaxed line-clamp-3">
+                                <p className="text-lg text-slate-500 leading-corp-relaxed line-clamp-3 font-light text-justify">
                                     { featured.summary }
                                 </p>
+
+                                <div className="flex items-center gap-3 text-[#145C98] font-black uppercase text-xs tracking-widest pt-4">
+                                    <LuZap className="h-4 w-4 fill-current" />
+                                    <span>Full Analysis Available</span>
+                                </div>
                             </div>
-                        </Link>
-                    </article>
-
-                    {/* ================= AUTO-SCROLL FEED ================= */ }
-                    <div
-                        data-news-block
-                        className="lg:col-span-5 border-r border-slate-200 pr-8 overflow-hidden"
-                    >
-                        <div ref={ feedRef } className="flex flex-col gap-6">
-                            { [ ...feed, ...feed ].map( ( item, idx ) => (
-                                <Link
-                                    key={ `${ item.slug }-${ idx }` }
-                                    href={ `/news/${ item.slug }` }
-                                    className="group flex gap-4 items-start"
-                                >
-                                    <div className="mt-1 h-2 w-2 rounded-full bg-bms-primary/40 group-hover:bg-bms-primary transition" />
-
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 text-xs text-slate-400 mb-1">
-                                            <LuCalendar className="h-3 w-3" />
-                                            <span className="font-mono">
-                                                { new Intl.DateTimeFormat( 'fa-IR' ).format(
-                                                    new Date( item.publishedAt )
-                                                ) }
-                                            </span>
-                                        </div>
-
-                                        <h4 className="text-sm font-bold text-slate-800 leading-snug group-hover:text-bms-primary transition-colors line-clamp-2">
-                                            { item.title }
-                                        </h4>
-                                    </div>
-                                </Link>
-                            ) ) }
-                        </div>
-
-                        {/* Mobile CTA */ }
-                        <Link
-                            href="/news"
-                            className="md:hidden mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 py-4 text-sm font-bold text-slate-700 hover:bg-slate-200 transition"
-                        >
-                            مشاهده همه اخبار
-                            <LuArrowLeft className="h-4 w-4" />
                         </Link>
                     </div>
 
+                    {/* ================= FEED ================= */ }
+                    <div className="lg:col-span-5 space-y-12">
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                Latest Feed
+                            </span>
+                            <LuActivity className="h-4 w-4 text-emerald-500 animate-pulse" />
+                        </div>
+
+                        <div className="feed-container divide-y divide-slate-100">
+                            { feed.map( ( item ) => (
+                                <article
+                                    key={ item.slug }
+                                    className="feed-item group py-10 first:pt-0"
+                                >
+                                    <Link
+                                        href={ `/news/${ item.slug }` }
+                                        className="flex flex-col gap-4"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="h-1.5 w-1.5 rounded-full bg-[#145C98] transition-transform group-hover:scale-[3] group-hover:bg-[#D72638]" />
+                                            <span className="text-[10px] font-black text-[#D72638] uppercase tracking-wider">
+                                                { item.category }
+                                            </span>
+                                        </div>
+
+                                        <h4 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-[#145C98] transition-all">
+                                            { item.title }
+                                        </h4>
+
+                                        <div className="flex items-center justify-between">
+                                            <time className="text-[10px] font-mono font-bold text-slate-400">
+                                                { new Intl.DateTimeFormat( "fa-IR" )
+                                                    .format( new Date( item.publishedAt ) ) }
+                                            </time>
+                                            <div className="h-px flex-1 bg-slate-50 mx-4" />
+                                            <LuArrowLeft className="h-4 w-4 text-slate-300 transition-transform group-hover:-translate-x-2 group-hover:text-[#145C98]" />
+                                        </div>
+                                    </Link>
+                                </article>
+                            ) ) }
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </section>
+        </Section>
     );
 }

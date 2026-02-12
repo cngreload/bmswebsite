@@ -1,10 +1,15 @@
-// layout.tsx
+// app/layout.tsx
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import RootChrome from "@/components/layout/RootChrome";
 import Script from "next/script";
+import { cn } from "@/lib/utils";
 
+/**
+ * We use a specific subset of weights to minimize layout shift 
+ * and maximize typographic authority.
+ */
 const bmsSans = IBM_Plex_Sans_Arabic( {
   subsets: [ "arabic", "latin" ],
   weight: [ "300", "400", "500", "600", "700" ],
@@ -13,39 +18,60 @@ const bmsSans = IBM_Plex_Sans_Arabic( {
 } );
 
 export const viewport: Viewport = {
-  themeColor: "#145C98",
+  themeColor: "#145C98", // BMS Primary
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5, // Accessible zoom
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL( "https://barman-mes.ir" ),
   title: {
     template: "%s | بارمان محور اسپادانا",
-    default: "بارمان | هوشمندسازی دارایی‌های حیاتی",
+    default: "بارمان | هوشمندسازی و مدیریت دارایی‌های حیاتی",
   },
   description:
-    "بارمان با سامانه ICTS و پلتفرم Clinicans، نبض زیرساخت‌های انرژی و سلامت را در دست می‌گیرد. تکنولوژی بومی برای محافظت از دارایی‌های حیاتی کشور.",
+    "بارمان محور اسپادانا پیشرو در ارائه راهکارهای هوشمندسازی صنعتی، سامانه ICTS و پلتفرم Clinicans. معماری نوین برای حفاظت از زیرساخت‌های انرژی و سلامت کشور.",
   alternates: {
     canonical: "https://barman-mes.ir",
   },
-  robots: { index: true, follow: true },
-
-  // SEO polish
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "fa_IR",
     siteName: "بارمان محور اسپادانا",
     url: "https://barman-mes.ir",
+    title: "بارمان | هوشمندسازی دارایی‌های حیاتی",
+    description: "تکنولوژی بومی برای محافظت از زیرساخت‌های انرژی و سلامت کشور.",
+    images: [
+      {
+        url: "/og-image.jpg", // Ensure this exists in public folder
+        width: 1200,
+        height: 630,
+        alt: "Barman Mehvar Spadana - Intelligent Solutions",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    title: "بارمان | هوشمندسازی دارایی‌های حیاتی",
+    description: "تکنولوژی بومی برای محافظت از زیرساخت‌های انرژی و سلامت کشور.",
   },
-
-  // PWA / favicon readiness
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
@@ -57,18 +83,32 @@ export default function RootLayout ( {
   children: React.ReactNode;
 } )
 {
+  /**
+   * JSON-LD for Search Engine Authority.
+   * This provides a "Corporate Graph" to Google.
+   */
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": "https://barman-mes.ir/#organization",
-        name: "Barman Mehvar Spadana",
-        alternateName: "بارمان",
-        url: "https://barman-mes.ir",
-        logo: "https://barman-mes.ir/logo.png",
-        foundingCountry: "IR",
-        description: "Leading provider of Smart Infrastructure and Vital Asset Management solutions.",
+        "name": "Barman Mehvar Spadana",
+        "alternateName": "بارمان محور اسپادانا",
+        "url": "https://barman-mes.ir",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://barman-mes.ir/logo.png"
+        },
+        "foundingDate": "2021",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+98-31-XXXXXXXX", // Replace with real number
+          "contactType": "customer service",
+          "areaServed": "IR",
+          "availableLanguage": [ "Persian" ]
+        },
+        "description": "Leading provider of Smart Infrastructure and Vital Asset Management solutions in Iran.",
       },
     ],
   };
@@ -77,7 +117,10 @@ export default function RootLayout ( {
     <html
       lang="fa"
       dir="rtl"
-      className={ `${ bmsSans.variable } scroll-smooth text-slate-900 antialiased` }
+      className={ cn(
+        bmsSans.variable,
+        "scroll-smooth selection:bg-bms-primary/10 selection:text-bms-primary"
+      ) }
     >
       <head>
         <Script
@@ -87,17 +130,28 @@ export default function RootLayout ( {
         />
       </head>
 
-      <body className="bg-slate-50 min-h-screen flex flex-col">
-        {/* Skip link */ }
+      <body className="bg-white font-sans text-slate-900 antialiased min-h-screen flex flex-col">
+        {/* 
+            Premium Skip Link: 
+            Visible only on focus, styled with corporate branding.
+        */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[100] rounded-2xl bg-bms-primary px-8 py-4 text-white font-semibold shadow-xl transition-all duration-300"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-6 focus:right-6 focus:z-[100] px-6 py-3 bg-bms-primary text-white rounded-xl font-bold shadow-2xl transition-transform"
         >
           پرش به محتوای اصلی
         </a>
 
+        {/* 
+            RootChrome: Handles persistent UI (Header/Footer).
+            main#main-content: Provides the semantic hook for skip-links.
+        */}
         <RootChrome>
-          <main id="main-content" className="flex-1 w-full relative overflow-hidden">
+          <main
+            id="main-content"
+            className="flex-1 w-full relative flex flex-col"
+            role="main"
+          >
             { children }
           </main>
         </RootChrome>

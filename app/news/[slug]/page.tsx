@@ -1,213 +1,251 @@
-// app/news/[slug]/page.tsx
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import Script from "next/script";
-// 🧠 UPDATE: Switch to local static data
-import { getNewsBySlug, getAllNews } from "@/components/news/data";
-import { Metadata } from "next";
-import
-{
-    LuCalendar,
+import React from 'react';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { getNewsBySlug, getRelatedNews } from '@/components/news/data';
+import Image from 'next/image';
+import { Metadata } from 'next';
+import Script from 'next/script';
+import { LuCalendar, LuClock, LuArrowRight, LuNewspaper, LuShare2 } from 'react-icons/lu';
+import { Section } from '@/components/layout/Section';
 
-    LuArrowRight,
-    LuShare2,
-    LuUser,
-} from "react-icons/lu";
-
-// ⚡ PERFORMANCE: Static Site Generation (SSG)
-// This tells Next.js to pre-build these pages, no server required at runtime.
-export async function generateStaticParams ()
+interface Props
 {
-    const posts = getAllNews();
-    return posts.map( ( post ) => ( {
-        slug: post.slug,
-    } ) );
+    params: Promise<{ slug: string; }>;
 }
 
-type Props = {
-    params: Promise<{ slug: string; }>;
-};
-
-// 🧠 CRAWLER EMPATHY: Dynamic SEO Metadata from Static Data
+/**
+ * 🧠 SEO METADATA REFORMATION
+ * Optimized for Google's E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)
+ */
 export async function generateMetadata ( { params }: Props ): Promise<Metadata>
 {
     const { slug } = await params;
-    const post = getNewsBySlug( slug );
-
-    if ( !post )
-    {
-        return { title: "مطلب یافت نشد" };
-    }
+    const article = getNewsBySlug( slug );
+    if ( !article ) return { title: 'مطلب یافت نشد' };
 
     return {
-        title: post.title,
-        description: post.summary,
-        openGraph: {
-            title: post.title,
-            description: post.summary,
-            type: "article",
-            publishedTime: post.publishedAt,
-            section: post.category,
-            images: [ { url: post.image } ],
-            locale: "fa_IR",
-            siteName: "بارمان محور اسپادانا"
+        title: article.title,
+        description: article.summary,
+        alternates: {
+            canonical: `https://barman-mes.ir/news/${ slug }`,
         },
-        twitter: {
-            card: "summary_large_image",
-            title: post.title,
-            description: post.summary,
-        }
+        openGraph: {
+            title: article.title,
+            description: article.summary,
+            type: 'article',
+            publishedTime: article.publishedAt,
+            authors: [ article.author ],
+            images: [ { url: article.image } ],
+            locale: 'fa_IR',
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
+        },
     };
 }
 
-export default async function NewsDetailPage ( { params }: Props )
+export default async function ArticlePage ( { params }: Props )
 {
     const { slug } = await params;
+    const article = getNewsBySlug( slug );
 
-    // ⚡ FETCH: Load from local constant (Instant)
-    const post = getNewsBySlug( slug );
-
-    if ( !post )
+    if ( !article )
     {
         notFound();
     }
 
-    // Optional: Fetch related posts based on IDs in the data
+    const related = getRelatedNews( article.relatedIds );
 
-    // 🧠 CRAWLER EMPATHY: Structured Data (JSON-LD)
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": post.title,
-        "image": [ post.image ],
-        "datePublished": post.publishedAt,
-        "author": {
-            "@type": "Organization",
-            "name": post.author || "تیم تحریریه بارمان",
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Barman Mehvar Spadana",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://barman-mes.ir/logo.png"
-            }
-        },
-        "description": post.summary,
-        "articleBody": post.content
+    const formatDate = ( dateString: string ) =>
+    {
+        return new Date( dateString ).toLocaleDateString( 'fa-IR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        } );
     };
 
-    const dateLabel = new Intl.DateTimeFormat( "fa-IR", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit",
-    } ).format( new Date( post.publishedAt ) );
+    /**
+     * 🧠 STRUCTURED DATA (JSON-LD)
+     * Injects corporate authority directly into search results.
+     */
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: article.title,
+        image: [ article.image ],
+        datePublished: article.publishedAt,
+        author: [ {
+            '@type': 'Organization',
+            name: article.author,
+        } ],
+        publisher: {
+            '@type': 'Organization',
+            name: 'Barman Mehvar Spadana',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://barman-mes.ir/logo.png'
+            }
+        },
+        description: article.summary,
+    };
 
     return (
-        <>
+        <main className="min-h-screen bg-white" dir="rtl">
             <Script
-                id="json-ld-article"
+                id="article-jsonld"
                 type="application/ld+json"
                 dangerouslySetInnerHTML={ { __html: JSON.stringify( jsonLd ) } }
             />
 
-            <div id="main-content" className="min-h-screen bg-slate-50 pb-24">
-
-                {/* 🧭 STICKY NAV */ }
-                <div className="sticky top-[64px] z-20 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 py-3 transition-all">
-                    <div className="container mx-auto max-w-4xl px-4 flex items-center justify-between text-xs">
-                        <Link href="/news" className="flex items-center gap-2 text-slate-600 hover:text-bms-primary transition-colors font-bold group">
-                            <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            <span>بازگشت به مرکز دانش</span>
-                        </Link>
-                        <div className="hidden sm:flex items-center gap-2 text-slate-400">
-                            <span className="text-slate-500 font-medium">{ post.category }</span>
-                            <span className="opacity-30">/</span>
-                            <span className="truncate max-w-[200px] font-bold text-slate-800">{ post.title }</span>
+            {/* ================= HEADER SECTION (The Command Center) ================= */ }
+            {/* FIX: Changed 'background' to 'variant' to match SectionProps */ }
+            <Section variant="subtle" spacing="default" className="border-b border-slate-100">
+                <header className="max-w-5xl mx-auto space-y-8">
+                    {/* Breadcrumbs / Meta */ }
+                    <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest">
+                        <span className="bg-[#D72638] text-white px-3 py-1 rounded-md shadow-sm">
+                            { article.category }
+                        </span>
+                        <div className="flex items-center gap-2 text-slate-400 border-r border-slate-200 pr-4">
+                            <LuCalendar className="text-[#F4C430]" />
+                            <time dateTime={ article.publishedAt }>{ formatDate( article.publishedAt ) }</time>
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-400 border-r border-slate-200 pr-4">
+                            <LuClock className="text-bms-primary" />
+                            <span>{ article.readingTime }</span>
                         </div>
                     </div>
-                </div>
 
-                <article className="container mx-auto max-w-4xl px-4 mt-10 md:mt-16">
+                    <h1 className="text-slate-900 leading-[1.15] text-balance font-black text-4xl md:text-5xl lg:text-6xl tracking-tightest">
+                        { article.title }
+                    </h1>
 
-                    {/* 📝 HEADER BLOCK */ }
-                    <header className="mb-10 text-right space-y-6">
-                        <div className="flex flex-wrap items-center gap-3 text-xs font-medium">
-                            <span className="px-3 py-1 rounded-lg bg-bms-primary/10 text-bms-primary border border-bms-primary/20">
-                                { post.category }
-                            </span>
-                            <span className="flex items-center gap-1.5 text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-lg">
-                                <LuCalendar className="h-3.5 w-3.5" />
-                                <span>{ dateLabel }</span>
-                            </span>
+                    <div className="flex items-center gap-4 pt-4 border-t border-slate-200/50 w-fit">
+                        <div className="h-12 w-12 rounded-full bg-bms-primary flex items-center justify-center text-white font-bold shadow-lg">
+                            { article.author.charAt( 0 ) }
                         </div>
-
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bms-dark leading-[1.3] tracking-tight text-balance">
-                            { post.title }
-                        </h1>
-
-                        <p className="text-base md:text-xl text-slate-600 leading-9 font-light border-r-4 border-slate-300 pr-6 mr-2">
-                            { post.summary }
-                        </p>
-                    </header>
-
-                    {/* 🖼️ HERO IMAGE */ }
-                    <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-2xl mb-12 bg-slate-200 ring-1 ring-slate-900/5">
-                        <Image
-                            src={ post.image }
-                            alt={ post.title }
-                            fill
-                            className="object-cover"
-                            priority
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1000px"
-                        />
+                        <div className="text-right">
+                            <span className="block text-xs font-black text-slate-400 uppercase tracking-tighter">Author</span>
+                            <span className="text-sm font-bold text-slate-900">{ article.author }</span>
+                        </div>
                     </div>
+                </header>
+            </Section>
 
-                    {/* 📄 CONTENT BODY */ }
-                    <div className="grid gap-10 lg:grid-cols-12">
+            {/* ================= CONTENT BODY ================= */ }
+            <Section spacing="default" className="overflow-visible">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24 items-start">
 
-                        {/* Main Text */ }
-                        <div className="lg:col-span-12">
-                            <div className="bg-white rounded-[2.5rem] p-6 md:p-12 shadow-sm border border-slate-200 text-right">
-                                {/* 
-                           ⚠️ SECURITY NOTE: 
-                           Since this is internal static data, dangerouslySetInnerHTML is safe.
-                        */}
-                                <div
-                                    className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:text-bms-dark prose-p:text-slate-700 prose-p:leading-9 prose-p:text-justify prose-img:rounded-2xl prose-a:text-bms-primary hover:prose-a:underline prose-li:text-right"
-                                    dangerouslySetInnerHTML={ { __html: post.content } }
-                                />
-
-                                {/* Reading Time Badge */ }
-                                <div className="mt-12 pt-8 border-t border-slate-100 flex items-center justify-between">
-                                    <span className="text-xs font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full">
-                                        { post.readingTime }
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 👤 AUTHOR CARD */ }
-                        <div className="lg:col-span-12">
-                            <div className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm max-w-lg mr-auto">
-                                <div className="h-14 w-14 shrink-0 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 border border-slate-200">
-                                    <LuUser className="h-7 w-7" />
-                                </div>
-                                <div className="text-right flex-1">
-                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">نویسنده</p>
-                                    <p className="text-base font-bold text-slate-900">{ post.author }</p>
-                                    <p className="text-xs text-slate-500 mt-1">تیم فنی و مهندسی بارمان</p>
-                                </div>
-                                <button className="p-2 rounded-xl text-slate-400 hover:bg-slate-50 hover:text-bms-primary transition-colors" aria-label="Share">
-                                    <LuShare2 className="h-5 w-5" />
+                    {/* MAIN CONTENT AREA */ }
+                    <div className="lg:col-span-8 space-y-12">
+                        {/* Hero Image with Machined Border */ }
+                        <div className="relative aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden shadow-2xl ring-8 ring-slate-50">
+                            <Image
+                                src={ article.image }
+                                alt={ article.title }
+                                fill
+                                priority
+                                className="object-cover"
+                                sizes="(max-width: 1024px) 100vw, 800px"
+                            />
+                            {/* Visual HUD overlay */ }
+                            <div className="absolute top-6 left-6 flex gap-2">
+                                <button className="p-3 rounded-full bg-white/90 backdrop-blur-md text-bms-primary shadow-xl hover:bg-white transition-colors">
+                                    <LuShare2 className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>
+
+                        {/* Article Content - Executive Typography */ }
+                        <div
+                            className="prose prose-lg prose-slate max-w-none 
+                            prose-headings:font-black prose-headings:text-slate-900 prose-headings:tracking-tightest
+                            prose-p:text-slate-600 prose-p:leading-[1.8] prose-p:text-justify
+                            prose-li:text-slate-600 prose-li:marker:text-bms-primary
+                            prose-blockquote:border-r-4 prose-blockquote:border-[#F4C430] prose-blockquote:bg-slate-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-l-2xl
+                            prose-strong:text-slate-900 prose-strong:font-black"
+                            dangerouslySetInnerHTML={ { __html: article.content } }
+                        />
                     </div>
 
-                </article>
+                    {/* SIDEBAR (Desktop Only) */ }
+                    <aside className="lg:col-span-4 sticky top-28 space-y-12">
+
+                        {/* Related News - "Machined" Cards */ }
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3">
+                                <div className="h-1 w-8 bg-[#D72638]" />
+                                <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">
+                                    Related Intelligence
+                                </h3>
+                            </div>
+
+                            <div className="space-y-4">
+                                { related.map( ( item ) => (
+                                    <Link
+                                        key={ item.slug }
+                                        href={ `/news/${ item.slug }` }
+                                        className="group block bg-slate-50 p-5 rounded-2xl border border-transparent hover:border-bms-primary/20 hover:bg-white hover:shadow-soft-lg transition-all duration-300"
+                                    >
+                                        <h4 className="text-sm font-bold text-slate-800 leading-snug mb-3 group-hover:text-bms-primary transition-colors">
+                                            { item.title }
+                                        </h4>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-[10px] font-mono font-bold text-slate-400">
+                                                { formatDate( item.publishedAt ) }
+                                            </span>
+                                            <LuArrowRight className="w-4 h-4 text-slate-300 transition-transform group-hover:-translate-x-1 group-hover:text-bms-primary" />
+                                        </div>
+                                    </Link>
+                                ) ) }
+                            </div>
+                        </div>
+
+                        {/* Media Contact Box - High Authority Dark Blue */ }
+                        <div className="bg-bms-dark rounded-[2rem] p-8 text-white relative overflow-hidden group shadow-2xl">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-bms-primary/20 rounded-full blur-3xl" />
+                            <div className="relative z-10 space-y-6">
+                                <LuNewspaper className="h-10 w-10 text-[#F4C430]" />
+                                <div className="space-y-2">
+                                    <h4 className="text-lg font-black tracking-tight">ارتباط با رسانه</h4>
+                                    <p className="text-xs text-slate-400 leading-relaxed font-light">
+                                        برای استعلام گزارش‌های فنی و هماهنگی مصاحبه با تیم روابط عمومی بارمان در تماس باشید.
+                                    </p>
+                                </div>
+                                <div className="pt-4 border-t border-white/10 space-y-2">
+                                    <p className="text-sm font-mono tracking-tighter">info@barman-mes.ir</p>
+                                    <p className="text-sm font-bold text-[#F4C430]">۰۳۱-۳XXXXXXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </Section>
+
+            {/* ================= MOBILE UNIQUE UI: Floating Action Bar ================= */ }
+            <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md">
+                <div className="bg-white/90 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl p-4 flex items-center justify-between ring-1 ring-black/5">
+                    <Link href="/news" className="flex items-center gap-2 text-xs font-black text-slate-500 hover:text-bms-primary">
+                        <LuArrowRight className="w-4 h-4" />
+                        <span>بازگشت به آرشیو</span>
+                    </Link>
+                    <div className="h-8 w-px bg-slate-200" />
+                    <button className="flex items-center gap-2 text-xs font-black text-bms-primary">
+                        <span>اشتراک‌گذاری</span>
+                        <LuShare2 className="w-4 h-4" />
+                    </button>
+                </div>
             </div>
-        </>
+        </main>
     );
 }

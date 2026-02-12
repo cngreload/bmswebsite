@@ -12,17 +12,17 @@ if ( typeof window !== "undefined" )
     gsap.registerPlugin( ScrollTrigger );
 }
 
-export default function CngStory ()
+export default function CngStorySection ()
 {
     const containerRef = useRef<HTMLElement>( null );
     const imageWrapperRef = useRef<HTMLDivElement>( null );
     const contentRef = useRef<HTMLDivElement>( null );
 
-    // Refs for staggered animation
-    const badgeRef = useRef( null );
-    const titleRef = useRef( null );
-    const descRef = useRef( null );
-    const gridRef = useRef( null );
+    // Refs for staggered internal animations
+    const badgeRef = useRef<HTMLDivElement>( null );
+    const titleRef = useRef<HTMLHeadingElement>( null );
+    const descRef = useRef<HTMLParagraphElement>( null );
+    const gridRef = useRef<HTMLDivElement>( null );
 
     useEffect( () =>
     {
@@ -32,65 +32,63 @@ export default function CngStory ()
 
         if ( !container || !imageWrapper || !content ) return;
 
-        // ⚡ PERFORMANCE: Browser Hinting
+        // ⚡ PERFORMANCE: Hinting browser for heavy transforms
         gsap.set( imageWrapper, { willChange: "clip-path, transform" } );
         gsap.set( content, { willChange: "opacity, transform" } );
 
         const ctx = gsap.context( () =>
         {
-
             const tl = gsap.timeline( {
                 scrollTrigger: {
                     trigger: container,
                     start: "top top",
-                    end: "+=300%", // Longer scroll distance for drama
-                    scrub: 0.5,    // Smooth scrubbing
+                    end: "+=300%", // Cinematic long-scroll
+                    scrub: 0.5,
                     pin: true,
                     anticipatePin: 1,
                 },
             } );
 
-            // --- SEQUENCE DEFINITION ---
+            // --- THE SEQUENCE ---
 
-            // 1. Expand Image (The Reveal)
+            // 1. Reveal Phase: Expand image from card-inset to full-screen
             tl.to( imageWrapper, {
-                clipPath: "inset(0% 0% 0% 0% round 0px)", // Full screen, sharp corners
+                clipPath: "inset(0% 0% 0% 0% round 0px)",
                 scale: 1,
                 duration: 2,
                 ease: "power3.inOut",
             } )
 
-                // 2. Content Entry (Staggered Fade In)
+                // 2. Entrance Phase: Staggered reveal of the Glass Card
                 .to( content, {
                     opacity: 1,
                     y: 0,
                     duration: 1,
                     ease: "power2.out",
-                }, "-=0.5" ) // Overlap slightly with image expansion
+                }, "-=0.5" )
 
-                // Stagger internal elements
                 .from( [ badgeRef.current, titleRef.current, descRef.current, gridRef.current ], {
-                    y: 20,
+                    y: 24,
                     opacity: 0,
                     duration: 0.8,
-                    stagger: 0.1,
-                    ease: "back.out(1.2)",
+                    stagger: 0.15,
+                    ease: "back.out(1.4)",
                 }, "<" )
 
-                // 3. The Hold (Reading Time)
-                .to( {}, { duration: 1.5 } )
+                // 3. The Sustained Hold (Reading Time)
+                .to( {}, { duration: 2 } )
 
-                // 4. Exit Phase
+                // 4. Exit Phase: Fade content and Grayscale the image
                 .to( content, {
                     opacity: 0,
-                    y: -20,
-                    duration: 0.5,
+                    y: -40,
+                    duration: 0.8,
                     ease: "power2.in",
                 } )
                 .to( imageWrapper, {
-                    clipPath: "inset(15% 5% 15% 5% round 2.5rem)", // Shrink back differently
+                    clipPath: "inset(15% 5% 15% 5% round 3rem)",
                     scale: 0.9,
-                    filter: "grayscale(100%)", // Fade to B&W on exit
+                    filter: "grayscale(100%) brightness(0.6)",
                     duration: 2,
                     ease: "power3.inOut",
                 }, "<+=0.1" );
@@ -103,67 +101,63 @@ export default function CngStory ()
     return (
         <section
             ref={ containerRef }
-            className="relative w-full h-screen bg-slate-50 flex items-center justify-center overflow-hidden"
-            aria-label="داستان امنیت و پدافند"
+            className="relative w-full h-screen bg-white flex items-center justify-center overflow-hidden"
+            aria-label="داستان امنیت و پدافند غیرعامل بارمان"
             dir="rtl"
         >
             <div className="relative w-full h-full flex flex-col items-center justify-center">
 
-                {/* 
-           ================= 1. THE GLASS CARD (Content) =================
-           Positioned absolutely in center (z-20).
-           Initial state: Hidden & Translated Down.
-        */}
+                {/* ================= 1. THE GLASS CARD (Floating UI) ================= */ }
                 <div
                     ref={ contentRef }
-                    className="absolute z-20 w-[90%] max-w-4xl opacity-0 translate-y-10"
+                    className="absolute z-20 w-[92%] max-w-4xl opacity-0 translate-y-12 pointer-events-none"
                 >
-                    <div className="relative overflow-hidden rounded-[3rem] bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl p-8 md:p-12 text-center">
+                    <div className="relative overflow-hidden rounded-[3rem] bg-white/80 backdrop-blur-2xl border border-white/50 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] p-8 md:p-14 text-center">
 
-                        {/* Texture Overlay for Glass */ }
-                        <div className="absolute inset-0 bg-noise opacity-5 pointer-events-none" />
+                        {/* Subtle Noise Texture for Glass Look */ }
+                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/noise.webp')] bg-repeat" />
 
-                        {/* Badge */ }
-                        <div ref={ badgeRef } className="flex justify-center mb-6">
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold tracking-wider shadow-lg">
+                        {/* Badge - Corporate Dark Blue */ }
+                        <div ref={ badgeRef } className="flex justify-center mb-8">
+                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-950 text-white text-[10px] font-black uppercase tracking-widest shadow-xl ring-1 ring-white/20">
                                 <LuShieldCheck className="w-4 h-4 text-emerald-400" />
                                 <span>استاندارد ملی امنیت</span>
                             </span>
                         </div>
 
-                        {/* Headline */ }
-                        <h2 ref={ titleRef } className="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.1] text-slate-900 mb-6">
+                        {/* Headline - Typographic Authority */ }
+                        <h2 ref={ titleRef } className="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.1] text-slate-950 mb-8 tracking-tightest">
                             تنها دارنده گواهی <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bms-primary to-blue-600">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#145C98] to-blue-600">
                                 پدافند غیرعامل
                             </span>
                         </h2>
 
                         {/* Description */ }
-                        <p className="text-lg md:text-xl text-slate-600 leading-9 font-medium">
-                            در زیرساخت‌های حیاتی کشور، اعتماد اتفاقی نیست.
-                            <br className="hidden md:block" />
-                            سامانه کنترل و مانیتورینگ جایگاه های سوخت سی ان جی تنها پلتفرم بومی است که موفق به اخذ بالاترین سطوح تاییدیه‌های امنیتی و پدافندی شده است.
+                        <p ref={ descRef } className="text-base md:text-lg text-slate-600 leading-relaxed font-medium max-w-2xl mx-auto">
+                            در زیرساخت‌های حیاتی کشور، اعتماد بر پایه شواهد بنا می‌شود.
+                            سامانه ICTS تنها پلتفرم بومی است که موفق به اخذ بالاترین تاییدیه امنیتی شده است.
                         </p>
-                        {/* Trust Grid */ }
-                        <div ref={ gridRef } className="flex flex-wrap justify-center gap-4 mt-8 border-t border-slate-200/50 pt-8">
-                            <div className="flex items-center gap-3 bg-white/60 px-5 py-3 rounded-2xl border border-white shadow-sm hover:scale-105 transition-transform cursor-default">
-                                <div className="bg-amber-50 p-2 rounded-lg text-amber-600">
-                                    <LuAward className="w-5 h-5" />
+
+                        {/* Trust Grid - Red and Yellow Accents */ }
+                        <div ref={ gridRef } className="flex flex-wrap justify-center gap-5 mt-10 border-t border-slate-200/50 pt-10">
+                            <div className="flex items-center gap-4 bg-white/60 px-6 py-4 rounded-2xl border border-white shadow-sm transition-all hover:scale-105">
+                                <div className="bg-amber-50 p-3 rounded-xl text-[#F4C430]">
+                                    <LuAward className="w-6 h-6" />
                                 </div>
                                 <div className="text-right">
-                                    <span className="block text-[10px] text-slate-400 font-bold uppercase">Certificate</span>
-                                    <span className="text-sm font-bold text-slate-800">مجوز سازمان پدافند غیر عامل</span>
+                                    <span className="block text-[9px] text-slate-400 font-black uppercase tracking-tighter">Accreditation</span>
+                                    <span className="text-sm font-bold text-slate-900">مجوز سازمان پدافند</span>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 bg-white/60 px-5 py-3 rounded-2xl border border-white shadow-sm hover:scale-105 transition-transform cursor-default">
-                                <div className="bg-emerald-50 p-2 rounded-lg text-emerald-600">
-                                    <LuFileBadge className="w-5 h-5" />
+                            <div className="flex items-center gap-4 bg-white/60 px-6 py-4 rounded-2xl border border-white shadow-sm transition-all hover:scale-105">
+                                <div className="bg-blue-50 p-3 rounded-xl text-[#145C98]">
+                                    <LuFileBadge className="w-6 h-6" />
                                 </div>
                                 <div className="text-right">
-                                    <span className="block text-[10px] text-slate-400 font-bold uppercase">Approval</span>
-                                    <span className="text-sm font-bold text-slate-800">تاییدیه دانش بنیان</span>
+                                    <span className="block text-[9px] text-slate-400 font-black uppercase tracking-tighter">Status</span>
+                                    <span className="text-sm font-bold text-slate-900">تاییدیه دانش‌بنیان</span>
                                 </div>
                             </div>
                         </div>
@@ -171,39 +165,27 @@ export default function CngStory ()
                     </div>
                 </div>
 
-                {/* 
-           ================= 2. THE VISUAL (Image) =================
-           Initial State: Inset (Card Look).
-           Animates to: Full Screen.
-        */}
+                {/* ================= 2. THE VISUAL (Cinematic Image) ================= */ }
                 <div
                     ref={ imageWrapperRef }
-                    className="absolute inset-0 z-10 w-full h-full shadow-2xl origin-center overflow-hidden bg-slate-200"
+                    className="absolute inset-0 z-10 w-full h-full shadow-2xl origin-center overflow-hidden bg-slate-100"
                     style={ {
-                        // Responsive Clip-Path Logic:
-                        // Mobile: Wider (5% inset) | Desktop: Narrower (20% inset)
-                        clipPath: "inset(10% 5% 10% 5% round 2rem)",
+                        clipPath: "inset(10% 5% 10% 5% round 3rem)",
                         transform: "scale(0.95)",
                     } }
                 >
-                    {/* 
-             ⚡ IMAGE OPTIMIZATION: 
-             - fill: covers the container
-             - priority: High importance LCP candidate
-             - quality: 90 for crisp edges on expansion
-          */}
                     <Image
                         src="/certificate_padafand.webp"
-                        alt="زیرساخت امن صنعتی بارمان"
+                        alt="زیرساخت امن صنعتی بارمان محور اسپادانا"
                         fill
                         className="object-cover"
                         sizes="100vw"
                         priority
-                        quality={ 90 }
+                        quality={ 100 }
                     />
 
-                    {/* Cinematic Grain Overlay */ }
-                    <div className="absolute inset-0 bg-slate-900/10 pointer-events-none mix-blend-multiply" />
+                    {/* Cinematic Overlay */ }
+                    <div className="absolute inset-0 bg-slate-950/20 pointer-events-none mix-blend-multiply" />
                 </div>
 
             </div>

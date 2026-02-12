@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 // Components
 import Hero from "@/components/home/HeroSection";
+import DualFeatureCard from "@/components/home/DualFeatureCard";
 import TechStrip from "@/components/home/TechStrip";
 import WorldsGrid from "@/components/home/WorldsGrid";
-import ProductBands from "@/components/home/ProductBands";
 import NewsPreview from "@/components/news/NewsPreview";
+import { Section } from "@/components/layout/Section";
 
 export const metadata: Metadata = {
   title: "بارمان | تکنولوژی برای زندگی امن‌تر و هوشمندتر",
@@ -43,166 +44,81 @@ export const metadata: Metadata = {
 export default function HomePage ()
 {
   return (
-    <main
-      className="
-        flex flex-col min-h-screen
-        bg-slate-50
-        overflow-x-hidden
-        antialiased
-      "
-    >
-      {/* ===================== HERO ===================== */ }
-      <section
-        aria-label="معرفی بارمان"
-        className="
-          relative z-20
-          -mb-16 md:-mb-24 lg:-mb-32
-        "
-      >
-        <Hero />
-      </section>
+    <div className="flex flex-col min-h-screen bg-white overflow-x-hidden antialiased">
+      {/* 1. HERO SECTION */ }
+      <Hero />
 
-      {/* ===================== WORLDS + TECH (ZIGZAG) ===================== */ }
+      {/* 2. STRATEGIC PLATFORMS */ }
+      <Section variant="subtle" spacing="large" id="primary-platforms">
+        <header className="mb-16 md:mb-24 text-center space-y-4">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-bms-primary opacity-70">
+            Core Solutions
+          </span>
+          <h2 className="text-slate-900 font-black">پیشگام در هوشمندسازی زیرساخت‌های ملی</h2>
+        </header>
+
+        <DualFeatureCard
+          leftCard={ {
+            title: "سامانه هوشمند سوخت (ICTS)",
+            subtitle: "پایش لحظه‌ای، مدیریت هوشمند و امنیت کامل جایگاه‌های CNG با معماری Edge Computing و پروتکل‌های صنعتی اختصاصی",
+            ctaText: "مشاهده مستندات فنی",
+            ctaLink: "/cng-automation",
+            backgroundImage: "/images/icts-bg.jpg",
+            category: "INDUSTRIAL SAFETY", // Added missing prop
+          } }
+          rightCard={ {
+            title: "پلتفرم سلامت کلینیکانز",
+            subtitle: "سیستم یکپارچه مدیریت کلینیک‌های پزشکی با هوش مصنوعی، اتوماسیون فرآیندها و تحلیل داده‌های سلامت در زمان واقعی",
+            ctaText: "درخواست دمو",
+            ctaLink: "/clinicans",
+            backgroundImage: "/ctest.jpg",
+            category: "HEALTH TECH", // Added missing prop
+          } }
+          separatorText="WIT"
+        />
+      </Section>
+
+      {/* 3. CORE TECHNOLOGY (The ZigZag Overlay) */ }
       <section
         aria-label="حوزه‌های فعالیت و تکنولوژی"
-        className="
-          relative z-30
-          mx-auto w-full max-w-[1500px]
-          px-4 sm:px-6 md:px-8 lg:px-10
-          mt-2
-          pb-20 md:pb-28 lg:pb-36
-        "
+        className="relative z-30 mx-auto w-full max-w-[1500px] px-4 sm:px-6 md:px-8 lg:px-10 -mt-20 md:-mt-32 lg:-mt-40"
       >
-        {/* Floating surface */ }
-        <div
-          className="
-            relative
-            bg-white
-            rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem]
-            shadow-[0_30px_80px_-30px_rgba(15,23,42,0.25)]
-            border border-slate-100/70
-            overflow-hidden
-          "
-        >
-          {/* Subtle top accent */ }
-          <div
-            className="
-              pointer-events-none
-              absolute inset-x-0 top-0 h-px
-              bg-gradient-to-r
-              from-transparent via-amber-400/30 to-transparent
-            "
-          />
+        <div className="relative bg-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem] shadow-soft-lg border border-slate-100/70 overflow-hidden">
 
-          {/* SVG Clip Paths */ }
-          <div className="absolute w-0 h-0 overflow-hidden" aria-hidden="true">
-            <svg>
-              <defs>
-                <clipPath
-                  id="zigzag-world-desktop"
-                  clipPathUnits="objectBoundingBox"
-                >
-                  <path d="M1 0 L0.08 0 L0.12 0.1 L0.04 0.2 L0.12 0.3 L0.04 0.4 L0.12 0.5 L0.04 0.6 L0.12 0.7 L0.04 0.8 L0.12 0.9 L0.08 1 L1 1 Z" />
-                </clipPath>
+          {/* Grid setup with controlled height */ }
+          <div className="grid grid-cols-1 lg:grid-cols-2 bg-white min-h-[550px] lg:min-h-[650px]">
 
-                <clipPath
-                  id="zigzag-world-mobile"
-                  clipPathUnits="objectBoundingBox"
-                >
-                  <path d="M0 0 L1 0 L1 0.86 L0.9 0.9 L0.8 0.82 L0.7 0.9 L0.6 0.82 L0.5 0.9 L0.4 0.82 L0.3 0.9 L0.2 0.82 L0.1 0.9 L0 0.86 Z" />
-                </clipPath>
-
-                <clipPath
-                  id="zigzag-tech-desktop"
-                  clipPathUnits="objectBoundingBox"
-                >
-                  <path d="M0 0 L0.92 0 L0.88 0.1 L0.96 0.2 L0.88 0.3 L0.96 0.4 L0.88 0.5 L0.96 0.6 L0.88 0.7 L0.96 0.8 L0.88 0.9 L0.92 1 L0 1 Z" />
-                </clipPath>
-
-                <clipPath
-                  id="zigzag-tech-mobile"
-                  clipPathUnits="objectBoundingBox"
-                >
-                  <path d="M0 0.14 L0.1 0.1 L0.2 0.18 L0.3 0.1 L0.4 0.18 L0.5 0.1 L0.6 0.18 L0.7 0.1 L0.8 0.18 L0.9 0.1 L1 0.14 L1 1 L0 1 Z" />
-                </clipPath>
-              </defs>
-            </svg>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* WORLDS */ }
             <div className="relative isolate">
-              <div
-                className="hidden lg:block h-full w-full"
-                style={ { clipPath: "url(#zigzag-world-desktop)" } }
-              >
+              <div className="hidden lg:block h-full w-full absolute inset-0" style={ { clipPath: "url(#zigzag-world-desktop)" } }>
                 <WorldsGrid />
               </div>
-              <div
-                className="block lg:hidden w-full"
-                style={ { clipPath: "url(#zigzag-world-mobile)" } }
-              >
+              <div className="block lg:hidden h-full w-full" >
                 <WorldsGrid />
               </div>
             </div>
 
             {/* TECH */ }
-            <div className="relative isolate">
-              <div
-                className="hidden lg:block h-full w-full"
-                style={ { clipPath: "url(#zigzag-tech-desktop)" } }
-              >
+            <div className="relative isolate lg:mt-0">
+              <div className="hidden lg:block h-full w-full absolute inset-0" style={ { clipPath: "url(#zigzag-tech-desktop)" } }>
                 <TechStrip />
               </div>
-              <div
-                className="block lg:hidden w-full"
-                style={ { clipPath: "url(#zigzag-tech-mobile)" } }
-              >
+              <div className="block lg:hidden h-full w-full" >
                 <TechStrip />
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* ===================== PRODUCTS ===================== */ }
-      <section
-        aria-label="محصولات و پلتفرم‌ها"
-        className="
-          relative
-          bg-gradient-to-b from-white to-slate-50/80
-        "
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <ProductBands />
-        </div>
-      </section>
+      {/* 4. PRODUCT PORTFOLIO */ }
 
-      {/* ===================== NEWS ===================== */ }
-      <section
-        aria-label="آخرین اخبار و مقالات"
-        className="
-          relative
-          py-24 md:py-32 lg:py-40
-          bg-white
-          border-t border-slate-100
-        "
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-          <NewsPreview />
-        </div>
-      </section>
 
-      {/* Footer fade */ }
-      <div
-        aria-hidden="true"
-        className="
-          h-40
-          bg-gradient-to-t
-          from-slate-50
-          to-transparent
-        "
-      />
-    </main>
+      {/* 5. KNOWLEDGE HUB */ }
+      <Section variant="subtle" border id="latest-news">
+        <NewsPreview />
+      </Section>
+    </div>
   );
 }
