@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         "Clinicans Health AI",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/health-ai",
+        canonical: "https://co-bms.ir/clinicans/health-ai",
     },
 };
 

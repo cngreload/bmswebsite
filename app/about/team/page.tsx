@@ -20,9 +20,9 @@ export default function TeamPage ()
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
-            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://barman-mes.ir/about" },
-            { "@type": "ListItem", "position": 3, "name": "تیم ما", "item": "https://barman-mes.ir/about/team" }
+            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://co-bms.ir" },
+            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://co-bms.ir/about" },
+            { "@type": "ListItem", "position": 3, "name": "تیم ما", "item": "https://co-bms.ir/about/team" }
         ]
     };
 

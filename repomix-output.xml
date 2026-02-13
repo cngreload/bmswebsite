@@ -1044,7 +1044,7 @@ export const metadata: Metadata = {
         "Clinicans Digital Builder",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/digital-builder",
+        canonical: "https://co-bms.ir/clinicans/digital-builder",
     },
 };
 
@@ -1235,7 +1235,7 @@ export const metadata: Metadata = {
         "Clinicans Health AI",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/health-ai",
+        canonical: "https://co-bms.ir/clinicans/health-ai",
     },
 };
 
@@ -1479,7 +1479,7 @@ export const metadata: Metadata = {
         "Clinicans Marketing",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/marketing",
+        canonical: "https://co-bms.ir/clinicans/marketing",
     },
 };
 
@@ -1708,7 +1708,7 @@ export const metadata: Metadata = {
         "اتوماسیون صنعتی",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/intelligentautomation",
+        canonical: "https://co-bms.ir/intelligentautomation",
     },
     openGraph: {
         type: "website",
@@ -2792,7 +2792,7 @@ export default function ClinicansSystemCarousel ()
                         "@context": "https://schema.org",
                         "@type": "SoftwareApplication",
                         name: "Clinicans Platform",
-                        url: "https://barman-mes.ir/clinicans",
+                        url: "https://co-bms.ir/clinicans",
                     } ),
                 } }
             />
@@ -2983,7 +2983,7 @@ export default function ClinicansSystemTabs ()
                         description: active.description,
                         dateModified: active.lastUpdated,
                         keywords: active.relatedKeywords.join( ", " ),
-                        url: `https://barman-mes.ir${ active.ctaLink }`,
+                        url: `https://co-bms.ir${ active.ctaLink }`,
                     } ),
                 } }
             />
@@ -4483,7 +4483,7 @@ export default function ArticlePage ( { params }: ArticlePageProps )
                                 <h3 className="text-sm font-bold text-slate-900 mb-2">ارتباط با رسانه</h3>
                                 <p className="text-sm text-slate-600 leading-relaxed">
                                     <strong>دفتر روابط عمومی</strong><br />
-                                    info@barman-mes.ir<br />
+                                    info@co-bms.ir<br />
                                     ۰۳۱-۳XXXXXXX
                                 </p>
                             </div>
@@ -6576,7 +6576,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-#   b m s w e b s i t e  
+#   b m s w e b s i t e 
+ 
  
 </file>
 

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "درباره ما | شرکت دانش‌بنیان بارمان محور اسپادانا",
     description: "با داستان، ماموریت، ارزش‌ها و تیم شرکت دانش‌بنیان بارمان محور اسپادانا آشنا شوید. پیشگام در هوشمندسازی صنعتی، انرژی و سلامت.",
     alternates: {
-        canonical: "https://barman-mes.ir/about",
+        canonical: "https://co-bms.ir/about",
     }
 };
 
@@ -76,8 +76,8 @@ export default function AboutOverviewPage ()
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
-            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://barman-mes.ir/about" }
+            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://co-bms.ir" },
+            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://co-bms.ir/about" }
         ]
     };
 

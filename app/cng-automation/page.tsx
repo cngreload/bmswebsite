@@ -1,5 +1,4 @@
 import Script from "next/script";
-import Link from "next/link";
 import { Section } from "@/components/layout/Section";
 
 /* Sections */
@@ -94,19 +93,6 @@ export default function CngAutomationPage ()
                     <FinalCtaSection />
                 </div>
             </Section>
-
-            {/* 📱 MOBILE DOCK */ }
-            <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-sm">
-                <div className="bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl p-3 flex items-center justify-between ring-1 ring-black/5">
-                    <div className="flex items-center gap-2 pr-2">
-                        <div className="h-2 w-2 rounded-full bg-[#D72638] animate-pulse" />
-                        <span className="text-[10px] font-black text-slate-500 uppercase">System Live</span>
-                    </div>
-                    <Link href="/contact-us" className="bg-bms-primary text-white px-6 py-2 rounded-xl text-xs font-black shadow-lg">
-                        شروع همکاری
-                    </Link>
-                </div>
-            </div>
         </main>
     );
 }

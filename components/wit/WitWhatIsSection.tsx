@@ -1,105 +1,177 @@
-// components/wit/WitHeroSection.tsx
-import { LuCpu, LuLayers, LuNetwork, LuGlobe, LuZap, LuShield } from "react-icons/lu";
-import Link from "next/link";
+"use client";
 
-export default function WitHeroSection ()
+import React from "react";
+import { motion } from "framer-motion";
+import
+{
+    LuLayers,
+    LuCircuitBoard,
+    LuDatabase,
+    LuArrowDownToLine,
+    LuBinary,
+    LuActivity,
+    LuCpu
+} from "react-icons/lu";
+import { cn } from "@/lib/utils";
+
+/**
+ * 🔄 WIT WHAT IS SECTION - REFORMED
+ * Strategy: Technical Anatomy / Editorial Dossier
+ * Palette: BMS Navy (#145C98), Industrial Red (#D72638), Intel Yellow (#F4C430)
+ */
+
+const features = [
+    {
+        id: "core",
+        code: "SYS_CORE_01",
+        title: "پلتفرم هسته‌ای (Core Platform)",
+        desc: "WIT یک محصول تک‌منظوره نیست؛ یک هسته فناورانه‌ی پایدار است که می‌تواند هم‌زمان بار پروژه‌های صنعتی، انرژی و سلامت را بدون بازطراحی زیرساخت پشتیبانی کند.",
+        icon: LuLayers,
+        tone: "blue",
+        bg: "bg-blue-50",
+        border: "border-blue-100",
+        color: "text-bms-primary",
+    },
+    {
+        id: "hardware",
+        code: "SYS_HW_INT_02",
+        title: "هم‌طراحی سخت‌افزار و نرم‌افزار",
+        desc: "بردهای الکترونیکی، فریم‌ور و لایه نرم‌افزار به‌صورت یکپارچه طراحی شده‌اند تا پایداری صنعتی، تأخیر پایین و قابلیت اطمینان بلندمدت در میدان عملیات تضمین شود.",
+        icon: LuCircuitBoard,
+        tone: "red",
+        bg: "bg-red-50",
+        border: "border-red-100",
+        color: "text-[#D72638]",
+    },
+    {
+        id: "data",
+        code: "SYS_DATA_E2E_03",
+        title: "جریان داده End-to-End",
+        desc: "داده از سطح میدان (سنسورها و کنترلرها) تا لایه تحلیل و داشبورد مدیریتی بدون گسست منتقل می‌شود؛ آماده برای تحلیل پیشرفته و هوش مصنوعی.",
+        icon: LuDatabase,
+        tone: "yellow",
+        bg: "bg-amber-50",
+        border: "border-amber-100",
+        color: "text-[#F4C430]",
+    },
+];
+
+export default function WitWhatIsSection ()
 {
     return (
         <section
-            className="relative text-right overflow-hidden"
-            aria-labelledby="wit-hero-heading"
-            role="banner"
+            id="what-is-wit"
+            className="relative py-12 lg:py-20 bg-white overflow-hidden"
+            aria-labelledby="whatis-heading"
+            dir="rtl"
         >
-            {/* Gradient Background */ }
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50 -z-20" />
-            <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-20 blur-3xl -z-10" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tr from-cyan-200 to-blue-200 rounded-full translate-x-1/3 translate-y-1/3 opacity-20 blur-3xl -z-10" />
+            {/* Background HUD Graphics - Technical Moat */ }
+            <div className="absolute top-0 left-0 p-12 opacity-[0.02] pointer-events-none hidden lg:block">
+                <LuCpu className="w-80 h-80 text-bms-primary" />
+            </div>
 
-            <div className="space-y-8 max-w-6xl">
-                {/* Badge – Positioning & Entity Signal */ }
-                <div
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 border border-indigo-200 px-4 py-2 text-sm font-bold text-indigo-700"
-                    aria-label="World Intelligent Technology Platform"
-                >
-                    <LuGlobe className="h-4 w-4" />
-                    <span>فناوری هوشمند جهانی (World Intelligent Technology)</span>
-                    <span className="text-xs font-normal text-indigo-500">از BMS Co.</span>
-                </div>
+            <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
+                <div className="grid gap-16 lg:grid-cols-12 items-start">
 
-                {/* H1 – Primary SEO Anchor */ }
-                <div className="space-y-4">
-                    <h1
-                        id="wit-hero-heading"
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-900 tracking-tight"
-                    >
-                        هسته‌ی تصمیم‌ساز
-                        <br className="hidden md:block" />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-indigo-600 via-purple-600 to-pink-600">
-                            زیرساخت‌های هوشمند
-                        </span>
-                    </h1>
+                    {/* ===================== DEFINITION TEXT (EDITORIAL SIDEBAR) ===================== */ }
+                    <div className="lg:col-span-5 space-y-8 sticky top-32">
+                        <div className="space-y-4">
+                            <motion.div
+                                initial={ { opacity: 0, x: 20 } }
+                                whileInView={ { opacity: 1, x: 0 } }
+                                viewport={ { once: true } }
+                                className="inline-flex items-center gap-2 rounded-lg bg-slate-50 border border-slate-200 px-3 py-1 shadow-sm"
+                            >
+                                <LuArrowDownToLine className="h-3.5 w-3.5 text-bms-primary" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 font-mono">
+                                    Platform_Specification
+                                </span>
+                            </motion.div>
 
-                    <div className="inline-flex items-center gap-2 text-sm text-slate-600">
-                        <LuZap className="h-4 w-4 text-amber-500" />
-                        <span>ادغام انقلابی سیستم‌های کنترل، IoT و هوش مصنوعی در انقلاب صنعتی چهارم</span>
-                    </div>
-                </div>
+                            <h2
+                                id="whatis-heading"
+                                className="text-3xl md:text-5xl font-black text-slate-950 leading-[1.1] tracking-tightest"
+                            >
+                                WIT دقیقاً <br />
+                                <span className="text-bms-primary">چیست؟</span>
+                            </h2>
+                        </div>
 
-                {/* Supporting Description – Context for Google & Humans */ }
-                <div className="space-y-6">
-                    <p className="text-base md:text-lg leading-8 text-slate-700 max-w-4xl font-light">
-                        <strong className="font-semibold text-slate-900">WIT</strong> پاسخی است به
-                        <em className="text-slate-900"> محدودیت‌های سیستم‌های اتوماسیون موجود</em> —
-                        یک پلتفرم هسته‌ای که داده‌های خام میدانی را به{ ' ' }
-                        <strong className="font-semibold text-slate-900">
-                            بینش عملیاتی، کنترلی و مدیریتی
-                        </strong>{ ' ' }
-                        تبدیل می‌کند و رویای{ ' ' }
-                        <span className="text-slate-800 font-medium">
-                            کنترل تمام جنبه‌های دارایی‌ها در هر زمان و مکان
-                        </span>{ ' ' }
-                        را محقق می‌سازد.
-                    </p>
+                        <div className="space-y-6 text-base md:text-lg leading-relaxed-corp text-slate-600 text-justify font-light">
+                            <p>
+                                WIT یک زیرساخت فناورانه‌ی هسته‌ای است که محصولات کلیدی بارمان — از سامانه‌های
+                                <strong className="text-slate-900 font-bold mx-1">پایش صنعتی (ICTS)</strong>
+                                تا پلتفرم
+                                <strong className="text-slate-900 font-bold mx-1">سلامت Clinicans</strong>
+                                — بر پایه آن بنا شده‌اند.
+                            </p>
+                            <p>
+                                به‌جای توسعه مجزا برای هر پروژه، WIT یک هسته مرکزی پایدار ایجاد می‌کند که امکان انطباق با حوزه‌های مختلف و توسعه تدریجی بدون اختلال را فراهم می‌سازد.
+                            </p>
+                        </div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <Link
-                            href="#story"
-                            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-3 text-white font-semibold hover:shadow-lg transition-all"
-                        >
-                            <LuShield className="h-4 w-4" />
-                            کشف داستان BMS
-                        </Link>
-                        <div className="text-xs text-slate-500 max-w-md">
-                            <span className="font-semibold">نکته:</span> WIT همان فناوری هوشمند کنترل و تگ (ICTS) است که اکنون با نام جهانی ارائه می‌شود
+                        {/* Technical Proof Point */ }
+                        <div className="pt-6 flex items-center gap-4 border-t border-slate-100">
+                            <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center text-bms-primary">
+                                <LuBinary className="w-5 h-5" />
+                            </div>
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest font-mono">
+                                Architecture_Status: Stable_v4.2
+                            </span>
                         </div>
                     </div>
-                </div>
 
-                {/* Technical Proof Points – Scannable Signals */ }
-                <div className="mt-8">
-                    <h3 className="text-sm font-semibold text-slate-700 mb-4">توانمندی‌های کلیدی پلتفرم:</h3>
-                    <ul
-                        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm"
-                        role="list"
-                        aria-label="WIT platform capabilities"
-                    >
-                        { [
-                            { icon: LuNetwork, text: "سنسورها · PLC · سیستم‌های تعبیه‌شده", color: "text-indigo-500" },
-                            { icon: LuLayers, text: "IIoT · پردازش لبه‌ای · هسته داده", color: "text-purple-500" },
-                            { icon: LuCpu, text: "صنعتی‌گرا · امن · مقیاس‌پذیر", color: "text-cyan-500" },
-                            { icon: LuShield, text: "حاکمیت داده · امنیت بومی · مقاوم در برابر تحریم", color: "text-emerald-500" },
-                        ].map( ( item, idx ) => (
-                            <li
-                                key={ idx }
-                                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white/80 backdrop-blur px-4 py-3 shadow-sm hover:shadow-md transition-shadow"
-                            >
-                                <item.icon className={ `h-5 w-5 ${ item.color }` } />
-                                <span className="text-slate-700">{ item.text }</span>
-                            </li>
-                        ) ) }
-                    </ul>
+                    {/* ===================== FEATURE ANATOMY (BENTO CARDS) ===================== */ }
+                    <div className="lg:col-span-7 flex flex-col gap-6">
+                        { features.map( ( f, i ) =>
+                        {
+                            const Icon = f.icon;
+                            return (
+                                <motion.article
+                                    key={ f.id }
+                                    initial={ { opacity: 0, y: 20 } }
+                                    whileInView={ { opacity: 1, y: 0 } }
+                                    viewport={ { once: true } }
+                                    transition={ { duration: 0.6, delay: i * 0.1 } }
+                                    className="group relative flex flex-col md:flex-row items-center gap-8 p-8 lg:p-10 rounded-[2.5rem] bg-slate-50/50 border border-slate-100 transition-all duration-500 hover:bg-white hover:shadow-premium hover:border-bms-primary/20"
+                                >
+                                    {/* Icon Interface */ }
+                                    <div className={ cn(
+                                        "flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3",
+                                        f.bg, f.color, f.border, "border-2"
+                                    ) }>
+                                        <Icon className="h-10 w-10" />
+                                    </div>
+
+                                    {/* Content Area */ }
+                                    <div className="space-y-3 text-center md:text-right flex-1">
+                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                            <h3 className="text-xl font-black text-slate-900 group-hover:text-bms-primary transition-colors">
+                                                { f.title }
+                                            </h3>
+                                            <span className="font-mono text-[9px] font-bold text-slate-300 tracking-[0.2em] uppercase">
+                                                { f.code }
+                                            </span>
+                                        </div>
+                                        <p className="text-sm md:text-base leading-7 text-slate-500 font-light">
+                                            { f.desc }
+                                        </p>
+                                    </div>
+
+                                    {/* HUD Active Signal */ }
+                                    <div className="absolute bottom-4 left-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <LuActivity className="w-4 h-4 text-emerald-500 animate-pulse" />
+                                    </div>
+                                </motion.article>
+                            );
+                        } ) }
+                    </div>
+
                 </div>
             </div>
+
+            {/* Bottom Visual Hard-Stop */ }
+            <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-100 to-transparent" />
         </section>
     );
 }

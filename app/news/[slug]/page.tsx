@@ -27,7 +27,7 @@ export async function generateMetadata ( { params }: Props ): Promise<Metadata>
         title: article.title,
         description: article.summary,
         alternates: {
-            canonical: `https://barman-mes.ir/news/${ slug }`,
+            canonical: `https://co-bms.ir/news/${ slug }`,
         },
         openGraph: {
             title: article.title,
@@ -92,7 +92,7 @@ export default async function ArticlePage ( { params }: Props )
             name: 'Barman Mehvar Spadana',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://barman-mes.ir/logo.png'
+                url: 'https://co-bms.ir/logo.png'
             }
         },
         description: article.summary,
@@ -222,7 +222,7 @@ export default async function ArticlePage ( { params }: Props )
                                     </p>
                                 </div>
                                 <div className="pt-4 border-t border-white/10 space-y-2">
-                                    <p className="text-sm font-mono tracking-tighter">info@barman-mes.ir</p>
+                                    <p className="text-sm font-mono tracking-tighter">info@co-bms.ir</p>
                                     <p className="text-sm font-bold text-[#F4C430]">۰۳۱-۳XXXXXXX</p>
                                 </div>
                             </div>

@@ -128,7 +128,7 @@ function ClinicansStructuredData ()
         },
         mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": "https://barman-mes.ir/clinicans/all-in-one",
+            "@id": "https://co-bms.ir/clinicans/all-in-one",
         },
     };
 

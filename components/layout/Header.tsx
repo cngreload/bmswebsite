@@ -67,7 +67,7 @@ const NAV_SECTIONS: NavSection[] = [
     },
     {
         id: "company",
-        label: "دنیای بارمان",
+        label: "درباره ما",
         items: [
             { label: "داستان ما", href: "/about/story", icon: LuBookOpen },
             { label: "باورهای ما (ماموریت)", href: "/about/mission", icon: LuTarget },

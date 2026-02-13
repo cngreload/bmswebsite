@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL( "https://barman-mes.ir" ),
+  metadataBase: new URL( "https://co-bms.ir" ),
   title: {
     template: "%s | بارمان محور اسپادانا",
     default: "بارمان | هوشمندسازی و مدیریت دارایی‌های حیاتی",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   description:
     "بارمان محور اسپادانا پیشرو در ارائه راهکارهای هوشمندسازی صنعتی، سامانه ICTS و پلتفرم Clinicans. معماری نوین برای حفاظت از زیرساخت‌های انرژی و سلامت کشور.",
   alternates: {
-    canonical: "https://barman-mes.ir",
+    canonical: "https://co-bms.ir",
   },
   robots: {
     index: true,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fa_IR",
     siteName: "بارمان محور اسپادانا",
-    url: "https://barman-mes.ir",
+    url: "https://co-bms.ir",
     title: "بارمان | هوشمندسازی دارایی‌های حیاتی",
     description: "تکنولوژی بومی برای محافظت از زیرساخت‌های انرژی و سلامت کشور.",
     images: [
@@ -92,13 +92,13 @@ export default function RootLayout ( {
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://barman-mes.ir/#organization",
+        "@id": "https://co-bms.ir/#organization",
         "name": "Barman Mehvar Spadana",
         "alternateName": "بارمان محور اسپادانا",
-        "url": "https://barman-mes.ir",
+        "url": "https://co-bms.ir",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://barman-mes.ir/logo.png"
+          "url": "https://co-bms.ir/logo.png"
         },
         "foundingDate": "2021",
         "contactPoint": {

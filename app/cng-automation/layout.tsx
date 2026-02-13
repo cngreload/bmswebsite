@@ -1,7 +1,11 @@
 // app/cng-automation/layout.tsx
 import CngMacosDock from "@/components/cng/CngMacosDock";
-import CngSectionSwitcherMobile from "@/components/cng/CngSectionSwitcherMobile";
 
+/**
+ * 🏗️ UNIVERSAL PRODUCT LAYOUT - REFORMED
+ * Strategy: Single Navigation System (macOS Dock) for all Viewports.
+ * UI Standard: Zero horizontal scroll, max-width article centering.
+ */
 export default function CngProductLayout ( {
     children,
 }: {
@@ -9,25 +13,23 @@ export default function CngProductLayout ( {
 } )
 {
     return (
-        <div className="relative w-full bg-white">
-            {/* 📱 Mobile UI: Only active on small screens */ }
-            <div className="lg:hidden sticky top-[64px] z-[40] w-full border-b border-slate-100 bg-white/90 backdrop-blur-md">
-                <CngSectionSwitcherMobile />
-            </div>
-
+        <div className="relative w-full bg-white overflow-x-hidden">
             {/* 
-          Main Container
-          The macOS dock is inside here but fixed to the viewport.
+          🚀 UNIVERSAL NAVIGATION
+          The macOS Dock handles its own internal responsiveness 
+          and magnification logic based on screen size.
       */}
-            <div className="relative w-full">
-                <div className="hidden lg:block">
-                    <CngMacosDock />
-                </div>
+            <CngMacosDock />
 
-                <article className="mx-auto max-w-7xl w-full min-w-0 ">
+            <div className="relative w-full">
+                {/* 📄 MAIN CONTENT CORE */ }
+                <article className="mx-auto max-w-7xl px-6 lg:px-12 w-full min-w-0 pb-32">
                     { children }
                 </article>
             </div>
+
+            {/* Visual hard-stop before global footer */ }
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200/50 to-transparent" />
         </div>
     );
 }

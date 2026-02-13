@@ -31,7 +31,7 @@ export const metadata: Metadata = {
         "Clinicans Marketing",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/marketing",
+        canonical: "https://co-bms.ir/clinicans/marketing",
     },
 };
 

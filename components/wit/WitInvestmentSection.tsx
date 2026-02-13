@@ -1,78 +1,130 @@
-// components/wit/WitInvestmentSection.tsx
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import
 {
     LuTrendingUp,
     LuDownload,
     LuTarget,
-    LuZap,
+
     LuShield,
-    LuGlobe,
+
     LuDollarSign,
 
-} from "react-icons/lu";
-import Link from "next/link";
+    LuActivity,
+    LuArrowLeft,
 
-const investmentOpportunities = [
+} from "react-icons/lu";
+import { cn } from "@/lib/utils";
+
+/**
+ * 💰 WIT INVESTMENT SECTION - REFORMED & TYPE-SAFE
+ * Strategy: Financial Dossier / Institutional Authority
+ * Palette: BMS Navy (#145C98), Industrial Red (#D72638), Intel Yellow (#F4C430)
+ */
+
+interface InvestmentOpportunity
+{
+    id: string; // Added ID to resolve Error 2339
+    icon: React.ElementType;
+    title: string;
+    code: string;
+    amount: string;
+    valuation: string;
+    equity: string;
+    timeline: string;
+    highlight: boolean;
+    tone: "red" | "blue";
+    benefits: string[];
+}
+
+interface ROIProjection
+{
+    year: string;
+    revenue: number;
+    growth: string;
+    valuation: string;
+    status: "CURRENT" | "ESTIMATED" | "PROJECTED" | "EXPANSION";
+}
+
+interface ExitStrategy
+{
+    title: string;
+    probability: "بالا" | "متوسط";
+    timeline: string;
+    potential: string;
+    description: string;
+}
+
+const investmentOpportunities: InvestmentOpportunity[] = [
     {
+        id: "series-a",
         icon: LuTrendingUp,
         title: "سری A",
+        code: "ROUND_SERIES_A",
         amount: "۲۰ میلیارد تومان",
         valuation: "ارزش‌گذاری: ۱۰۰ میلیارد تومان",
         equity: "۲۰% سهام",
         timeline: "۱۸-۲۴ ماه",
         highlight: true,
+        tone: "red",
         benefits: [
-            "توسعه سریع بازار",
-            "افزایش تیم فنی به ۳۰ نفر",
-            "ورود به ۳ بازار جدید",
-            "توسعه محصول Clinicans"
-        ]
+            "توسعه سریع بازار و نفوذ در لایه‌ی نظارتی",
+            "افزایش تیم فنی به ۳۰ نفر متخصص",
+            "ورود به ۳ بازار استراتژیک جدید",
+            "توسعه محصول Clinicans v2.0",
+        ],
     },
     {
+        id: "seed",
         icon: LuTarget,
         title: "سری Seed",
+        code: "ROUND_SEED_FUND",
         amount: "۵ میلیارد تومان",
         valuation: "ارزش‌گذاری: ۵۰ میلیارد تومان",
         equity: "۱۰% سهام",
         timeline: "۱۲-۱۸ ماه",
         highlight: false,
+        tone: "blue",
         benefits: [
-            "تسریع توسعه فنی",
-            "توسعه تیم فروش",
-            "MVP بازارهای جدید",
-            "برندسازی"
-        ]
-    }
+            "تسریع فرآیند توسعه فنی هسته WIT",
+            "توسعه تیم فروش و عملیات میدانی",
+            "تولید MVP برای بازارهای نوظهور",
+            "برندسازی و هویت بصری بین‌المللی",
+        ],
+    },
 ];
 
-const roiProjections = [
-    { year: "۱۴۰۳", revenue: "۱۵", growth: "۱۵۰%", valuation: "۱۰۰" },
-    { year: "۱۴۰۴", revenue: "۴۰", growth: "۱۶۶%", valuation: "۲۵۰" },
-    { year: "۱۴۰۵", revenue: "۱۲۰", growth: "۲۰۰%", valuation: "۶۰۰" },
-    { year: "۱۴۰۶", revenue: "۳۰۰", growth: "۱۵۰%", valuation: "۱,۵۰۰" }
+const roiProjections: ROIProjection[] = [
+    { year: "۱۴۰۳", revenue: 15, growth: "۱۵۰%", valuation: "۱۰۰", status: "CURRENT" },
+    { year: "۱۴۰۴", revenue: 40, growth: "۱۶۶%", valuation: "۲۵۰", status: "ESTIMATED" },
+    { year: "۱۴۰۵", revenue: 120, growth: "۲۰۰%", valuation: "۶۰۰", status: "PROJECTED" },
+    { year: "۱۴۰۶", revenue: 300, growth: "۱۵۰%", valuation: "۱,۵۰۰", status: "EXPANSION" },
 ];
 
-const exitStrategies = [
+const exitStrategies: ExitStrategy[] = [
     {
         title: "اکتساب توسط شرکت‌های بزرگ",
         probability: "بالا",
         timeline: "۳-۵ سال",
         potential: "۱۰-۲۰x ROI",
-        description: "شرکت‌های بزرگ فناوری یا صنعتی منطقه"
+        description: "شرکت‌های بزرگ فناوری یا صنعتی منطقه در حوزه انرژی و سلامت دیجیتال."
     },
     {
         title: "عرضه عمومی اولیه (IPO)",
         probability: "متوسط",
         timeline: "۵-۷ سال",
         potential: "۱۵-۳۰x ROI",
-        description: "در بازار سرمایه ایران یا منطقه"
+        description: "ورود به بازار سرمایه و تابلوهای معاملاتی اختصاصی شرکت‌های دانش‌بنیان."
     },
     {
         title: "ادغام با شرکت‌های مکمل",
         probability: "متوسط",
         timeline: "۴-۶ سال",
         potential: "۸-۱۵x ROI",
-        description: "ایجاد هلدینگ فناوری منطقه‌ای"
+        description: "ایجاد هلدینگ‌های فناورانه با هدف تسلط بر زنجیره ارزش اتوماسیون."
     }
 ];
 
@@ -81,221 +133,219 @@ export default function WitInvestmentSection ()
     return (
         <section
             id="investment"
-            className="relative"
+            className="relative py-24 lg:py-40 bg-white overflow-hidden"
             aria-labelledby="investment-heading"
+            dir="rtl"
         >
-            {/* Section Header */ }
-            <div className="text-center mb-12">
-                <div className="inline-flex items-center gap-2 text-emerald-600 mb-4">
-                    <LuDollarSign className="h-5 w-5" />
-                    <span className="text-sm font-bold tracking-wider">
-                        فرصت سرمایه‌گذاری استراتژیک
-                    </span>
-                </div>
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none [background-image:radial-gradient(#145C98_1px,transparent_1px)] [background-size:40px_40px]" />
 
-                <h2
-                    id="investment-heading"
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
-                >
-                    سرمایه‌گذاری در <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-500">آینده اتوماسیون</span>
-                </h2>
+            <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12">
 
-                <p className="text-slate-600 max-w-3xl mx-auto">
-                    همراهی در رشد تصاعدی شرکتی که انقلاب صنعتی چهارم را در ایران رهبری می‌کند
-                </p>
-            </div>
-
-            {/* Investment Rounds */ }
-            <div className="grid lg:grid-cols-2 gap-8 mb-16">
-                { investmentOpportunities.map( ( round, index ) => (
-                    <div
-                        key={ index }
-                        className={ `relative rounded-3xl overflow-hidden ${ round.highlight ? 'border-2 border-emerald-500 shadow-xl' : 'border border-slate-200' } bg-white` }
+                {/* ===================== HEADER ===================== */ }
+                <header className="mb-20 text-right space-y-6 max-w-4xl">
+                    <motion.div
+                        initial={ { opacity: 0, x: 20 } }
+                        whileInView={ { opacity: 1, x: 0 } }
+                        viewport={ { once: true } }
+                        className="inline-flex items-center gap-3 rounded-lg bg-slate-50 border border-slate-200 px-4 py-1.5 shadow-sm"
                     >
-                        { round.highlight && (
-                            <div className="absolute top-4 left-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                پیشنهاد ویژه
-                            </div>
-                        ) }
+                        <LuDollarSign className="h-4 w-4 text-emerald-600" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 font-mono">
+                            Capital_Roadmap / Series_A_Open
+                        </span>
+                    </motion.div>
 
-                        <div className="p-6">
-                            <div className="flex items-start justify-between mb-4">
-                                <div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <round.icon className={ `h-6 w-6 ${ round.highlight ? 'text-emerald-600' : 'text-slate-600' }` } />
-                                        <h3 className="text-xl font-bold text-slate-900">{ round.title }</h3>
+                    <h2
+                        id="investment-heading"
+                        className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-950 leading-[1.1] tracking-tightest"
+                    >
+                        سرمایه‌گذاری در <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#145C98] via-blue-600 to-[#D72638]">
+                            آینده اتوماسیون هوشمند
+                        </span>
+                    </h2>
+                </header>
+
+                {/* ===================== INVESTMENT ROUNDS ===================== */ }
+                <div className="grid lg:grid-cols-2 gap-8 mb-24">
+                    { investmentOpportunities.map( ( round, index ) => (
+                        <motion.div
+                            key={ round.id }
+                            initial={ { opacity: 0, y: 20 } }
+                            whileInView={ { opacity: 1, y: 0 } }
+                            viewport={ { once: true } }
+                            transition={ { duration: 0.6, delay: index * 0.1 } }
+                            className={ cn(
+                                "group relative overflow-hidden rounded-[3rem] p-8 md:p-12 transition-all duration-500",
+                                round.highlight
+                                    ? "bg-[#020617] text-white shadow-2xl"
+                                    : "bg-slate-50 border border-slate-200 text-slate-900 hover:bg-white hover:shadow-premium"
+                            ) }
+                        >
+                            <div className="flex justify-between items-start mb-12">
+                                <div className="flex items-center gap-5">
+                                    <div className={ cn(
+                                        "flex h-16 w-16 items-center justify-center rounded-2xl shadow-inner transition-transform group-hover:scale-110",
+                                        round.highlight ? "bg-white/10 text-[#F4C430] border border-white/10" : "bg-white text-bms-primary border border-slate-100"
+                                    ) }>
+                                        <round.icon className="h-8 w-8" />
                                     </div>
-                                    <div className="text-sm text-slate-500">{ round.timeline } زمان بازگشت سرمایه</div>
+                                    <div>
+                                        <h3 className="text-2xl font-black">{ round.title }</h3>
+                                        <span className="text-[9px] font-mono font-bold opacity-40 uppercase tracking-widest">{ round.code }</span>
+                                    </div>
                                 </div>
-                                <div className="text-right">
-                                    <div className="text-2xl font-bold text-slate-900">{ round.amount }</div>
-                                    <div className="text-sm text-slate-600">{ round.equity }</div>
+                                { round.highlight && (
+                                    <span className="bg-[#D72638] text-white text-[9px] font-black px-3 py-1 rounded-md uppercase tracking-tighter animate-pulse">
+                                        Priority_Round
+                                    </span>
+                                ) }
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8 mb-12 border-y border-white/10 py-8">
+                                <div className="space-y-1">
+                                    <span className="text-[10px] font-bold opacity-50 uppercase tracking-widest">Amount</span>
+                                    <div className="text-2xl font-black">{ round.amount }</div>
+                                </div>
+                                <div className="space-y-1">
+                                    <span className="text-[10px] font-bold opacity-50 uppercase tracking-widest">Equity</span>
+                                    <div className="text-2xl font-black text-emerald-500">{ round.equity }</div>
                                 </div>
                             </div>
 
-                            <div className="mb-6">
-                                <div className="text-sm font-semibold text-slate-700 mb-2">اهداف تخصیص سرمایه:</div>
-                                <ul className="space-y-2">
-                                    { round.benefits.map( ( benefit, idx ) => (
-                                        <li key={ idx } className="flex items-center gap-2 text-sm text-slate-600">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                            { benefit }
-                                        </li>
-                                    ) ) }
-                                </ul>
-                            </div>
+                            <ul className="space-y-3 mb-12 h-40">
+                                { round.benefits.map( ( benefit, idx ) => (
+                                    <li key={ idx } className="flex items-start gap-3">
+                                        <div className={ cn( "mt-1.5 h-1 w-1 rounded-full", round.highlight ? "bg-[#F4C430]" : "bg-bms-primary" ) } />
+                                        <span className="text-sm font-medium opacity-80 leading-relaxed">{ benefit }</span>
+                                    </li>
+                                ) ) }
+                            </ul>
 
                             <Link
-                                href={ `/contact?type=investment-round-${ round.title.toLowerCase().replace( ' ', '-' ) }` }
-                                className={ `block text-center py-3 rounded-xl font-semibold transition-all ${ round.highlight
-                                    ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white hover:shadow-lg'
-                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }` }
+                                href={ `/contact?type=invest-${ round.id }` }
+                                className={ cn(
+                                    "flex items-center justify-between w-full p-5 rounded-2xl font-bold transition-all active:scale-95 group/btn",
+                                    round.highlight
+                                        ? "bg-white text-slate-950 hover:bg-[#F4C430]"
+                                        : "bg-slate-900 text-white hover:bg-bms-primary"
+                                ) }
                             >
-                                اطلاعات بیشتر و ترم‌شیت
+                                <span>درخواست ترم‌شیت مالی</span>
+                                <LuArrowLeft className="w-5 h-5 transition-transform group-hover/btn:-translate-x-2" />
                             </Link>
-                        </div>
-                    </div>
-                ) ) }
-            </div>
-
-            {/* ROI Projections */ }
-            <div className="mb-16">
-                <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <LuTrendingUp className="h-5 w-5 text-emerald-600" />
-                    پیش‌بینی رشد مالی
-                </h3>
-
-                <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="bg-slate-50">
-                                <th className="text-right p-4 font-semibold text-slate-700 border-b border-slate-200">سال</th>
-                                <th className="text-right p-4 font-semibold text-slate-700 border-b border-slate-200">درآمد (میلیارد تومان)</th>
-                                <th className="text-right p-4 font-semibold text-slate-700 border-b border-slate-200">رشد سالانه</th>
-                                <th className="text-right p-4 font-semibold text-slate-700 border-b border-slate-200">ارزش‌گذاری (میلیارد تومان)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { roiProjections.map( ( projection, idx ) => (
-                                <tr key={ idx } className="hover:bg-slate-50">
-                                    <td className="p-4 border-b border-slate-100">
-                                        <div className="font-semibold text-slate-900">{ projection.year }</div>
-                                    </td>
-                                    <td className="p-4 border-b border-slate-100">
-                                        <div className="font-bold text-slate-900">{ projection.revenue }</div>
-                                    </td>
-                                    <td className="p-4 border-b border-slate-100">
-                                        <div className="inline-flex items-center gap-1">
-                                            <LuTrendingUp className="h-4 w-4 text-emerald-500" />
-                                            <span className="font-semibold text-emerald-600">{ projection.growth }</span>
-                                        </div>
-                                    </td>
-                                    <td className="p-4 border-b border-slate-100">
-                                        <div className="font-bold text-slate-900">{ projection.valuation }</div>
-                                    </td>
-                                </tr>
-                            ) ) }
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="mt-4 text-sm text-slate-600">
-                    * پیش‌بینی‌ها بر اساس تحلیل بازار، نرخ پذیرش فناوری و استراتژی رشد تهیه شده است
-                </div>
-            </div>
-
-            {/* Competitive Advantages for Investors */ }
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
-                { [
-                    {
-                        icon: LuShield,
-                        title: "مزیت رقابتی قوی",
-                        desc: "فناوری ثبت‌شده و تیم فنی عمیق"
-                    },
-                    {
-                        icon: LuZap,
-                        title: "بازار در حال رشد",
-                        desc: "تقاضای شدید برای اتوماسیون در ایران"
-                    },
-                    {
-                        icon: LuGlobe,
-                        title: "قابلیت توسعه منطقه‌ای",
-                        desc: "پتانسیل ورود به بازارهای همسایه"
-                    }
-                ].map( ( advantage, idx ) => (
-                    <div key={ idx } className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 p-5">
-                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 mb-4">
-                            <advantage.icon className="h-6 w-6" />
-                        </div>
-                        <h4 className="font-semibold text-slate-900 mb-2">{ advantage.title }</h4>
-                        <p className="text-sm text-slate-600">{ advantage.desc }</p>
-                    </div>
-                ) ) }
-            </div>
-
-            {/* Exit Strategies */ }
-            <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                    <LuTarget className="h-5 w-5 text-emerald-600" />
-                    استراتژی‌های خروج
-                </h3>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    { exitStrategies.map( ( strategy, idx ) => (
-                        <div key={ idx } className="bg-white rounded-2xl border border-slate-200 p-6">
-                            <div className="flex items-start justify-between mb-4">
-                                <h4 className="font-bold text-slate-900">{ strategy.title }</h4>
-                                <span className={ `text-xs font-bold px-2 py-1 rounded-full ${ strategy.probability === 'بالا'
-                                    ? 'bg-emerald-100 text-emerald-700'
-                                    : 'bg-amber-100 text-amber-700'
-                                    }` }>
-                                    احتمال { strategy.probability }
-                                </span>
-                            </div>
-
-                            <div className="space-y-3 mb-4">
-                                <div className="flex items-center justify-between text-sm">
-                                    <span className="text-slate-600">زمان‌بندی:</span>
-                                    <span className="font-semibold text-slate-900">{ strategy.timeline }</span>
-                                </div>
-                                <div className="flex items-center justify-between text-sm">
-                                    <span className="text-slate-600">پتانسیل بازدهی:</span>
-                                    <span className="font-bold text-emerald-600">{ strategy.potential }</span>
-                                </div>
-                            </div>
-
-                            <p className="text-sm text-slate-600">{ strategy.description }</p>
-                        </div>
+                        </motion.div>
                     ) ) }
                 </div>
-            </div>
 
-            {/* Investor CTA */ }
-            <div className="mt-16 text-center bg-gradient-to-r from-emerald-50 to-green-50 rounded-3xl p-8 border border-emerald-100">
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                    آماده‌ای جزئیات مالی کامل را ببینید؟
-                </h3>
-                <p className="text-slate-600 max-w-2xl mx-auto mb-6">
-                    پرزنتیشن کامل سرمایه‌گذاری شامل تحلیل بازار، مدل مالی، تیم اجرایی و استراتژی رشد آماده ارائه است.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                        href="/investors/deck.pdf"
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-300 text-slate-700 px-6 py-3 font-semibold hover:bg-slate-50 transition-colors"
-                        target="_blank"
-                    >
-                        <LuDownload className="h-4 w-4" />
-                        دانلود پرزنتیشن کامل
-                    </Link>
-                    <Link
-                        href="/contact?type=financial-model-review"
-                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-500 text-white px-6 py-3 font-semibold hover:shadow-lg transition-all"
-                    >
-                        <LuDollarSign className="h-4 w-4" />
-                        بررسی مدل مالی با تیم اجرایی
-                    </Link>
+                {/* ===================== FINANCIAL PROJECTIONS ===================== */ }
+                <div className="bg-white rounded-[3rem] border border-slate-200 shadow-sm p-8 md:p-14 mb-24 overflow-hidden relative">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-bms-primary via-[#D72638] to-[#F4C430]" />
+                    <header className="flex items-center justify-between mb-12">
+                        <div className="flex items-center gap-4">
+                            <LuActivity className="w-6 h-6 text-bms-primary" />
+                            <h3 className="text-2xl font-black text-slate-900">پیش‌بینی عملکرد مالی و ROI</h3>
+                        </div>
+                    </header>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-right">
+                            <thead>
+                                <tr className="text-xs font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                    <th className="pb-6 pr-4">Fiscal_Year</th>
+                                    <th className="pb-6">Revenue (B_IRR)</th>
+                                    <th className="pb-6">Growth</th>
+                                    <th className="pb-6">Est. Valuation</th>
+                                    <th className="pb-6 pl-4 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-50">
+                                { roiProjections.map( ( projection ) => (
+                                    <tr key={ projection.year } className="group hover:bg-slate-50/50 transition-colors">
+                                        <td className="py-6 pr-4 font-mono font-black text-slate-900">{ projection.year }</td>
+                                        <td className="py-6 font-black text-xl text-slate-900">{ projection.revenue }</td>
+                                        <td className="py-6">
+                                            <div className="flex items-center gap-2 text-emerald-600 font-bold">
+                                                <LuTrendingUp className="w-4 h-4" />
+                                                <span>{ projection.growth }</span>
+                                            </div>
+                                        </td>
+                                        <td className="py-6 font-black text-lg text-bms-primary">{ projection.valuation }</td>
+                                        <td className="py-6 pl-4 text-left">
+                                            <span className={ cn(
+                                                "px-3 py-1 rounded-lg text-[9px] font-black uppercase border",
+                                                projection.status === 'CURRENT' ? "bg-emerald-50 text-emerald-700 border-emerald-100" : "bg-blue-50 text-blue-700 border-blue-100"
+                                            ) }>
+                                                { projection.status }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ) ) }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* ===================== EXIT STRATEGIES ===================== */ }
+                <div className="grid md:grid-cols-3 gap-6">
+                    { exitStrategies.map( ( strategy, idx ) => (
+                        <motion.div
+                            key={ idx }
+                            whileHover={ { y: -5 } }
+                            className="bg-white border border-slate-200 rounded-[2.5rem] p-8 shadow-sm hover:shadow-premium transition-all duration-300"
+                        >
+                            <div className="flex justify-between items-start mb-6">
+                                <h4 className="text-lg font-black text-slate-900 leading-tight">{ strategy.title }</h4>
+                                <span className={ cn(
+                                    "text-[9px] font-black px-2 py-1 rounded-md uppercase",
+                                    strategy.probability === 'بالا' ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"
+                                ) }>
+                                    { strategy.probability }_Prob
+                                </span>
+                            </div>
+                            <div className="space-y-4 mb-6">
+                                <div className="flex justify-between text-xs border-b border-slate-50 pb-2">
+                                    <span className="text-slate-400">Potential</span>
+                                    <span className="font-black text-emerald-600">{ strategy.potential }</span>
+                                </div>
+                            </div>
+                            <p className="text-xs leading-6 text-slate-500 font-medium">{ strategy.description }</p>
+                        </motion.div>
+                    ) ) }
+                </div>
+
+                {/* ===================== INVESTOR CTA ===================== */ }
+                <div className="mt-24 relative group">
+                    <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-[3.5rem] blur-2xl opacity-10" />
+                    <div className="relative bg-gradient-to-br from-emerald-600 to-bms-primary rounded-[3rem] p-10 md:p-16 text-white text-center">
+                        <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+                            <LuShield className="w-12 h-12 text-[#F4C430] mx-auto" />
+                            <h3 className="text-3xl md:text-5xl font-black leading-tight">آماده‌ی بررسی جزییات مالی هستید؟</h3>
+                            <div className="flex flex-col sm:flex-row gap-5 justify-center pt-4">
+                                <Link href="/investors/deck.pdf" className="bg-white text-slate-950 px-8 py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#F4C430] transition-colors">
+                                    <LuDownload className="w-5 h-5" />
+                                    <span>دانلود Pitch Deck</span>
+                                </Link>
+                                <Link href="/contact?type=investor-meeting" className="border-2 border-white/30 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
+                                    <LuCalendarCheck className="w-5 h-5" />
+                                    <span>رزرو جلسه با تیم</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+    );
+}
+
+// Fixed SVG Helper with unique attributes (resolves Error 17001)
+function LuCalendarCheck ( { className }: { className?: string; } )
+{
+    return (
+        <svg className={ className } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+            <path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4" />
+        </svg>
     );
 }

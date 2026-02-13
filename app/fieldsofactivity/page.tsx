@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         "IoT سرمایه‌گذاری"
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/solutions",
+        canonical: "https://co-bms.ir/solutions",
     },
     openGraph: {
         title: "فرصت‌های سرمایه‌گذاری در راهکارهای هوشمند",
@@ -259,7 +259,7 @@ export default function SolutionsPage ()
                     "@type": "InvestAction",
                     target: {
                         "@type": "EntryPoint",
-                        urlTemplate: `https://barman-mes.ir/invest/${ cat.id }`
+                        urlTemplate: `https://co-bms.ir/invest/${ cat.id }`
                     }
                 }
             } ) ),

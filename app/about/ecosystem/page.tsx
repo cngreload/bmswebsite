@@ -28,9 +28,9 @@ export default function EcosystemPage ()
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://barman-mes.ir" },
-            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://barman-mes.ir/about" },
-            { "@type": "ListItem", "position": 3, "name": "اکوسیستم", "item": "https://barman-mes.ir/about/ecosystem" }
+            { "@type": "ListItem", "position": 1, "name": "خانه", "item": "https://co-bms.ir" },
+            { "@type": "ListItem", "position": 2, "name": "درباره ما", "item": "https://co-bms.ir/about" },
+            { "@type": "ListItem", "position": 3, "name": "اکوسیستم", "item": "https://co-bms.ir/about/ecosystem" }
         ]
     };
 

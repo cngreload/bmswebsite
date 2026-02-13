@@ -13,7 +13,7 @@ export const metadata: Metadata = {
         "اتوماسیون صنعتی",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/intelligentautomation",
+        canonical: "https://co-bms.ir/intelligentautomation",
     },
     openGraph: {
         type: "website",

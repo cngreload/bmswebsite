@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         "Clinicans Digital Builder",
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/clinicans/digital-builder",
+        canonical: "https://co-bms.ir/clinicans/digital-builder",
     },
 };
 

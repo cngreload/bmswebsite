@@ -363,7 +363,7 @@ export const ClinicansFeaturesGrid: React.FC = () =>
                                 "@type": feature.entityType,
                                 "name": feature.title,
                                 "description": feature.description,
-                                "url": `https://barman-mes.ir${ feature.ctaLink }`,
+                                "url": `https://co-bms.ir${ feature.ctaLink }`,
                                 "dateModified": feature.lastUpdated,
                                 "keywords": feature.relatedKeywords.join( ", " )
                             }

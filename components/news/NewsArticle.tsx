@@ -150,7 +150,7 @@ export default function ArticlePage ( { params }: ArticlePageProps )
                                 <h3 className="text-sm font-bold text-slate-900 mb-2">ارتباط با رسانه</h3>
                                 <p className="text-sm text-slate-600 leading-relaxed">
                                     <strong>دفتر روابط عمومی</strong><br />
-                                    info@barman-mes.ir<br />
+                                    info@co-bms.ir<br />
                                     ۰۳۱-۳XXXXXXX
                                 </p>
                             </div>

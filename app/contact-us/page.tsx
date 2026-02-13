@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description:
         "ارتباط مستقیم با تیم بارمان‌محور اسپادانا برای مشاوره تخصصی، درخواست دمو و استقرار راهکارهای هوشمند در حوزه انرژی، سلامت و زیرساخت‌های حیاتی.",
     alternates: {
-        canonical: "https://barman-mes.ir/contact-us",
+        canonical: "https://co-bms.ir/contact-us",
     },
 };
 
@@ -32,8 +32,8 @@ export default function ContactUsPage ()
         mainEntity: {
             "@type": "Organization",
             name: "Barman Mehvar Spadana",
-            url: "https://barman-mes.ir",
-            email: "contact@barman-mes.ir",
+            url: "https://co-bms.ir",
+            email: "contact@co-bms.ir",
             contactPoint: [
                 {
                     "@type": "ContactPoint",

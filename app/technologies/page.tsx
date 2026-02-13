@@ -58,7 +58,7 @@ export const metadata: Metadata = {
         "سرمایه‌گذاری فناوری"
     ],
     alternates: {
-        canonical: "https://barman-mes.ir/technologies",
+        canonical: "https://co-bms.ir/technologies",
     },
 };
 
