@@ -17,7 +17,6 @@ import { Section } from "@/components/layout/Section";
 
 /* Navigation Components */
 import WitMacosDock from "@/components/wit/WitMacosDock";
-import ClinicansMobileSectionSwitcher from "@/components/clinicans/ClinicansMobileSectionSwitcher";
 
 /* Section Components */
 import WitHeroSection from "@/components/wit/WitHeroSection";
@@ -213,9 +212,7 @@ export default function IntelligentAutomationPage ()
             <WitMacosDock />
 
             {/* Contextual Switcher for Tablet/Mobile */ }
-            <div className="lg:hidden">
-                <ClinicansMobileSectionSwitcher />
-            </div>
+
 
             {/* Final Visual Hard-Stop Visual Anchor */ }
             <div className="h-px w-full bg-gradient-to-r from-transparent via-bms-primary/10 to-transparent" />

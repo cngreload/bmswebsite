@@ -8,7 +8,6 @@ import { Section } from "@/components/layout/Section";
 
 /* Navigation Components */
 import ClinicansMacosDock from "@/components/clinicans/ClinicansMacosDock";
-import ClinicansMobileSectionSwitcher from "@/components/clinicans/ClinicansMobileSectionSwitcher";
 
 /* Section Components */
 import ClinicansHeroSectionV2 from "@/components/clinicans/ClinicansHeroSectionV2";
@@ -20,15 +19,36 @@ import ClinicansSystemCarousel from "@/components/clinicans/ClinicansSystemCarou
 import ClinicansSystemTabs from "@/components/clinicans/ClinicansSystemTabs";
 import ClinicansCardScroll from "@/components/clinicans/ClinicansCardScroll";
 
+/**
+ * 🏥 CLINICANS PLATFORM - FINAL REFORMATION
+ * Spacing calibrated to 8pt Grid (py-12 to py-24)
+ * Theme: Medical White / Calm Teal / Emerald Green
+ */
 export default function ClinicansPage ()
 {
     const containerRef = useRef<HTMLDivElement>( null );
-    const { scrollYProgress } = useScroll( { target: containerRef, offset: [ "start start", "end end" ] } );
-    const smoothProgress = useSpring( scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 } );
+
+    const { scrollYProgress } = useScroll( {
+        target: containerRef,
+        offset: [ "start start", "end end" ],
+    } );
+
+    const smoothProgress = useSpring( scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001,
+    } );
+
+    // Subtle Parallax for the footer entrance
     const mainScale = useTransform( smoothProgress, [ 0.9, 1 ], [ 1, 0.98 ] );
 
     return (
-        <main ref={ containerRef } className="flex flex-col w-full bg-white overflow-visible" dir="rtl">
+        <main
+            ref={ containerRef }
+            className="flex flex-col w-full bg-white overflow-visible"
+            dir="rtl"
+        >
+            {/* 🧠 SEO: STRUCTURED DATA */ }
             <Script
                 id="json-ld-clinicans-master"
                 type="application/ld+json"
@@ -37,15 +57,21 @@ export default function ClinicansPage ()
                         "@context": "https://schema.org",
                         "@type": "SoftwareApplication",
                         "name": "Clinicans Health Platform",
-                        "publisher": { "@type": "Organization", "name": "Barman Mehvar Spadana" }
+                        "applicationCategory": "MedicalBusinessApplication",
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "Barman Mehvar Spadana",
+                        },
                     } ),
                 } }
             />
 
-            {/* CHAPTER 1: VISION */ }
+            {/* CHAPTER 1: VISION - Hero & Contextual Pivot */ }
             <Section variant="white" spacing="none" id="overview" className="pt-6 md:pt-10 pb-0">
                 <div className="flex flex-col">
                     <ClinicansHeroSectionV2 />
+
+                    {/* Overlap Status Card - Anchors the user after the headline */ }
                     <motion.div
                         initial={ { y: 40, opacity: 0 } }
                         whileInView={ { y: 0, opacity: 1 } }
@@ -59,19 +85,31 @@ export default function ClinicansPage ()
                                     <LuStethoscope className="w-7 h-7" />
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 block mb-1">Status: Active</span>
-                                    <h3 className="text-lg md:text-xl font-black text-slate-900 leading-tight">زیرساخت هوشمند درمان</h3>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 block mb-1">
+                                        Status: Active
+                                    </span>
+                                    <h3 className="text-lg md:text-xl font-black text-slate-900 leading-tight">
+                                        زیرساخت هوشمند درمان
+                                    </h3>
                                 </div>
                             </div>
                             <div className="hidden lg:block h-12 w-px bg-slate-100" />
                             <div className="flex items-center gap-10">
                                 <div className="text-center">
-                                    <div className="text-3xl font-black text-emerald-600 tracking-tighter">۱۰۰٪</div>
-                                    <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">بومی‌سازی</div>
+                                    <div className="text-3xl font-black text-emerald-600 tracking-tighter">
+                                        ۱۰۰٪
+                                    </div>
+                                    <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">
+                                        بومی‌سازی
+                                    </div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-3xl font-black text-bms-primary tracking-tighter">۲۴/۷</div>
-                                    <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">پشتیبانی</div>
+                                    <div className="text-3xl font-black text-bms-primary tracking-tighter">
+                                        ۲۴/۷
+                                    </div>
+                                    <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">
+                                        پشتیبانی
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,9 +117,14 @@ export default function ClinicansPage ()
                 </div>
             </Section>
 
-            {/* CHAPTER 2: MODULES (Subtle Background) */ }
-            <Section variant="subtle" spacing="none" id="features" className="py-16 lg:py-24 border-y border-slate-100 mt-16">
-                <div className="space-y-16">
+            {/* CHAPTER 2: MODULES - Visualizing the Platform components */ }
+            <Section
+                variant="subtle"
+                spacing="none"
+                id="features"
+                className="py-16 lg:py-24 border-y border-slate-100 mt-16"
+            >
+                <div className="space-y-16 hidden ">
                     <ClinicansSystemCarousel />
                     <div className="max-w-5xl mx-auto py-10 px-6">
                         <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
@@ -90,14 +133,14 @@ export default function ClinicansPage ()
                 </div>
             </Section>
 
-            {/* CHAPTER 3: IMMERSIVE 3D SCROLL */ }
+            {/* CHAPTER 3: IMMERSIVE - Specialists Focus */ }
             <section id="specialists" className="relative w-full bg-slate-950 z-20">
-                <div style={ { height: '400vh' } } className="relative">
+                <div style={ { height: "400vh" } } className="relative">
                     <ClinicansCardScroll />
                 </div>
             </section>
 
-            {/* CHAPTER 4: AUDIENCE & SECURITY */ }
+            {/* CHAPTER 4: AUDIENCE, SECURITY & TECH */ }
             <Section variant="white" spacing="none" id="audience" className="py-16 lg:py-24">
                 <div className="flex flex-col gap-24 lg:gap-32">
                     <ClinicansForWhomSection />
@@ -108,15 +151,15 @@ export default function ClinicansPage ()
                 </div>
             </Section>
 
-            {/* CHAPTER 5: ONBOARDING */ }
+            {/* CHAPTER 5: ONBOARDING - Closing the Narrative */ }
             <Section variant="white" spacing="none" id="pricing" className="pt-16 md:pt-24 pb-20">
                 <motion.div style={ { scale: mainScale } } className="space-y-20">
                     <ClinicansGetStartedSection />
                 </motion.div>
             </Section>
 
+            {/* 🚀 UNIVERSAL macOS DOCK - Handles both Desktop and Mobile UI */ }
             <ClinicansMacosDock />
-            <ClinicansMobileSectionSwitcher />
         </main>
     );
 }
