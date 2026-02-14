@@ -50,8 +50,8 @@ export const Section = ( {
     };
 
     const spacings = {
-        default: "py-20 lg:py-32",
-        large: "py-24 lg:py-48",
+        default: "py-6 lg:py-12",
+        large: "py-12 lg:py-24",
         none: "py-0",
     };
 

@@ -6,10 +6,6 @@ import RootChrome from "@/components/layout/RootChrome";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
 
-/**
- * We use a specific subset of weights to minimize layout shift 
- * and maximize typographic authority.
- */
 const bmsSans = IBM_Plex_Sans_Arabic( {
   subsets: [ "arabic", "latin" ],
   weight: [ "300", "400", "500", "600", "700" ],
@@ -18,10 +14,10 @@ const bmsSans = IBM_Plex_Sans_Arabic( {
 } );
 
 export const viewport: Viewport = {
-  themeColor: "#145C98", // BMS Primary
+  themeColor: "#145C98",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5, // Accessible zoom
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {
@@ -55,7 +51,7 @@ export const metadata: Metadata = {
     description: "تکنولوژی بومی برای محافظت از زیرساخت‌های انرژی و سلامت کشور.",
     images: [
       {
-        url: "/og-image.jpg", // Ensure this exists in public folder
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Barman Mehvar Spadana - Intelligent Solutions",
@@ -83,10 +79,6 @@ export default function RootLayout ( {
   children: React.ReactNode;
 } )
 {
-  /**
-   * JSON-LD for Search Engine Authority.
-   * This provides a "Corporate Graph" to Google.
-   */
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -103,12 +95,12 @@ export default function RootLayout ( {
         "foundingDate": "2021",
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+98-31-XXXXXXXX", // Replace with real number
+          "telephone": "+98-31-XXXXXXXX",
           "contactType": "customer service",
           "areaServed": "IR",
-          "availableLanguage": [ "Persian" ]
+          "availableLanguage": [ "Persian", "English" ]
         },
-        "description": "Leading provider of Smart Infrastructure and Vital Asset Management solutions in Iran.",
+        "description": "Leading provider of Smart Infrastructure and Vital Asset Management solutions.",
       },
     ],
   };
@@ -130,11 +122,7 @@ export default function RootLayout ( {
         />
       </head>
 
-      <body className="bg-white font-sans text-slate-900 antialiased min-h-screen flex flex-col">
-        {/* 
-            Premium Skip Link: 
-            Visible only on focus, styled with corporate branding.
-        */}
+      <body className="bg-white font-sans text-slate-900 antialiased min-h-screen flex flex-col overflow-x-hidden">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-6 focus:right-6 focus:z-[100] px-6 py-3 bg-bms-primary text-white rounded-xl font-bold shadow-2xl transition-transform"
@@ -142,10 +130,6 @@ export default function RootLayout ( {
           پرش به محتوای اصلی
         </a>
 
-        {/* 
-            RootChrome: Handles persistent UI (Header/Footer).
-            main#main-content: Provides the semantic hook for skip-links.
-        */}
         <RootChrome>
           <main
             id="main-content"

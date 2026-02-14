@@ -11,8 +11,7 @@ import
     LuCpu,
     LuActivity,
     LuArrowLeft,
-    LuHandshake,
-    LuGlobe,
+
     LuBinary,
 
     LuArrowUpDown,
@@ -62,12 +61,12 @@ export default function ProductBands ()
                 {/* ================= THE SYSTEM SPINE ================= */ }
                 <div className="relative">
                     {/* THE DATA BUS - Visual Connection */ }
-                    <div aria-hidden className="absolute left-1/2 top-0 h-full -translate-x-1/2">
+                    <div aria-hidden className="absolute   left-1/2 top-0 h-full -translate-x-1/2">
                         <div className="relative h-full w-[2px] bg-slate-100 overflow-hidden">
                             {/* Animated Progress Line using Brand Colors */ }
                             <motion.div
                                 style={ { height: spineHeight } }
-                                className="absolute top-0 left-0 w-full bg-gradient-to-b from-bms-primary via-[#D72638] to-[#F4C430] origin-top"
+                                className="absolute -z-20  top-0 left-0 w-full bg-gradient-to-b from-transparent via-[#e9e5e5] to-[#F4C430] origin-top"
                             />
 
                             {/* Traveling Pulse Node */ }
@@ -76,7 +75,7 @@ export default function ProductBands ()
                     </div>
 
                     {/* ================= BAND 01: ICTS (Industrial Red) ================= */ }
-                    <BandWrapper side="right">
+                    <BandWrapper side="right" >
                         <article className="group relative rounded-[2.5rem] border border-slate-200 bg-slate-50/50 p-8 md:p-12 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
                             {/* Background Red Glow */ }
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#D72638]/5 rounded-full blur-3xl" />
@@ -200,59 +199,7 @@ export default function ProductBands ()
                             </div>
                         </article>
                     </BandWrapper>
-
-                    <CoreNode scale={ pulseScale } />
-
                     {/* ================= BAND 03: WIT (Corporate Dark Blue) ================= */ }
-                    <BandWrapper side="right">
-                        <article className="relative overflow-hidden rounded-[2.5rem] bg-bms-dark p-10 md:p-20 text-center text-white shadow-2xl border border-white/5">
-                            <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
-
-                            <div className="relative z-10 mx-auto max-w-3xl space-y-10">
-                                <div className="flex justify-center">
-                                    <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white/5 border border-white/10 text-[#F4C430] shadow-2xl backdrop-blur-md">
-                                        <LuHandshake className="h-10 w-10" />
-                                    </div>
-                                </div>
-
-                                <h3 className="text-3xl md:text-5xl font-black tracking-tightest leading-[1.1]">
-                                    همکاری برای <br />
-                                    <span className="text-[#F4C430]">آینده هوشمند</span>
-                                </h3>
-
-                                <p className="text-lg md:text-xl text-slate-400 font-light leading-corp-relaxed">
-                                    بارمان بستری برای توسعه مشترک محصولات، سرمایه‌گذاری فناورانه و
-                                    ورود راهبردی به حوزه‌های نوظهور صنعتی و دیجیتال فراهم می‌کند.
-                                </p>
-
-                                <div className="flex flex-wrap justify-center gap-5 pt-4">
-                                    <Link
-                                        href="/intelligentautomation"
-                                        className="inline-flex h-12 items-center justify-center rounded-xl bg-white px-8 text-sm font-black text-bms-dark hover:bg-slate-100 transition shadow-xl"
-                                    >
-                                        مدل‌های همکاری
-                                    </Link>
-                                    <Link
-                                        href="/contact-us"
-                                        className="inline-flex h-12 items-center justify-center rounded-xl border border-white/20 bg-white/5 px-8 text-sm font-bold text-white hover:bg-white/10 transition backdrop-blur-sm"
-                                    >
-                                        تماس با توسعه کسب‌وکار
-                                    </Link>
-                                </div>
-
-                                <div className="pt-10 flex flex-col items-center gap-3">
-                                    <LuGlobe className="h-6 w-6 text-bms-primary animate-pulse" />
-                                    <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-[0.4em]">
-                                        Worldwide Intelligent Technology (WIT)
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Brand Accent Blobs */ }
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-bms-primary/10 rounded-full blur-[100px]" />
-                            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D72638]/5 rounded-full blur-[100px]" />
-                        </article>
-                    </BandWrapper>
 
                 </div>
             </div>

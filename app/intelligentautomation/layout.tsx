@@ -1,3 +1,4 @@
+// app/intelligentautomation/layout.tsx
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,16 +14,20 @@ export const metadata: Metadata = {
         "اتوماسیون صنعتی",
     ],
     alternates: {
-        canonical: "https://co-bms.ir/intelligentautomation",
+        canonical: "https://barman-mes.ir/intelligentautomation",
     },
     openGraph: {
         type: "website",
         title: "WIT Platform | Industrial IoT by Barman",
-        description:
-            "WIT، هسته‌ی سخت‌افزاری و نرم‌افزاری بارمان برای پیاده‌سازی سامانه‌های هوشمندسازی صنعتی و سازمانی.",
+        description: "WIT، هسته‌ی سخت‌افزاری و نرم‌افزاری بارمان برای پیاده‌سازی سامانه‌های هوشمندسازی صنعتی و سازمانی.",
         locale: "fa_IR",
         siteName: "Barman Mehvar Spadana",
+        images: [ { url: '/images/og-wit.jpg', width: 1200, height: 630 } ]
     },
+    twitter: {
+        card: "summary_large_image",
+        title: "WIT Platform | Industrial IoT by Barman",
+    }
 };
 
 export default function IntelligentAutomationLayout ( {
@@ -31,5 +36,9 @@ export default function IntelligentAutomationLayout ( {
     children: React.ReactNode;
 } )
 {
-    return children;
+    return (
+        <section className="bg-white min-h-screen">
+            { children }
+        </section>
+    );
 }

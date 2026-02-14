@@ -43,10 +43,7 @@ export default function CngMacosDock ()
     const dockContainerRef = useRef<HTMLDivElement>( null );
     const mouseX = useMotionValue( Infinity );
 
-    useEffect( () =>
-    {
-        setMounted( true );
-    }, [] );
+    useEffect( () => setMounted( true ), [] );
 
     useGSAP( () =>
     {
@@ -54,14 +51,15 @@ export default function CngMacosDock ()
 
         gsap.set( dockContainerRef.current, { y: 0, opacity: 1 } );
 
+        // Momentum Directional Logic: Hide on Scroll Down, Show on Scroll Up
         ScrollTrigger.create( {
             start: "top top",
             end: "bottom bottom",
             onUpdate: ( self ) =>
             {
-                if ( self.direction === 1 && self.scroll() > 150 )
+                if ( self.direction === 1 && self.scroll() > 200 )
                 {
-                    gsap.to( dockContainerRef.current, { y: 120, opacity: 0, duration: 0.4, ease: "power2.in" } );
+                    gsap.to( dockContainerRef.current, { y: 150, opacity: 0, duration: 0.4, ease: "power2.in" } );
                 } else if ( self.direction === -1 )
                 {
                     gsap.to( dockContainerRef.current, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" } );
@@ -69,10 +67,11 @@ export default function CngMacosDock ()
             }
         } );
 
+        // Prevent Footer Overlap
         ScrollTrigger.create( {
             trigger: "footer",
             start: "top bottom",
-            onEnter: () => gsap.to( dockContainerRef.current, { y: 120, opacity: 0, duration: 0.3 } ),
+            onEnter: () => gsap.to( dockContainerRef.current, { y: 150, opacity: 0, duration: 0.3 } ),
             onLeaveBack: () => gsap.to( dockContainerRef.current, { y: 0, opacity: 1, duration: 0.4 } ),
         } );
 
@@ -85,8 +84,6 @@ export default function CngMacosDock ()
                 onToggle: ( self ) => { if ( self.isActive ) setActive( item.id ); },
             } );
         } );
-
-        ScrollTrigger.refresh();
     }, { scope: dockContainerRef, dependencies: [ mounted ] } );
 
     if ( !mounted ) return null;
@@ -100,8 +97,8 @@ export default function CngMacosDock ()
                 onMouseMove={ ( e ) => mouseX.set( e.pageX ) }
                 onMouseLeave={ () => mouseX.set( Infinity ) }
                 className={ cn(
-                    "flex items-end gap-2 md:gap-3 px-4 py-3 md:px-5 md:py-4 rounded-[2rem] md:rounded-[2.5rem]",
-                    "bg-white/80 backdrop-blur-2xl border border-slate-200/50 shadow-2xl ring-1 ring-black/5 pointer-events-auto"
+                    "flex items-end gap-2 md:gap-3 p-3 md:p-4 rounded-[2rem] md:rounded-[2.5rem]",
+                    "bg-white/80 backdrop-blur-3xl border border-slate-200/50 shadow-2xl ring-1 ring-black/5 pointer-events-auto"
                 ) }
                 dir="rtl"
             >
@@ -119,9 +116,8 @@ export default function CngMacosDock ()
                 <button
                     onClick={ () => window.scrollTo( { top: 0, behavior: 'smooth' } ) }
                     className="group relative flex h-[44px] w-[44px] md:h-[54px] md:w-[54px] items-center justify-center rounded-xl md:rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 hover:bg-bms-primary hover:text-white transition-all duration-300 mb-0.5"
-                    aria-label="Scroll to top"
                 >
-                    <LuChevronUp className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-y-1 transition-transform" />
+                    <LuChevronUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
                 </button>
             </motion.div>
         </div>
@@ -139,34 +135,27 @@ function DockIcon ( { mouseX, item, isActive }: { mouseX: MotionValue<number>, i
         return val - bounds.x - bounds.width / 2;
     } );
 
-    const isLarge = typeof window !== 'undefined' && window.innerWidth > 768;
-    const baseSize = isLarge ? 54 : 44;
-    const magSize = isLarge ? 88 : 58;
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth > 1024;
+    const baseSize = isDesktop ? 54 : 46;
+    const magSize = isDesktop ? 88 : 50; // Magnification disabled for mobile touch UX
 
     const widthSync = useTransform( distance, [ -150, 0, 150 ], [ baseSize, magSize, baseSize ] );
-    const width = useSpring( widthSync, { mass: 0.1, stiffness: 180, damping: 15 } );
-
-    const scrollTo = ( id: string ) =>
-    {
-        const el = document.getElementById( id );
-        if ( el )
-        {
-            const offset = 80;
-            const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo( { top: elementPosition - offset, behavior: "smooth" } );
-        }
-    };
+    const width = useSpring( widthSync, { mass: 0.1, stiffness: 200, damping: 20 } );
 
     return (
         <motion.div
             ref={ ref }
             style={ { width } }
-            onClick={ () => scrollTo( item.id ) }
+            onClick={ () =>
+            {
+                const el = document.getElementById( item.id );
+                if ( el ) window.scrollTo( { top: el.offsetTop - 80, behavior: "smooth" } );
+            } }
             className="group relative aspect-square flex flex-col items-center justify-center cursor-pointer"
         >
             <AnimatePresence>
-                <div className="absolute -top-16 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none translate-y-2 group-hover:translate-y-0 hidden md:block">
-                    <div className="bg-bms-dark text-white text-[11px] font-black px-4 py-2 rounded-2xl whitespace-nowrap shadow-2xl border border-white/10">
+                <div className="absolute -top-16 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none translate-y-2 group-hover:translate-y-0 hidden lg:block">
+                    <div className="bg-bms-dark text-white text-[11px] font-black px-4 py-2 rounded-2xl shadow-2xl border border-white/10">
                         { item.label }
                     </div>
                     <div className="w-2.5 h-2.5 bg-bms-dark rotate-45 mx-auto -mt-1.5" />
@@ -174,7 +163,7 @@ function DockIcon ( { mouseX, item, isActive }: { mouseX: MotionValue<number>, i
             </AnimatePresence>
 
             <div className={ cn(
-                "flex items-center justify-center w-full h-full rounded-xl md:rounded-2xl transition-all duration-300 border shadow-sm relative overflow-hidden",
+                "flex items-center justify-center w-full h-full rounded-2xl transition-all duration-300 border shadow-sm relative overflow-hidden",
                 isActive
                     ? "bg-bms-primary text-white border-bms-primary shadow-lg shadow-blue-500/30 scale-105"
                     : "bg-white text-slate-500 border-slate-100 hover:border-bms-primary/40 hover:text-bms-primary"
@@ -184,8 +173,8 @@ function DockIcon ( { mouseX, item, isActive }: { mouseX: MotionValue<number>, i
 
             { isActive && (
                 <motion.div
-                    layoutId="cng-dock-dot-universal"
-                    className="absolute -bottom-2 md:-bottom-2.5 w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-[#D72638] shadow-[0_0_10px_#D72638]"
+                    layoutId="cng-dock-dot"
+                    className="absolute -bottom-2 w-1.5 h-1.5 rounded-full bg-[#D72638] shadow-[0_0_10px_#D72638]"
                 />
             ) }
         </motion.div>

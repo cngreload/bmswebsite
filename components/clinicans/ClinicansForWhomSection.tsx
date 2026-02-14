@@ -24,70 +24,70 @@ import { cn } from "@/lib/utils";
 const personas = [
     {
         id: "managers",
-        role: "Management_Enablement",
-        title: "مدیران و مالکان کلینیک",
-        subtitle: "توانمندسازی در تصمیم‌گیری و توسعه",
+        role: "Strategic_Control",
+        title: "مدیران و مالکان مراکز سلامت",
+        subtitle: "کنترل، رشد و تصمیم‌گیری مبتنی بر داده",
         summary:
-            "برای مدیرانی که به دنبال ابزارهای دقیق برای پایش عملکرد، بهینه‌سازی درآمد و توسعه کسب‌وکار خود بر پایه داده‌های واقعی هستند.",
+            "برای مدیرانی که می‌خواهند رشد را حدس نزنند، بلکه آن را اندازه‌گیری و هدایت کنند.",
         icon: LuBriefcase,
-        color: "text-[#145C98]", // BMS Primary Navy
+        color: "text-[#145C98]",
         bg: "bg-blue-50",
         border: "group-hover:border-[#145C98]/30",
         benefits: [
-            "دید یکپارچه نسبت به درآمد، ظرفیت و عملکرد واقعی",
-            "گزارش‌های مدیریتی قابل اتکا برای تصمیم‌گیری راهبردی",
-            "امکان مدیریت چند شعبه در یک ساختار متمرکز",
+            "نمای یکپارچه از درآمد، ظرفیت و عملکرد واقعی مرکز",
+            "گزارش‌های تحلیلی برای تصمیم‌گیری راهبردی و توسعه پایدار",
+            "مدیریت متمرکز چند شعبه در یک زیرساخت واحد",
         ],
     },
     {
         id: "doctors",
-        role: "Clinical_Intelligence",
+        role: "Clinical_Focus",
         title: "پزشکان و کادر درمان",
-        subtitle: "تمرکز بر کیفیت درمان و مراقبت",
+        subtitle: "تمرکز کامل بر کیفیت درمان",
         summary:
-            "برای درمانگرانی که می‌خواهند با اتکا به ابزارهای دیجیتال، دغدغه‌های اجرایی را حذف کرده و کیفیت مراقبت از بیمار را ارتقا دهند.",
+            "برای درمانگرانی که می‌خواهند زمان و انرژی خود را صرف بیمار کنند، نه مدیریت فرآیندها.",
         icon: LuStethoscope,
-        color: "text-[#10B981]", // Medical Green
+        color: "text-[#10B981]",
         bg: "bg-emerald-50",
         border: "group-hover:border-emerald-200",
         benefits: [
-            "دسترسی سریع و منسجم به پرونده و سوابق درمان",
-            "ثبت ساده و ساخت‌یافته اطلاعات و خدمات",
-            "کاهش وقفه‌های غیرضروری در زمان ویزیت",
+            "دسترسی سریع و ساخت‌یافته به سوابق و اطلاعات بیمار",
+            "ثبت منظم خدمات بدون وقفه در جریان درمان",
+            "کاهش اصطکاک اجرایی در فرآیند ویزیت",
         ],
     },
     {
         id: "reception",
         role: "Operational_Flow",
         title: "تیم پذیرش و عملیات",
-        subtitle: "اتوماسیون فرآیندها و کاهش خطا",
+        subtitle: "جریان روان، خطای کمتر",
         summary:
-            "برای تیم‌های اجرایی که با حجم بالای هماهنگی روبرو هستند و به ابزارهای هوشمند برای مدیریت جریان مراجعین نیاز دارند.",
+            "برای تیم‌هایی که قلب تپنده نظم مرکز هستند و به ابزار دقیق برای مدیریت جریان مراجعین نیاز دارند.",
         icon: LuCalendarCheck,
-        color: "text-[#F4C430]", // Intel Yellow
+        color: "text-[#F4C430]",
         bg: "bg-amber-50",
         border: "group-hover:border-amber-200",
         benefits: [
             "مدیریت هوشمند نوبت‌ها و تغییرات برنامه",
-            "کاهش تماس‌های تکراری با اطلاع‌رسانی خودکار",
-            "کاهش خطای انسانی در فرآیند پذیرش",
+            "اطلاع‌رسانی خودکار برای کاهش تماس‌های تکراری",
+            "کاهش خطای انسانی در پذیرش و هماهنگی‌ها",
         ],
     },
     {
         id: "patients",
-        role: "Patient_Experience",
+        role: "Trusted_Experience",
         title: "مراجعان و بیماران",
-        subtitle: "تجربه دریافت خدمات در کلاس جهانی",
+        subtitle: "تجربه‌ای منظم و قابل اعتماد",
         summary:
-            "برای مراجعانی که انتظار دارند خدمات سلامت را با نظم، شفافیت و احترام دریافت کنند.",
+            "برای بیمارانی که انتظار دارند خدمات سلامت را شفاف، دقیق و محترمانه دریافت کنند.",
         icon: LuHeartHandshake,
-        color: "text-[#D72638]", // Industrial Red
+        color: "text-[#D72638]",
         bg: "bg-red-50",
         border: "group-hover:border-red-200",
         benefits: [
-            "دریافت نوبت بدون وابستگی به تماس تلفنی",
-            "اطلاع‌رسانی شفاف درباره وضعیت و زمان مراجعه",
-            "افزایش اعتماد به فرآیند و کیفیت خدمات",
+            "دریافت نوبت آنلاین بدون وابستگی به تماس تلفنی",
+            "اطلاع‌رسانی شفاف درباره زمان و وضعیت مراجعه",
+            "افزایش اعتماد به فرآیند و کیفیت خدمات مرکز",
         ],
     },
 ];
@@ -117,7 +117,7 @@ export default function ClinicansForWhomSection ()
                     >
                         <LuUser className="h-3.5 w-3.5 text-slate-400" />
                         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
-                            User_Segmentation / 042-BMS
+                            Stakeholder_Access / Clinicans
                         </span>
                     </motion.div>
 
@@ -125,17 +125,16 @@ export default function ClinicansForWhomSection ()
                         id="audience-heading"
                         className="text-3xl md:text-5xl lg:text-6xl font-black text-slate-950 leading-[1.1] tracking-tightest"
                     >
-                        این پلتفرم چه کسانی را <br />
+                        کلینیکانز برای چه کسانی <br />
                         <span className="text-bms-primary underline decoration-bms-primary/10 underline-offset-8">
-                            توانمند
-                        </span>{ " " }
-                        می‌کند؟
+                            ارزش خلق می‌کند؟
+                        </span>
                     </h2>
 
                     <p className="max-w-3xl text-base md:text-lg text-slate-500 font-light leading-relaxed">
-                        «پلتفرم توانمندسازی دیجیتال ارائه‌دهندگان خدمات سلامت» یک ابزار
-                        یکسان برای همه نیست؛ بلکه تجربه‌ای شخصی‌سازی‌شده متناسب با نقش هر
-                        فرد در چرخه درمان است.
+                        این پلتفرم یک ابزار عمومی نیست؛ بلکه زیرساختی نقش‌محور است که برای
+                        هر جایگاه در چرخه ارائه خدمات سلامت، تجربه‌ای متناسب و هدفمند
+                        طراحی کرده است.
                     </p>
                 </header>
 
@@ -156,7 +155,6 @@ export default function ClinicansForWhomSection ()
                                     persona.border
                                 ) }
                             >
-                                {/* HUD Role Metadata */ }
                                 <div className="mb-6 flex flex-col items-center text-center gap-4">
                                     <div
                                         className={ cn(
@@ -178,12 +176,10 @@ export default function ClinicansForWhomSection ()
                                     </div>
                                 </div>
 
-                                {/* Summary */ }
                                 <p className="mb-6 text-xs leading-6 text-center text-slate-500 font-medium italic">
                                     { persona.summary }
                                 </p>
 
-                                {/* Benefits List */ }
                                 <ul className="flex-1 space-y-4 border-t border-slate-50 pt-6">
                                     { persona.benefits.map( ( item, idx ) => (
                                         <li key={ idx } className="flex items-start gap-3">
@@ -213,7 +209,6 @@ export default function ClinicansForWhomSection ()
                         <div className="absolute inset-0 opacity-10 [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
 
                         <div className="relative flex flex-col md:flex-row items-center gap-8 md:gap-12 rounded-[2.95rem] bg-slate-950 px-8 py-10 md:px-14">
-                            {/* Visual Anchor */ }
                             <div className="flex-shrink-0 relative group">
                                 <div className="absolute inset-0 bg-bms-primary/40 rounded-3xl blur-2xl group-hover:blur-3xl transition-all" />
                                 <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-white/5 text-[#F4C430] shadow-2xl border border-white/10 backdrop-blur-md">
@@ -221,33 +216,25 @@ export default function ClinicansForWhomSection ()
                                 </div>
                             </div>
 
-                            {/* Content */ }
                             <div className="flex-1 text-center md:text-right space-y-4">
-                                <div className="flex flex-col md:flex-row md:items-center gap-3">
-                                    <h4 className="text-xl md:text-2xl font-black text-white">
-                                        تلاقی تخصص و هوشمندی دیجیتال
-                                    </h4>
-                                    <span className="hidden md:block h-px w-12 bg-white/20" />
-                                </div>
+                                <h4 className="text-xl md:text-2xl font-black text-white">
+                                    زیرساختی که نقش‌ها را به رشد متصل می‌کند
+                                </h4>
                                 <p className="text-sm md:text-base text-slate-300 leading-8 text-justify font-light opacity-90">
-                                    کلینیکانز با درک دقیق نیازهای هر نقش، یک چرخه هماهنگ میان
-                                    <strong className="text-white font-bold mx-1">مدیریت</strong>،
-                                    <strong className="text-white font-bold mx-1">تیم درمان</strong>
-                                    و
-                                    <strong className="text-white font-bold mx-1">مراجعان</strong>
-                                    ایجاد می‌کند؛ چرخه‌ای که از طریق توانمندسازی دیجیتال، منجر به
+                                    کلینیکانز با هم‌راستا کردن مدیریت، تیم درمان و تجربه بیمار،
+                                    یک چرخه هماهنگ ایجاد می‌کند؛ چرخه‌ای که نتیجه آن
                                     <span className="text-[#F4C430] font-bold mx-1">
-                                        تجربه بهتر
+                                        افزایش بازگشت مراجعان
                                     </span>
                                     ،
                                     <span className="text-emerald-400 font-bold mx-1">
-                                        بهره‌وری بالاتر
+                                        بهره‌وری عملیاتی بالاتر
                                     </span>
                                     و
                                     <span className="text-blue-400 font-bold mx-1">
-                                        رشد پایدار
+                                        رشد پایدار مرکز
                                     </span>
-                                    می‌گردد.
+                                    است.
                                 </p>
                             </div>
                         </div>

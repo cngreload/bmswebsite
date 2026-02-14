@@ -4,9 +4,8 @@ import { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { LuShieldCheck, LuAward, LuFileBadge } from "react-icons/lu";
+import { LuShieldCheck, LuAward, LuFileBadge, LuBinary } from "react-icons/lu";
 
-// Register GSAP Plugin
 if ( typeof window !== "undefined" )
 {
     gsap.registerPlugin( ScrollTrigger );
@@ -42,14 +41,12 @@ export default function CngStorySection ()
                 scrollTrigger: {
                     trigger: container,
                     start: "top top",
-                    end: "+=300%", // Cinematic long-scroll
-                    scrub: 0.5,
+                    end: "+=250%", // Optimized duration for better flow
+                    scrub: 0.6,
                     pin: true,
                     anticipatePin: 1,
                 },
             } );
-
-            // --- THE SEQUENCE ---
 
             // 1. Reveal Phase: Expand image from card-inset to full-screen
             tl.to( imageWrapper, {
@@ -76,7 +73,7 @@ export default function CngStorySection ()
                 }, "<" )
 
                 // 3. The Sustained Hold (Reading Time)
-                .to( {}, { duration: 2 } )
+                .to( {}, { duration: 1.5 } )
 
                 // 4. Exit Phase: Fade content and Grayscale the image
                 .to( content, {
@@ -86,9 +83,9 @@ export default function CngStorySection ()
                     ease: "power2.in",
                 } )
                 .to( imageWrapper, {
-                    clipPath: "inset(15% 5% 15% 5% round 3rem)",
-                    scale: 0.9,
-                    filter: "grayscale(100%) brightness(0.6)",
+                    clipPath: "inset(12% 4% 12% 4% round 3rem)",
+                    scale: 0.92,
+                    filter: "grayscale(100%) brightness(0.7)",
                     duration: 2,
                     ease: "power3.inOut",
                 }, "<+=0.1" );
@@ -110,58 +107,53 @@ export default function CngStorySection ()
                 {/* ================= 1. THE GLASS CARD (Floating UI) ================= */ }
                 <div
                     ref={ contentRef }
-                    className="absolute z-20 w-[92%] max-w-4xl opacity-0 translate-y-12 pointer-events-none"
+                    className="absolute z-20 w-[94%] max-w-4xl opacity-0 translate-y-12 pointer-events-none"
                 >
-                    <div className="relative overflow-hidden rounded-[3rem] bg-white/80 backdrop-blur-2xl border border-white/50 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] p-8 md:p-14 text-center">
+                    <div className="relative overflow-hidden rounded-[3.5rem] bg-white/85 backdrop-blur-3xl border border-white/50 shadow-[0_50px_100px_-20px_rgba(15,23,42,0.25)] p-8 md:p-16 text-center">
 
-                        {/* Subtle Noise Texture for Glass Look */ }
-                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/noise.webp')] bg-repeat" />
+                        {/* HUD Grid Detail */ }
+                        <div className="absolute inset-0 opacity-[0.03] pointer-events-none [background-image:radial-gradient(#145C98_1px,transparent_1px)] [background-size:32px_32px]" />
 
-                        {/* Badge - Corporate Dark Blue */ }
+                        {/* Badge - Corporate Navy */ }
                         <div ref={ badgeRef } className="flex justify-center mb-8">
-                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-950 text-white text-[10px] font-black uppercase tracking-widest shadow-xl ring-1 ring-white/20">
-                                <LuShieldCheck className="w-4 h-4 text-emerald-400" />
-                                <span>استاندارد ملی امنیت</span>
+                            <span className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#0F172A] text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl ring-1 ring-white/20">
+                                <LuShieldCheck className="w-4 h-4 text-emerald-400 animate-pulse" />
+                                <span>استاندارد ملی امنیت صنعتی</span>
                             </span>
                         </div>
 
-                        {/* Headline - Typographic Authority */ }
-                        <h2 ref={ titleRef } className="text-3xl md:text-5xl lg:text-7xl font-black leading-[1.1] text-slate-950 mb-8 tracking-tightest">
+                        {/* Headline */ }
+                        <h2 ref={ titleRef } className="text-3xl md:text-6xl font-black leading-[1.1] text-slate-950 mb-8 tracking-tightest">
                             تنها دارنده گواهی <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#145C98] to-blue-600">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#145C98] via-[#145C98] to-blue-600">
                                 پدافند غیرعامل
                             </span>
                         </h2>
 
                         {/* Description */ }
-                        <p ref={ descRef } className="text-base md:text-lg text-slate-600 leading-relaxed font-medium max-w-2xl mx-auto">
-                            در زیرساخت‌های حیاتی کشور، اعتماد بر پایه شواهد بنا می‌شود.
-                            سامانه ICTS تنها پلتفرم بومی است که موفق به اخذ بالاترین تاییدیه امنیتی شده است.
+                        <p ref={ descRef } className="text-base md:text-xl text-slate-600 leading-relaxed font-medium max-w-2xl mx-auto">
+                            در مدیریت زیرساخت‌های حیاتی انرژی، امنیت یک ادعا نیست؛ یک الزام قانونی است.
+                            ICTS تنها پلتفرم بومی با تاییدیه سطح یک پدافند غیرعامل است.
                         </p>
 
-                        {/* Trust Grid - Red and Yellow Accents */ }
-                        <div ref={ gridRef } className="flex flex-wrap justify-center gap-5 mt-10 border-t border-slate-200/50 pt-10">
-                            <div className="flex items-center gap-4 bg-white/60 px-6 py-4 rounded-2xl border border-white shadow-sm transition-all hover:scale-105">
-                                <div className="bg-amber-50 p-3 rounded-xl text-[#F4C430]">
-                                    <LuAward className="w-6 h-6" />
-                                </div>
+                        {/* Trust Grid */ }
+                        <div ref={ gridRef } className="flex flex-wrap justify-center gap-6 mt-12 border-t border-slate-200/50 pt-12">
+                            <div className="flex items-center gap-4 bg-slate-50/50 px-6 py-4 rounded-2xl border border-white shadow-sm">
+                                <LuAward className="w-7 h-7 text-[#F4C430]" />
                                 <div className="text-right">
-                                    <span className="block text-[9px] text-slate-400 font-black uppercase tracking-tighter">Accreditation</span>
+                                    <span className="block text-[8px] text-slate-400 font-black uppercase tracking-tighter">Auth_Node</span>
                                     <span className="text-sm font-bold text-slate-900">مجوز سازمان پدافند</span>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-4 bg-white/60 px-6 py-4 rounded-2xl border border-white shadow-sm transition-all hover:scale-105">
-                                <div className="bg-blue-50 p-3 rounded-xl text-[#145C98]">
-                                    <LuFileBadge className="w-6 h-6" />
-                                </div>
+                            <div className="flex items-center gap-4 bg-slate-50/50 px-6 py-4 rounded-2xl border border-white shadow-sm">
+                                <LuFileBadge className="w-7 h-7 text-[#145C98]" />
                                 <div className="text-right">
-                                    <span className="block text-[9px] text-slate-400 font-black uppercase tracking-tighter">Status</span>
+                                    <span className="block text-[8px] text-slate-400 font-black uppercase tracking-tighter">Enterprise</span>
                                     <span className="text-sm font-bold text-slate-900">تاییدیه دانش‌بنیان</span>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -170,13 +162,13 @@ export default function CngStorySection ()
                     ref={ imageWrapperRef }
                     className="absolute inset-0 z-10 w-full h-full shadow-2xl origin-center overflow-hidden bg-slate-100"
                     style={ {
-                        clipPath: "inset(10% 5% 10% 5% round 3rem)",
-                        transform: "scale(0.95)",
+                        clipPath: "inset(10% 4% 10% 4% round 3rem)",
+                        transform: "scale(0.96)",
                     } }
                 >
                     <Image
                         src="/certificate_padafand.webp"
-                        alt="زیرساخت امن صنعتی بارمان محور اسپادانا"
+                        alt="گواهی پدافند غیرعامل بارمان"
                         fill
                         className="object-cover"
                         sizes="100vw"
@@ -185,7 +177,10 @@ export default function CngStorySection ()
                     />
 
                     {/* Cinematic Overlay */ }
-                    <div className="absolute inset-0 bg-slate-950/20 pointer-events-none mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-slate-950/25 pointer-events-none mix-blend-multiply" />
+                    <div className="absolute top-10 left-10 opacity-20">
+                        <LuBinary className="w-32 h-32 text-white" />
+                    </div>
                 </div>
 
             </div>
